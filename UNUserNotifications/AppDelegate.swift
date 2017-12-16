@@ -24,20 +24,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
         
-        application.registerForRemoteNotifications()
+        center.delegate = self
+        
+        //center.setNotificationCategories(setCategories())
+        
+        sendNotification()
         
         return true
     }
     
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        print("Device token = \(deviceToken)")
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
-        let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
-        print(token)
+        print("Notification identifier = \(notification.request.identifier)")
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        
+        completionHandler([.alert])
     }
     
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print("error = \(error.localizedDescription)")
+    func sendNotification()
+    {
+        let content = UNMutableNotificationContent()
+        content.title = "Local notification test"
+        content.body = "Hello"
+        content.badge = 1
+        content.sound = UNNotificationSound.default()
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        let request = UNNotificationRequest(identifier: "myid", content: content, trigger: trigger)
+        
+        let center = UNUserNotificationCenter.current()
+        center.add(request) { (error) in
+            print(error?.localizedDescription ?? "error")
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
