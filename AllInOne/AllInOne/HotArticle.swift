@@ -8,16 +8,15 @@
 
 import Foundation
 
-struct HotArticles: Codable {
-    let hotArticles: [HotArticle]
+struct List: Codable {
+    let list: [HotArticle]
 }
 
 struct HotArticle: Codable {
-    let hotNum: String
-    let author: String
-    let title: String
-    let boardName: String
-    let desc: String
-    let url: String
+    let author: String?
+    let title: String?
+    let board_name: String?
+    let desc: String?
+    let url: String?
 }
 

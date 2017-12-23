@@ -27,6 +27,8 @@
 		AC36D5421FEE157400BF94E6 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC36D5401FEE157400BF94E6 /* ScheduleViewController.swift */; };
 		AC36D5431FEE157400BF94E6 /* ScheduleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC36D5411FEE157400BF94E6 /* ScheduleViewController.xib */; };
 		AC36D54A1FEE226400BF94E6 /* HotArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC36D5491FEE226400BF94E6 /* HotArticle.swift */; };
+		AC36D54D1FEE4BB600BF94E6 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC36D54B1FEE4BB600BF94E6 /* DetailViewController.swift */; };
+		AC36D54E1FEE4BB600BF94E6 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC36D54C1FEE4BB600BF94E6 /* DetailViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,8 @@
 		AC36D5401FEE157400BF94E6 /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		AC36D5411FEE157400BF94E6 /* ScheduleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScheduleViewController.xib; sourceTree = "<group>"; };
 		AC36D5491FEE226400BF94E6 /* HotArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotArticle.swift; sourceTree = "<group>"; };
+		AC36D54B1FEE4BB600BF94E6 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		AC36D54C1FEE4BB600BF94E6 /* DetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +169,8 @@
 				AC36D52B1FEE0B6B00BF94E6 /* HomeViewController.xib */,
 				AC36D5341FEE101F00BF94E6 /* HomeTableViewCell.swift */,
 				AC36D5351FEE101F00BF94E6 /* HomeTableViewCell.xib */,
+				AC36D54B1FEE4BB600BF94E6 /* DetailViewController.swift */,
+				AC36D54C1FEE4BB600BF94E6 /* DetailViewController.xib */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -307,6 +313,7 @@
 				AC36D53B1FEE147000BF94E6 /* MapViewController.xib in Resources */,
 				AC36D4FE1FEE00F500BF94E6 /* Assets.xcassets in Resources */,
 				AC36D4F91FEE00F500BF94E6 /* Main.storyboard in Resources */,
+				AC36D54E1FEE4BB600BF94E6 /* DetailViewController.xib in Resources */,
 				AC36D5371FEE101F00BF94E6 /* HomeTableViewCell.xib in Resources */,
 				AC36D53F1FEE153700BF94E6 /* SettingsViewController.xib in Resources */,
 				AC36D52D1FEE0B6B00BF94E6 /* HomeViewController.xib in Resources */,
@@ -335,6 +342,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC36D54D1FEE4BB600BF94E6 /* DetailViewController.swift in Sources */,
 				AC36D52C1FEE0B6B00BF94E6 /* HomeViewController.swift in Sources */,
 				AC36D53E1FEE153700BF94E6 /* SettingsViewController.swift in Sources */,
 				AC36D5421FEE157400BF94E6 /* ScheduleViewController.swift in Sources */,

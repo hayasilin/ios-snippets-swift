@@ -12,17 +12,13 @@ class HomeViewController: UIViewController{
 
     @IBOutlet weak var tableView: UITableView!
     
-    var list = [String]()
+    var hotArticleList = [HotArticle]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.tabBarController?.tabBar.isTranslucent = false
         self.navigationController?.setNavigationBarHidden(true, animated: false)
-        
-        list.append("1")
-        list.append("2")
-        list.append("3")
         
         let nib = UINib(nibName: "HomeTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "cell")
@@ -38,24 +34,30 @@ class HomeViewController: UIViewController{
         
         try? get(url: url, completionHandler: { data, response, error in
             
-//            print("data = \(String(describing: data))")
-//            print("response = \(String(describing: response))")
-//            print("error = \(String(describing: error))")
-            
             let responseObj = try? JSONSerialization.jsonObject(with: data!) as! [String : AnyObject]
-            
-//            print(responseObj)
             
             if let arrJSON = responseObj {
                 
-                if arrJSON["isSuccess"] as! Int == 1 {
-                    print("isSuccess")
+                if arrJSON["isSuccess"] as! Int == 1
+                {
+                    //Swift 4 way
+                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .iso8601
                     
+                    let articles = try! decoder.decode(List.self, from: data!)
+                    self.hotArticleList = articles.list
                     
-//                    if let hotArticleList = arrJSON["list"]{
-//                        print(hotArticleList.firstIndex)
+                    //Swift 3 way
+//                    for item in arrJSON["list"] as! [AnyObject]
+//                    {//                        print("item = \(item)")
+//                        let hotArticle = HotArticle.init(hotNum: item["hot_num"] as! String,
+//                                                         author: item["author"] as! String,
+//                                                         title: item["title"] as! String,
+//                                                         boardName: item["board_name"] as! String,
+//                                                         desc: item["desc"] as! String,
+//                                                         url: item["url"] as! String)
 //
-//
+//                        self.hotArticleList.append(hotArticle)
 //                    }
                 }
                 else
@@ -63,8 +65,12 @@ class HomeViewController: UIViewController{
                     print("is not success")
                 }
             }
+            
+            let mainQueue = DispatchQueue.main
+            mainQueue.async {
+                self.tableView.reloadData()
+            }
         })
-    
     }
     
     // GET METHOD
@@ -87,17 +93,23 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return list.count
+        return hotArticleList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HomeTableViewCell
-        cell.textLabel?.text = list[indexPath.row]
+        
+        let hotArticle: HotArticle = hotArticleList[indexPath.row]
+        
+        cell.textLabel?.text = hotArticle.title
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath.row)
+        let hotArticle: HotArticle = hotArticleList[indexPath.row]
+        let detailVC = DetailViewController(nibName: "DetailViewController", bundle: nil, urlString: hotArticle.url)
+        self.navigationController?.pushViewController(detailVC, animated: true)
     }
 }
