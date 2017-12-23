@@ -26,6 +26,7 @@
 		AC36D53F1FEE153700BF94E6 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC36D53D1FEE153700BF94E6 /* SettingsViewController.xib */; };
 		AC36D5421FEE157400BF94E6 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC36D5401FEE157400BF94E6 /* ScheduleViewController.swift */; };
 		AC36D5431FEE157400BF94E6 /* ScheduleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC36D5411FEE157400BF94E6 /* ScheduleViewController.xib */; };
+		AC36D54A1FEE226400BF94E6 /* HotArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC36D5491FEE226400BF94E6 /* HotArticle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		AC36D53D1FEE153700BF94E6 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		AC36D5401FEE157400BF94E6 /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		AC36D5411FEE157400BF94E6 /* ScheduleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScheduleViewController.xib; sourceTree = "<group>"; };
+		AC36D5491FEE226400BF94E6 /* HotArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotArticle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 				AC36D5451FEE169200BF94E6 /* Map */,
 				AC36D5461FEE16A800BF94E6 /* Schedule */,
 				AC36D5471FEE16B000BF94E6 /* Settings */,
+				AC36D5491FEE226400BF94E6 /* HotArticle.swift */,
 			);
 			path = AllInOne;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				AC36D4F41FEE00F500BF94E6 /* AppDelegate.swift in Sources */,
 				AC36D5361FEE101F00BF94E6 /* HomeTableViewCell.swift in Sources */,
 				AC36D4FC1FEE00F500BF94E6 /* AllInOne.xcdatamodeld in Sources */,
+				AC36D54A1FEE226400BF94E6 /* HotArticle.swift in Sources */,
 				AC36D5291FEE0A5100BF94E6 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -26,6 +26,57 @@ class HomeViewController: UIViewController{
         
         let nib = UINib(nibName: "HomeTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "cell")
+        
+        requestDataFromAPI()
+    }
+    
+    func requestDataFromAPI(){
+        
+        let apiString: String = "http://disp.cc/api/hot_text.json"
+        
+        let url: URL = URL(string: apiString)!
+        
+        try? get(url: url, completionHandler: { data, response, error in
+            
+//            print("data = \(String(describing: data))")
+//            print("response = \(String(describing: response))")
+//            print("error = \(String(describing: error))")
+            
+            let responseObj = try? JSONSerialization.jsonObject(with: data!) as! [String : AnyObject]
+            
+//            print(responseObj)
+            
+            if let arrJSON = responseObj {
+                
+                if arrJSON["isSuccess"] as! Int == 1 {
+                    print("isSuccess")
+                    
+                    
+//                    if let hotArticleList = arrJSON["list"]{
+//                        print(hotArticleList.firstIndex)
+//
+//
+//                    }
+                }
+                else
+                {
+                    print("is not success")
+                }
+            }
+        })
+    
+    }
+    
+    // GET METHOD
+    func get(url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) throws {
+        var request: URLRequest = URLRequest(url: url)
+        
+        let session: URLSession = URLSession.shared
+        
+        request.httpMethod = "GET"
+        
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        session.dataTask(with: request, completionHandler: completionHandler).resume()
     }
 }
 
