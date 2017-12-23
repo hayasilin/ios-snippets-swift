@@ -18,5 +18,6 @@ struct HotArticle: Codable {
     let board_name: String?
     let desc: String?
     let url: String?
+    let img_list:[String]?
 }
 

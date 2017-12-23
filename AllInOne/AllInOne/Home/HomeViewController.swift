@@ -14,7 +14,8 @@ class HomeViewController: UIViewController{
     
     var hotArticleList = [HotArticle]()
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         
         let nib = UINib(nibName: "HomeTableViewCell", bundle: nil)
@@ -29,7 +30,9 @@ class HomeViewController: UIViewController{
         
         let url: URL = URL(string: apiString)!
         
-        try? get(url: url, completionHandler: { data, response, error in
+        let requestManager: RestfulRequestManager = RestfulRequestManager()
+        
+        try? requestManager.get(url: url, completionHandler: { data, response, error in
             
             let responseObj = try? JSONSerialization.jsonObject(with: data!) as! [String : AnyObject]
             
@@ -37,21 +40,14 @@ class HomeViewController: UIViewController{
                 
                 if arrJSON["isSuccess"] as! Int == 1
                 {
-                    //Swift 4 way
-                    let decoder = JSONDecoder()
-                    decoder.dateDecodingStrategy = .iso8601
-                    
-                    let articles = try! decoder.decode(List.self, from: data!)
-                    self.hotArticleList = articles.list
-                    
-                    //Swift 3 way
                     for item in arrJSON["list"] as! [AnyObject]
                     {
                         let hotArticle = HotArticle.init(author: item["author"] as? String,
                                                          title: item["title"] as? String,
                                                          board_name: item["board_name"] as? String,
                                                          desc: item["desc"] as? String,
-                                                         url: item["url"] as? String)
+                                                         url: item["url"] as? String,
+                                                         img_list: item["img_list"] as? [String])
 
                         self.hotArticleList.append(hotArticle)
                     }
@@ -67,18 +63,6 @@ class HomeViewController: UIViewController{
                 self.tableView.reloadData()
             }
         })
-    }
-    
-    // GET METHOD
-    func get(url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) throws {
-        var request: URLRequest = URLRequest(url: url)
-        
-        let session: URLSession = URLSession.shared
-        
-        request.httpMethod = "GET"
-        
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        session.dataTask(with: request, completionHandler: completionHandler).resume()
     }
 }
 
@@ -97,7 +81,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate{
         
         let hotArticle: HotArticle = hotArticleList[indexPath.row]
         
-        cell.textLabel?.text = hotArticle.title
+        
+        cell.titleLabel.text = hotArticle.title
+        cell.descLabel.text = hotArticle.desc
         
         return cell
     }
@@ -107,5 +93,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate{
         let hotArticle: HotArticle = hotArticleList[indexPath.row]
         let detailVC = DetailViewController(nibName: "DetailViewController", bundle: nil, urlString: hotArticle.url)
         self.navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100;
     }
 }
