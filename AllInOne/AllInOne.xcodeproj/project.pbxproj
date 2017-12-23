@@ -29,6 +29,7 @@
 		AC36D54A1FEE226400BF94E6 /* HotArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC36D5491FEE226400BF94E6 /* HotArticle.swift */; };
 		AC36D54D1FEE4BB600BF94E6 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC36D54B1FEE4BB600BF94E6 /* DetailViewController.swift */; };
 		AC36D54E1FEE4BB600BF94E6 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC36D54C1FEE4BB600BF94E6 /* DetailViewController.xib */; };
+		AC86E0CF1FEEAB2D00427C30 /* RestfulRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86E0CE1FEEAB2D00427C30 /* RestfulRequestManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		AC36D5491FEE226400BF94E6 /* HotArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotArticle.swift; sourceTree = "<group>"; };
 		AC36D54B1FEE4BB600BF94E6 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		AC36D54C1FEE4BB600BF94E6 /* DetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
+		AC86E0CE1FEEAB2D00427C30 /* RestfulRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestfulRequestManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 				AC36D5461FEE16A800BF94E6 /* Schedule */,
 				AC36D5471FEE16B000BF94E6 /* Settings */,
 				AC36D5491FEE226400BF94E6 /* HotArticle.swift */,
+				AC86E0CE1FEEAB2D00427C30 /* RestfulRequestManager.swift */,
 			);
 			path = AllInOne;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				AC36D54D1FEE4BB600BF94E6 /* DetailViewController.swift in Sources */,
 				AC36D52C1FEE0B6B00BF94E6 /* HomeViewController.swift in Sources */,
 				AC36D53E1FEE153700BF94E6 /* SettingsViewController.swift in Sources */,
+				AC86E0CF1FEEAB2D00427C30 /* RestfulRequestManager.swift in Sources */,
 				AC36D5421FEE157400BF94E6 /* ScheduleViewController.swift in Sources */,
 				AC36D4F61FEE00F500BF94E6 /* ViewController.swift in Sources */,
 				AC36D53A1FEE147000BF94E6 /* MapViewController.swift in Sources */,

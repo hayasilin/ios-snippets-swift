@@ -12,8 +12,10 @@ class MapViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.tabBarController?.tabBar.isTranslucent = false
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
         navigationItem.title = "Map";
     }
 

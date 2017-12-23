@@ -1,24 +1,20 @@
 //
-//  HomeViewController.swift
-//  AllInOne
+//  ViewController.swift
+//  SwiftDemo
 //
-//  Created by Kuan-Wei Lin on 12/23/17.
+//  Created by Kuan-Wei Lin on 12/16/17.
 //  Copyright © 2017 cracktheterm. All rights reserved.
 //
 
 import UIKit
+import UserNotifications
 
-class HomeViewController: UIViewController{
-
-    @IBOutlet weak var tableView: UITableView!
+class ViewController: UIViewController {
     
     var hotArticleList = [HotArticle]()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let nib = UINib(nibName: "HomeTableViewCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "cell")
         
         requestDataFromAPI()
     }
@@ -52,7 +48,7 @@ class HomeViewController: UIViewController{
                                                          board_name: item["board_name"] as? String,
                                                          desc: item["desc"] as? String,
                                                          url: item["url"] as? String)
-
+                        
                         self.hotArticleList.append(hotArticle)
                     }
                 }
@@ -60,11 +56,6 @@ class HomeViewController: UIViewController{
                 {
                     print("is not success")
                 }
-            }
-            
-            let mainQueue = DispatchQueue.main
-            mainQueue.async {
-                self.tableView.reloadData()
             }
         })
     }
@@ -79,33 +70,5 @@ class HomeViewController: UIViewController{
         
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         session.dataTask(with: request, completionHandler: completionHandler).resume()
-    }
-}
-
-extension HomeViewController: UITableViewDataSource, UITableViewDelegate{
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return hotArticleList.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HomeTableViewCell
-        
-        let hotArticle: HotArticle = hotArticleList[indexPath.row]
-        
-        cell.textLabel?.text = hotArticle.title
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
-        let hotArticle: HotArticle = hotArticleList[indexPath.row]
-        let detailVC = DetailViewController(nibName: "DetailViewController", bundle: nil, urlString: hotArticle.url)
-        self.navigationController?.pushViewController(detailVC, animated: true)
     }
 }
