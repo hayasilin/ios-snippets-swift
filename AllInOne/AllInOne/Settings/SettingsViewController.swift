@@ -9,27 +9,44 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
-
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    var menu: [String: [String]]?
+    
+    var keys: [String]?
+    var items: [String]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         navigationItem.title = "Settings"
+        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
+        let path = Bundle.main.path(forResource: "Settings", ofType: "plist")!
+        menu = NSDictionary(contentsOfFile: path) as? [String : [String]]
+        
+        if let dict = menu{
+            print(dict)
+        }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+}
+
+extension SettingsViewController: UITableViewDataSource, UITableViewDelegate{
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
     }
-    */
-
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+        return cell
+    }
 }

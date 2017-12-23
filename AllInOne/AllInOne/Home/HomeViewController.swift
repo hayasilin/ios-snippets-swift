@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class HomeViewController: UIViewController{
 
@@ -80,10 +81,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate{
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HomeTableViewCell
         
         let hotArticle: HotArticle = hotArticleList[indexPath.row]
-        
+        let imageUrlString = hotArticle.img_list?.first
+        let imageUrl = URL(string: imageUrlString!)
         
         cell.titleLabel.text = hotArticle.title
         cell.descLabel.text = hotArticle.desc
+        cell.articleImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "placeholder.png") , options: SDWebImageOptions(rawValue: 0), completed: nil)
         
         return cell
     }
