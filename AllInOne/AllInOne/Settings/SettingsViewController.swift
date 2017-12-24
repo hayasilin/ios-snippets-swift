@@ -12,10 +12,10 @@ class SettingsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var menu: [String: [String]]?
+    var menu: [String: [String]]!
     
-    var keys: [String]?
-    var items: [String]?
+    var keys = [String]()
+    var items = [Array<String>]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,28 +25,62 @@ class SettingsViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         let path = Bundle.main.path(forResource: "Settings", ofType: "plist")!
-        menu = NSDictionary(contentsOfFile: path) as? [String : [String]]
+        menu = (NSDictionary(contentsOfFile: path) as! [String : [String]])
         
         if let dict = menu{
             print(dict)
+            keys = Array(dict.keys)
+            
+            for key in keys{
+                let array = menu[key]
+                items.append(array!)
+            }
         }
     }
-
 }
 
 extension SettingsViewController: UITableViewDataSource, UITableViewDelegate{
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return items.count
     }
     
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return items[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.selectionStyle = .none
+        
+        cell.textLabel?.text = items[indexPath.section][indexPath.row]
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return keys[section]
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.row)
+        
+        if indexPath.section == 1 {
+            if indexPath.row == 0 {
+                print("send mail")
+                let to = "kuanwei.hayasi@gmail.com"
+                let subject = "問題回報/意見反應"
+                
+                let mail = "mailto:\(to)?subject=\(subject)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                
+                let url = URL(string: mail!)
+                UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+            }
+            else if indexPath.row == 1{
+                let instructionVC = InstructionViewController()
+                self.navigationController?.pushViewController(instructionVC, animated: true)
+            }
+        }
     }
 }
