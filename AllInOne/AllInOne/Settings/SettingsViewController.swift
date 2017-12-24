@@ -52,11 +52,16 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.selectionStyle = .none
         
-        cell.textLabel?.text = items[indexPath.section][indexPath.row]
+        configure(cell: cell, forItemAt: indexPath)
         
         return cell
+    }
+    
+    func configure(cell: UITableViewCell, forItemAt indexPath: IndexPath)
+    {
+        cell.selectionStyle = .none
+        cell.textLabel?.text = items[indexPath.section][indexPath.row]
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

@@ -8,6 +8,11 @@ target 'AllInOne' do
   # Pods for AllInOne
   pod 'SDWebImage'
   pod 'ReachabilitySwift', '~> 4.0'
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Database'
+  pod 'Fabric'
+  pod 'Crashlytics'
 
   target 'AllInOneTests' do
     inherit! :search_paths
