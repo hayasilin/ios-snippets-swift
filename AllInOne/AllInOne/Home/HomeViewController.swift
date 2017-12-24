@@ -30,23 +30,33 @@ class HomeViewController: UIViewController{
         
         requestDataFromAPI()
         
+        //declare this property where it won't go out of scope relative to your listener
         let reachability = Reachability()!
         
-        reachability.whenReachable = { reachability in
-            if reachability.connection == .wifi {
-                print("Reachable via WiFi")
-            } else {
-                print("Reachable via Cellular")
-            }
-        }
-        reachability.whenUnreachable = { _ in
-            print("Not reachable")
-        }
+        //declare this inside of viewWillAppear
         
-        do {
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(note:)), name: .reachabilityChanged, object: reachability)
+        do{
             try reachability.startNotifier()
-        } catch {
-            print("Unable to start notifier")
+        }catch{
+            print("could not start reachability notifier")
+        }
+    }
+    
+    @objc func reachabilityChanged(note: Notification) {
+        
+        let reachability = note.object as! Reachability
+        
+        switch reachability.connection {
+        case .wifi:
+            print("Reachable via WiFi")
+        case .cellular:
+            print("Reachable via Cellular")
+        case .none:
+            print("Network not reachable")
+            let alert = UIAlertController(title: "沒有網路連線", message: "請檢察網路連線喲", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
