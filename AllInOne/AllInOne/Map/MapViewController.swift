@@ -7,32 +7,98 @@
 //
 
 import UIKit
+import MapKit
 
 class MapViewController: UIViewController {
 
-    override func viewDidLoad() {
+    @IBOutlet weak var mapView: MKMapView!
+    let locationService = LocationService()
+    
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         
         self.tabBarController?.tabBar.isTranslucent = false
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         navigationItem.title = "Map";
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        if UIApplication.shared.canOpenURL(URL(string: "line://")!) {
+            print("User has LINE App")
+        }
+        else
+        {
+            print("User doesn't have LINE App")
+        }
+        
+        createLocationService()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func createLocationService()
+    {
+        locationService.startUpdatingLocation()
+        
+        mapView.showsUserLocation = true
+        mapView.showsBuildings = true
+        mapView.showsPointsOfInterest = true
     }
-    */
+    
+    @IBAction func showUserLocation(_ sender: UIButton) {
+        print("show user location")
+        
+        let userLocation: MKUserLocation = mapView.userLocation
+        var region = MKCoordinateRegion()
+        region.center = userLocation.coordinate
+        region = MKCoordinateRegionMakeWithDistance(region.center, 1000, 1000)
+        
+        mapView.setRegion(region, animated: true)
+    }
+    
+}
 
+extension MapViewController: MKMapViewDelegate{
+    
+    func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
+        print("regionWillChangeAnimated")
+    }
+    
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        print("regionDidChangeAnimated")
+    }
+    
+    func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
+        print("mapViewWillStartLoadingMap")
+    }
+    
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+        print("mapViewDidFinishLoadingMap")
+    }
+    
+    func mapViewDidFailLoadingMap(_ mapView: MKMapView, withError error: Error) {
+        print("mapViewDidFailLoadingMap")
+    }
+    
+    func mapViewWillStartRenderingMap(_ mapView: MKMapView) {
+        print("mapViewWillStartRenderingMap")
+    }
+    
+    func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
+        print("mapViewDidFinishRenderingMap")
+    }
+    
+    func mapViewWillStartLocatingUser(_ mapView: MKMapView) {
+        print("mapViewWillStartLocatingUser")
+    }
+    
+    func mapViewDidStopLocatingUser(_ mapView: MKMapView) {
+        print("mapViewDidStopLocatingUser")
+    }
+    
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        print("didUpdate")
+    }
+    
+    func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
+        print("didChange")
+    }
 }

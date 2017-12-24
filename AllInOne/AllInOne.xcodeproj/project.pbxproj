@@ -36,6 +36,7 @@
 		AC86E0D51FEEBB5E00427C30 /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC86E0D41FEEBB5E00427C30 /* Settings.plist */; };
 		ACA136F51FEF4DE60088B2CC /* InstructionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA136F31FEF4DE60088B2CC /* InstructionViewController.swift */; };
 		ACA136F61FEF4DE60088B2CC /* InstructionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ACA136F41FEF4DE60088B2CC /* InstructionViewController.xib */; };
+		ACA136F81FEF50CC0088B2CC /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA136F71FEF50CC0088B2CC /* LocationService.swift */; };
 		ED891551507B7A8700935000 /* Pods_AllInOneTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CF3148F81876E0E8452EEB /* Pods_AllInOneTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -97,6 +98,7 @@
 		AC86E0D41FEEBB5E00427C30 /* Settings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Settings.plist; sourceTree = "<group>"; };
 		ACA136F31FEF4DE60088B2CC /* InstructionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionViewController.swift; sourceTree = "<group>"; };
 		ACA136F41FEF4DE60088B2CC /* InstructionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InstructionViewController.xib; sourceTree = "<group>"; };
+		ACA136F71FEF50CC0088B2CC /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		BC457F5AB43D03C54F79CACB /* Pods-AllInOneUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AllInOneUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AllInOneUITests/Pods-AllInOneUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		CFC3FBC77B36213AC35B8F33 /* Pods-AllInOneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AllInOneTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AllInOneTests/Pods-AllInOneTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -192,6 +194,7 @@
 				AC36D5471FEE16B000BF94E6 /* Settings */,
 				AC36D5491FEE226400BF94E6 /* HotArticle.swift */,
 				AC86E0CE1FEEAB2D00427C30 /* RestfulRequestManager.swift */,
+				ACA136F71FEF50CC0088B2CC /* LocationService.swift */,
 			);
 			path = AllInOne;
 			sourceTree = "<group>";
@@ -559,6 +562,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACA136F81FEF50CC0088B2CC /* LocationService.swift in Sources */,
 				AC36D54D1FEE4BB600BF94E6 /* DetailViewController.swift in Sources */,
 				AC36D52C1FEE0B6B00BF94E6 /* HomeViewController.swift in Sources */,
 				AC36D53E1FEE153700BF94E6 /* SettingsViewController.swift in Sources */,
