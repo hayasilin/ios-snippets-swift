@@ -13,6 +13,7 @@ class MapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     let locationService = LocationService()
+    var isFirstEntry = true
     
     override func viewDidLoad()
     {
@@ -32,6 +33,8 @@ class MapViewController: UIViewController {
         }
         
         createLocationService()
+        
+        showUserLoaction()
     }
     
     func createLocationService()
@@ -43,15 +46,19 @@ class MapViewController: UIViewController {
         mapView.showsPointsOfInterest = true
     }
     
-    @IBAction func showUserLocation(_ sender: UIButton) {
-        print("show user location")
-        
+    func showUserLoaction()
+    {
         let userLocation: MKUserLocation = mapView.userLocation
         var region = MKCoordinateRegion()
         region.center = userLocation.coordinate
         region = MKCoordinateRegionMakeWithDistance(region.center, 1000, 1000)
         
         mapView.setRegion(region, animated: true)
+    }
+    
+    @IBAction func showUserLocationAction(_ sender: UIButton)
+    {
+        showUserLoaction()
     }
     
 }
@@ -72,6 +79,11 @@ extension MapViewController: MKMapViewDelegate{
     
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
         print("mapViewDidFinishLoadingMap")
+        if isFirstEntry
+        {
+            isFirstEntry = false
+            showUserLoaction()
+        }
     }
     
     func mapViewDidFailLoadingMap(_ mapView: MKMapView, withError error: Error) {

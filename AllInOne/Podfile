@@ -7,6 +7,7 @@ target 'AllInOne' do
 
   # Pods for AllInOne
   pod 'SDWebImage'
+  pod 'ReachabilitySwift', '~> 4.0'
 
   target 'AllInOneTests' do
     inherit! :search_paths

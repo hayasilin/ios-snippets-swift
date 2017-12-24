@@ -12,9 +12,11 @@ class RestfulRequestManager{
     
     let session: URLSession = URLSession.shared
     
-    init() {
-        
-    }
+    static let sharedInstance: RestfulRequestManager = {
+        let instance = RestfulRequestManager()
+        // setup code
+        return instance
+    }()
     
     // GET METHOD
     func get(url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) throws

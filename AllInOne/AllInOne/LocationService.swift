@@ -87,8 +87,6 @@ public class LocationService: NSObject, CLLocationManagerDelegate{
             print("authorizedWhenInUse")
         case .authorizedAlways:
             print("authorizedAlways")
-        default:
-            break
         }
     }
     

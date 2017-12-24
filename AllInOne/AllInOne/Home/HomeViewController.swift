@@ -8,12 +8,15 @@
 
 import UIKit
 import SDWebImage
+import Reachability
 
 class HomeViewController: UIViewController{
 
     @IBOutlet weak var tableView: UITableView!
     
     var hotArticleList = [HotArticle]()
+    
+    let requestManager: RestfulRequestManager = RestfulRequestManager.sharedInstance
     
     override func viewDidLoad()
     {
@@ -22,16 +25,36 @@ class HomeViewController: UIViewController{
         let nib = UINib(nibName: "HomeTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "cell")
         
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(requestDataFromAPI), for: .valueChanged)
+        
         requestDataFromAPI()
+        
+        let reachability = Reachability()!
+        
+        reachability.whenReachable = { reachability in
+            if reachability.connection == .wifi {
+                print("Reachable via WiFi")
+            } else {
+                print("Reachable via Cellular")
+            }
+        }
+        reachability.whenUnreachable = { _ in
+            print("Not reachable")
+        }
+        
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Unable to start notifier")
+        }
     }
     
-    func requestDataFromAPI(){
-        
+    @objc func requestDataFromAPI()
+    {
         let apiString: String = "http://disp.cc/api/hot_text.json"
         
         let url: URL = URL(string: apiString)!
-        
-        let requestManager: RestfulRequestManager = RestfulRequestManager()
         
         try? requestManager.get(url: url, completionHandler: { data, response, error in
             
@@ -55,13 +78,16 @@ class HomeViewController: UIViewController{
                 }
                 else
                 {
-                    print("is not success")
+                    let alert = UIAlertController(title: "喔喔！", message: "資料取得失敗，請往下滑再試一次", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
                 }
             }
             
             let mainQueue = DispatchQueue.main
             mainQueue.async {
                 self.tableView.reloadData()
+                self.tableView.refreshControl?.endRefreshing()
             }
         })
     }
@@ -86,7 +112,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate{
         
         cell.titleLabel.text = hotArticle.title
         cell.descLabel.text = hotArticle.desc
-        cell.articleImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "placeholder.png") , options: SDWebImageOptions(rawValue: 0), completed: nil)
+        cell.articleImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "no_image") , options: SDWebImageOptions(rawValue: 0), completed: nil)
         
         return cell
     }
