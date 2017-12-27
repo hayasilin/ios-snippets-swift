@@ -63,6 +63,8 @@
 		0714981BB38B47F71F9245D5 /* Pods-AllInOneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AllInOneTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AllInOneTests/Pods-AllInOneTests.release.xcconfig"; sourceTree = "<group>"; };
 		4AB819DAA068D99AC45754AE /* Pods-AllInOneUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AllInOneUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AllInOneUITests/Pods-AllInOneUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5F28262368566F53FC7D712A /* Pods_AllInOneUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AllInOneUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		65FE4A431FF3A0E2005BCBD5 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		65FE4A441FF3A0EE005BCBD5 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		7621C403D1A1EFDD3096FD0B /* Pods_AllInOne.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AllInOne.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1EC1572C6A57FC36781E13A /* Pods-AllInOne.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AllInOne.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AllInOne/Pods-AllInOne.debug.xcconfig"; sourceTree = "<group>"; };
 		AC36D4F01FEE00F500BF94E6 /* AllInOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AllInOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -195,6 +197,8 @@
 				AC36D5491FEE226400BF94E6 /* HotArticle.swift */,
 				AC86E0CE1FEEAB2D00427C30 /* RestfulRequestManager.swift */,
 				ACA136F71FEF50CC0088B2CC /* LocationService.swift */,
+				65FE4A431FF3A0E2005BCBD5 /* Debug.xcconfig */,
+				65FE4A441FF3A0EE005BCBD5 /* Release.xcconfig */,
 			);
 			path = AllInOne;
 			sourceTree = "<group>";
@@ -634,6 +638,7 @@
 /* Begin XCBuildConfiguration section */
 		AC36D5191FEE00F500BF94E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 65FE4A431FF3A0E2005BCBD5 /* Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -691,6 +696,7 @@
 		};
 		AC36D51A1FEE00F500BF94E6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 65FE4A441FF3A0EE005BCBD5 /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -743,7 +749,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A1EC1572C6A57FC36781E13A /* Pods-AllInOne.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(IS_APP_ICON)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = G62233X968;
 				INFOPLIST_FILE = AllInOne/Info.plist;
@@ -760,7 +766,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 00BAFDAED9F36B83F128F30F /* Pods-AllInOne.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(IS_APP_ICON)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = G62233X968;
 				INFOPLIST_FILE = AllInOne/Info.plist;
