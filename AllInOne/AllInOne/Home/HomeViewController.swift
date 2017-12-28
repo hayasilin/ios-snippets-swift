@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SDWebImage
 import Reachability
 
 class HomeViewController: UIViewController{
@@ -114,15 +113,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HomeTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? HomeTableViewCell else{
+            fatalError("Could not dequeue a cell")
+        }
         
         let hotArticle: HotArticle = hotArticleList[indexPath.row]
-        let imageUrlString = hotArticle.img_list?.first
-        let imageUrl = URL(string: imageUrlString!)
-        
-        cell.titleLabel.text = hotArticle.title
-        cell.descLabel.text = hotArticle.desc
-        cell.articleImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "no_image") , options: SDWebImageOptions(rawValue: 0), completed: nil)
+        cell.update(with: hotArticle)
         
         return cell
     }
