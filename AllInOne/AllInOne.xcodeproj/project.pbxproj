@@ -158,6 +158,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		6516F8171FF50EEC00B1AC25 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				65FE4A431FF3A0E2005BCBD5 /* Debug.xcconfig */,
+				65FE4A441FF3A0EE005BCBD5 /* Release.xcconfig */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
 		93783D00FC7ECCE51E81F4B8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,6 +202,7 @@
 		AC36D4F21FEE00F500BF94E6 /* AllInOne */ = {
 			isa = PBXGroup;
 			children = (
+				6516F8171FF50EEC00B1AC25 /* Configurations */,
 				6516F8061FF4FB3700B1AC25 /* GoogleService-Info.plist */,
 				AC36D4F31FEE00F500BF94E6 /* AppDelegate.swift */,
 				AC36D4F51FEE00F500BF94E6 /* ViewController.swift */,
@@ -210,8 +220,6 @@
 				AC36D5491FEE226400BF94E6 /* HotArticle.swift */,
 				AC86E0CE1FEEAB2D00427C30 /* RestfulRequestManager.swift */,
 				ACA136F71FEF50CC0088B2CC /* LocationService.swift */,
-				65FE4A431FF3A0E2005BCBD5 /* Debug.xcconfig */,
-				65FE4A441FF3A0EE005BCBD5 /* Release.xcconfig */,
 				6516F8081FF4FDB100B1AC25 /* Schedule.swift */,
 			);
 			path = AllInOne;
