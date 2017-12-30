@@ -34,6 +34,14 @@
                         <action selector="torchOnOff:" destination="-1" eventType="valueChanged" id="t2A-RW-1BG"/>
                     </connections>
                 </switch>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FSs-ug-Q2W">
+                    <rect key="frame" x="33" y="188" width="102" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Vibriate device"/>
+                    <connections>
+                        <action selector="vibrateDevice:" destination="-1" eventType="touchUpInside" id="q9I-0q-VZe"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>

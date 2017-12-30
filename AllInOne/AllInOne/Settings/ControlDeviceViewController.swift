@@ -47,5 +47,10 @@ class ControlDeviceViewController: UIViewController {
         }
     }
     
+    @IBAction func vibrateDevice(_ sender: UIButton)
+    {
+        AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
+    }
+    
 
 }
