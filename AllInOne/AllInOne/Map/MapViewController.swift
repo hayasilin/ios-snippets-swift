@@ -9,6 +9,8 @@
 import UIKit
 import MapKit
 
+let apiRequestUrl = "https://map.yahooapis.jp/search/local/V1/localSearch?appid=dj0zaiZpPUhhdVJPbm9hMnVUMSZzPWNvbnN1bWVyc2VjcmV0Jng9ZmE-&device=mobile&group=gid&sort=score&output=json&gc=01&query=%E3%83%8F%E3%83%B3%E3%83%90%E3%83%BC%E3%82%AC%E3%83%BC&lat=35.7020691&lon=139.7753269&dist=3"
+
 class MapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
@@ -49,6 +51,10 @@ class MapViewController: UIViewController {
     func showUserLoaction()
     {
         let userLocation: MKUserLocation = mapView.userLocation
+        
+        print("user lat = \(userLocation.coordinate.latitude)")
+        print("user lon = \(userLocation.coordinate.longitude)")
+        
         var region = MKCoordinateRegion()
         region.center = userLocation.coordinate
         region = MKCoordinateRegionMakeWithDistance(region.center, 1000, 1000)
