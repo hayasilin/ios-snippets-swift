@@ -15,11 +15,15 @@ class ScheduleAddViewController: UIViewController {
     @IBOutlet weak var descriptionTextField: UITextField!
     
     var scheduleRef: DatabaseReference = Database.database().reference().ref.child("schedule")
+    var createTime: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/M/d H:m:s"
+        createTime = formatter.string(from: Date())
+        print("now time = \(createTime)")
     }
     
     func saveSchedule()
@@ -30,7 +34,8 @@ class ScheduleAddViewController: UIViewController {
         if title != "" && description != "" {
             let newSchedule: Dictionary<String, AnyObject> = [
                 "title": title as AnyObject,
-                "description": description as AnyObject
+                "description": description as AnyObject,
+                "create_time": createTime as AnyObject
             ]
             
             createNewSchedule(schedule: newSchedule)
