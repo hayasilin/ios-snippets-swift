@@ -71,21 +71,37 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath.row)
         
-        if indexPath.section == 1 {
-            if indexPath.row == 0 {
-                print("send mail")
-                let to = "kuanwei.hayasi@gmail.com"
-                let subject = "問題回報/意見反應"
-                
-                let mail = "mailto:\(to)?subject=\(subject)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-                
-                let url = URL(string: mail!)
-                UIApplication.shared.open(url!, options: [:], completionHandler: nil)
-            }
-            else if indexPath.row == 1{
-                let instructionVC = InstructionViewController()
-                self.navigationController?.pushViewController(instructionVC, animated: true)
-            }
+        let cell = tableView.cellForRow(at: indexPath)
+        checkChosenCell(cellTitle: (cell?.textLabel?.text)!)
+    }
+    
+    func checkChosenCell(cellTitle: String) {
+        
+        if cellTitle == "QRCode scan"
+        {
+            let qrCodeScanVC = QRCodeScanViewController()
+            self.navigationController?.pushViewController(qrCodeScanVC, animated: true)
+        }
+        else if cellTitle == "Control device"
+        {
+            let controlDeviceVC = ControlDeviceViewController()
+            self.navigationController?.pushViewController(controlDeviceVC, animated: true)
+        }
+        else if cellTitle == "Instruction"
+        {
+            let instructionVC = InstructionViewController()
+            self.navigationController?.pushViewController(instructionVC, animated: true)
+        }
+        else if cellTitle == "Contact me"
+        {
+            print("send mail")
+            let to = "kuanwei.hayasi@gmail.com"
+            let subject = "問題回報/意見反應"
+            
+            let mail = "mailto:\(to)?subject=\(subject)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            
+            let url = URL(string: mail!)
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         }
     }
 }

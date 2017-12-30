@@ -9,7 +9,9 @@
 import UIKit
 import Reachability
 
-class HomeViewController: UIViewController{
+let apiString: String = "https://disp.cc/api/hot_text.json"
+
+class HomeViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -61,8 +63,6 @@ class HomeViewController: UIViewController{
     
     @objc func requestDataFromAPI()
     {
-        let apiString: String = "http://disp.cc/api/hot_text.json"
-        
         let url: URL = URL(string: apiString)!
         
         try? requestManager.get(url: url, completionHandler: { data, response, error in

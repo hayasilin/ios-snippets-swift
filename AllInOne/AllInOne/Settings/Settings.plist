@@ -8,6 +8,11 @@
 		<string>Phone</string>
 		<string>Information</string>
 	</array>
+	<key>Features</key>
+	<array>
+		<string>QRCode scan</string>
+		<string>Control device</string>
+	</array>
 	<key>Feed back</key>
 	<array>
 		<string>Contact me</string>
