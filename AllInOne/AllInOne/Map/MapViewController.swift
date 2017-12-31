@@ -17,6 +17,9 @@ class MapViewController: UIViewController {
     let locationService = LocationService()
     var isFirstEntry = true
     
+    let requestManager: RestfulRequestManager = RestfulRequestManager.sharedInstance
+    var shops = [Shop]()
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -37,6 +40,59 @@ class MapViewController: UIViewController {
         createLocationService()
         
         showUserLoaction()
+        
+        requestDataFromAPI()
+    }
+    
+    func requestDataFromAPI()
+    {
+        let url = URL(string: apiRequestUrl)
+        
+        try? requestManager.get(url: url!, completionHandler: { (data, urlResponse, error) in
+            
+            let responseObj = try? JSONSerialization.jsonObject(with: data!) as! [String : AnyObject]
+            print("responseObj = \(String(describing: responseObj))")
+            
+            if let arrJSON = responseObj {
+                
+                if let value = arrJSON["ResultInfo"]
+                {
+                    if value["Status"] as! Int == 200
+                    {
+                        for item in arrJSON["Feature"] as! [AnyObject]
+                        {
+                            print("start parsing")
+                            var shop = Shop()
+                            shop.gid = item["Gid"] as? String
+                            shop.name = item["Name"] as? String
+                            
+                            var geometry = item["Geometry"] as! [String: String]
+                            let coordinates = geometry["Coordinates"]
+                            let components = coordinates?.components(separatedBy: ",")
+                            shop.lat = Double(components![1])
+                            shop.lon = Double(components![0])
+                            
+                            
+                            var property = item["Property"] as! [String: AnyObject]
+                            shop.yomi = property["Yomi"] as? String
+                            shop.tel = property["Tel1"] as? String
+                            shop.address = property["Address"] as? String
+                            
+                            
+                            
+                            self.shops.append(shop)
+                        }
+                    }
+                }
+                else
+                {
+                    let alert = UIAlertController(title: "喔喔！", message: "資料取得失敗，請往下滑再試一次", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+        })
+        
     }
     
     func createLocationService()

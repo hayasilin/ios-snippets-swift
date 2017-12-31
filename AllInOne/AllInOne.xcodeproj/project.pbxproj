@@ -47,6 +47,7 @@
 		ACA136F51FEF4DE60088B2CC /* InstructionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA136F31FEF4DE60088B2CC /* InstructionViewController.swift */; };
 		ACA136F61FEF4DE60088B2CC /* InstructionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ACA136F41FEF4DE60088B2CC /* InstructionViewController.xib */; };
 		ACA136F81FEF50CC0088B2CC /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA136F71FEF50CC0088B2CC /* LocationService.swift */; };
+		ACA1C2111FF8750F00307B52 /* Shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA1C2101FF8750F00307B52 /* Shop.swift */; };
 		ED891551507B7A8700935000 /* Pods_AllInOneTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CF3148F81876E0E8452EEB /* Pods_AllInOneTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -121,6 +122,7 @@
 		ACA136F31FEF4DE60088B2CC /* InstructionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionViewController.swift; sourceTree = "<group>"; };
 		ACA136F41FEF4DE60088B2CC /* InstructionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InstructionViewController.xib; sourceTree = "<group>"; };
 		ACA136F71FEF50CC0088B2CC /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		ACA1C2101FF8750F00307B52 /* Shop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shop.swift; sourceTree = "<group>"; };
 		BC457F5AB43D03C54F79CACB /* Pods-AllInOneUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AllInOneUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AllInOneUITests/Pods-AllInOneUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		CFC3FBC77B36213AC35B8F33 /* Pods-AllInOneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AllInOneTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AllInOneTests/Pods-AllInOneTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -269,6 +271,7 @@
 			children = (
 				AC36D5381FEE147000BF94E6 /* MapViewController.swift */,
 				AC36D5391FEE147000BF94E6 /* MapViewController.xib */,
+				ACA1C2101FF8750F00307B52 /* Shop.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -636,6 +639,7 @@
 				ACA136F81FEF50CC0088B2CC /* LocationService.swift in Sources */,
 				AC36D54D1FEE4BB600BF94E6 /* DetailViewController.swift in Sources */,
 				AC36D52C1FEE0B6B00BF94E6 /* HomeViewController.swift in Sources */,
+				ACA1C2111FF8750F00307B52 /* Shop.swift in Sources */,
 				AC8C06831FF7DD7000018CFB /* ControlDeviceViewController.swift in Sources */,
 				6516F8091FF4FDB100B1AC25 /* Schedule.swift in Sources */,
 				AC36D53E1FEE153700BF94E6 /* SettingsViewController.swift in Sources */,
