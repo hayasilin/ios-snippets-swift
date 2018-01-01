@@ -10,7 +10,15 @@ import Foundation
 import UIKit
 import CoreLocation
 
+@objc
+protocol LocationServiceProtocol {
+    
+    @objc optional func lsDidUpdateLocation(_ location: CLLocation)
+}
+
 public class LocationService: NSObject, CLLocationManagerDelegate{
+    
+    var delegate: LocationServiceProtocol?
     
     // 位置情報使用拒否Notification
     public let LSAuthDeniedNotification = "LSAuthDeniedNotification"
@@ -94,6 +102,9 @@ public class LocationService: NSObject, CLLocationManagerDelegate{
     {
         cllm.stopUpdatingLocation()
         
+        let lastLocation = locations.last!
+        
+        delegate?.lsDidUpdateLocation!(lastLocation)
     }
     
     public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

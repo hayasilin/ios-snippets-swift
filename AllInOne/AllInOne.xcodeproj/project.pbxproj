@@ -50,6 +50,7 @@
 		ACA1C2111FF8750F00307B52 /* Shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA1C2101FF8750F00307B52 /* Shop.swift */; };
 		ACA1C2151FF9E5F700307B52 /* YahooLocalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA1C2141FF9E5F700307B52 /* YahooLocalManager.swift */; };
 		ACA481391FFA484D00BF4490 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA481381FFA484D00BF4490 /* APIService.swift */; };
+		ACA4813B1FFA543500BF4490 /* ShopListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA4813A1FFA543500BF4490 /* ShopListViewController.swift */; };
 		ED891551507B7A8700935000 /* Pods_AllInOneTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CF3148F81876E0E8452EEB /* Pods_AllInOneTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -127,6 +128,7 @@
 		ACA1C2101FF8750F00307B52 /* Shop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shop.swift; sourceTree = "<group>"; };
 		ACA1C2141FF9E5F700307B52 /* YahooLocalManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YahooLocalManager.swift; sourceTree = "<group>"; };
 		ACA481381FFA484D00BF4490 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		ACA4813A1FFA543500BF4490 /* ShopListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopListViewController.swift; sourceTree = "<group>"; };
 		BC457F5AB43D03C54F79CACB /* Pods-AllInOneUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AllInOneUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AllInOneUITests/Pods-AllInOneUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		CFC3FBC77B36213AC35B8F33 /* Pods-AllInOneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AllInOneTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AllInOneTests/Pods-AllInOneTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -278,6 +280,7 @@
 				AC36D5381FEE147000BF94E6 /* MapViewController.swift */,
 				AC36D5391FEE147000BF94E6 /* MapViewController.xib */,
 				ACA1C2101FF8750F00307B52 /* Shop.swift */,
+				ACA4813A1FFA543500BF4490 /* ShopListViewController.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -663,6 +666,7 @@
 				AC36D5361FEE101F00BF94E6 /* HomeTableViewCell.swift in Sources */,
 				AC36D4FC1FEE00F500BF94E6 /* AllInOne.xcdatamodeld in Sources */,
 				AC36D54A1FEE226400BF94E6 /* HotArticle.swift in Sources */,
+				ACA4813B1FFA543500BF4490 /* ShopListViewController.swift in Sources */,
 				AC36D5291FEE0A5100BF94E6 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
