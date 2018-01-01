@@ -39,7 +39,7 @@ public struct Shop: CustomStringConvertible
             string += "Yomi: \(String(describing: yomi))\n"
             string += "Tel: \(String(describing: tel))\n"
             string += "Address: \(String(describing: address))\n"
-            string += "Lat & Lon: (\(String(describing: lat)), \(lon))\n"
+            string += "Lat & Lon: (\(String(describing: lat)), \(String(describing: lon)))\n"
             string += "CatchCopy: \(String(describing: catchCopy))\n"
             string += "hasCoupon: \(hasCoupon)\n"
             string += "Station: \(String(describing: station))\n"
