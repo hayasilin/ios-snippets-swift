@@ -18,6 +18,9 @@ class MapViewController: UIViewController{
     let apiService: APIServiceProtocol = APIService()
     var allShops = [Shop]()
     
+    var rollOutView: UIView!
+    var rollOutViewHeight = CGFloat()
+    var rollOutViewMargin = CGFloat()
     
     override func viewDidLoad()
     {
@@ -36,6 +39,8 @@ class MapViewController: UIViewController{
             print("User doesn't have LINE App")
         }
         
+        locationService.delegate = self
+        
         createLocationService()
         
         showUserLoaction()
@@ -43,6 +48,67 @@ class MapViewController: UIViewController{
         apiService.fetchShopData { [weak self] (success, shops, error) in
             self?.allShops = shops
             print("allShops = \(String(describing: self?.allShops))")
+        }
+        
+        rollOutViewHeight = 300;
+        rollOutViewMargin = 100;
+        
+        createUI()
+    }
+    
+    func createUI()
+    {
+        rollOutView = UIView(frame: CGRect(x: 0, y: UIScreen.main.bounds.size.height, width: UIScreen.main.bounds.size.width, height: self.rollOutViewHeight))
+        rollOutView.backgroundColor = UIColor.blue
+        view.addSubview(rollOutView)
+        
+        let swipeDownGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(toggleViewDown))
+        swipeDownGesture.direction = UISwipeGestureRecognizerDirection.down
+        rollOutView.addGestureRecognizer(swipeDownGesture)
+    }
+    
+    @objc func toggleViewUp()
+    {
+        var frame = rollOutView.frame
+        
+        if rollOutView.frame.origin.y == UIScreen.main.bounds.size.height
+        {
+            frame.origin.y = UIScreen.main.bounds.size.height - self.rollOutViewHeight
+            
+            //讓mapView往上移一點
+            var center: CLLocationCoordinate2D = mapView.centerCoordinate
+            center.latitude -= mapView.region.span.latitudeDelta * 0.10
+            mapView.setCenter(center, animated: true)
+        }
+        else
+        {
+            //Do nothing
+        }
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.rollOutView.frame = frame
+        }) { (finished) in
+            
+        }
+    }
+    
+    @objc func toggleViewDown()
+    {
+        var frame = rollOutView.frame
+        
+        if rollOutView.frame.origin.y == UIScreen.main.bounds.size.height - rollOutViewMargin
+        {
+            //Do nothing
+        }
+        else
+        {
+            frame.origin.y = UIScreen.main.bounds.size.height
+        }
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.rollOutView.frame = frame
+        }) { (finished) in
+            
         }
     }
     
@@ -96,6 +162,7 @@ extension MapViewController: MKMapViewDelegate{
         {
             isFirstEntry = false
             showUserLoaction()
+            
         }
     }
     
@@ -125,5 +192,13 @@ extension MapViewController: MKMapViewDelegate{
     
     func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
         print("didChange")
+    }
+}
+
+extension MapViewController: LocationServiceProtocol {
+    
+    func lsDidUpdateLocation(_ location: CLLocation)
+    {
+        perform(#selector(toggleViewUp), with: nil, afterDelay: 1)
     }
 }
