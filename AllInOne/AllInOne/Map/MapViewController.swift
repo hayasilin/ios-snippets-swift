@@ -57,6 +57,9 @@ class MapViewController: UIViewController {
                 
                 if let value = arrJSON["ResultInfo"]
                 {
+                    let totalCount = value["Total"] as? String
+                    print("total = \(String(describing: totalCount))")
+                    
                     if value["Status"] as! Int == 200
                     {
                         for item in arrJSON["Feature"] as! [AnyObject]
@@ -66,22 +69,39 @@ class MapViewController: UIViewController {
                             shop.gid = item["Gid"] as? String
                             shop.name = item["Name"] as? String
                             
-                            var geometry = item["Geometry"] as! [String: String]
+                            let geometry = item["Geometry"] as! [String: String]
                             let coordinates = geometry["Coordinates"]
                             let components = coordinates?.components(separatedBy: ",")
                             shop.lat = Double(components![1])
                             shop.lon = Double(components![0])
                             
-                            
-                            var property = item["Property"] as! [String: AnyObject]
+                            let property = item["Property"] as! [String: AnyObject]
                             shop.yomi = property["Yomi"] as? String
                             shop.tel = property["Tel1"] as? String
                             shop.address = property["Address"] as? String
+                            shop.catchCopy = property["CatchCopy"] as? String
+                            shop.photoUrl = property["LeadImage"] as? String
                             
-                            
-                            
+                            if let stations = property["Station"] as? [[String: String]] {
+                                var line = ""
+                                let lineString = stations[0]
+                                let lineName = lineString["Railway"]
+                                let lines = lineName?.components(separatedBy: "/")
+                                line = lines![0]
+                                
+                                let stationDict = stations[0]
+                                if let stationName = stationDict["Name"] {
+                                    shop.station = "\(line) \(stationName)"
+                                }
+                                else
+                                {
+                                    shop.station = "\(line)"
+                                }
+                            }
+ 
                             self.shops.append(shop)
                         }
+                        
                     }
                 }
                 else

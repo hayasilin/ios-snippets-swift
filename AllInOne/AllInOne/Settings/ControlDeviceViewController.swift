@@ -11,9 +11,24 @@ import AVFoundation
 
 class ControlDeviceViewController: UIViewController {
 
+    var shakeAlert: UIAlertController!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+    }
+    
+    override func motionBegan(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if motion == .motionShake
+        {
+            shakeAlert = UIAlertController(title: "搖晃中", message: "裝置搖晃中", preferredStyle: .alert)
+            self.present(shakeAlert, animated: true, completion: nil)
+            perform(#selector(closeMotionShakeAlert), with: nil, afterDelay: 2.0)
+        }
+    }
+    
+    @objc func closeMotionShakeAlert() {
+        shakeAlert.dismiss(animated: true, completion: nil)
     }
 
     @IBAction func torchOnOff(_ sender: UISwitch)
