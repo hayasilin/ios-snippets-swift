@@ -19,8 +19,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        #if DEBUG
+            print("is debug")
+        #else
+            Fabric.with([Crashlytics.self])
+            print("is release")
+        #endif
+        
         FirebaseApp.configure()
-        Fabric.with([Crashlytics.self])
+        
         
         window = UIWindow(frame: UIScreen.main.bounds);
         let mainVC = MainViewController();

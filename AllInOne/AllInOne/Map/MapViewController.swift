@@ -22,12 +22,17 @@ class MapViewController: UIViewController{
     var rollOutViewHeight = CGFloat()
     var rollOutViewMargin = CGFloat()
     
+    var shopListVC = ShopListViewController()
+    var tabBarHeight: CGFloat!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
         self.tabBarController?.tabBar.isTranslucent = false
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        tabBarHeight = (tabBarController?.tabBar.frame.size.height)!
         
         navigationItem.title = "Map";
         
@@ -54,6 +59,7 @@ class MapViewController: UIViewController{
         rollOutViewMargin = 100;
         
         createUI()
+        createShopListUI()
     }
     
     func createUI()
@@ -67,13 +73,21 @@ class MapViewController: UIViewController{
         rollOutView.addGestureRecognizer(swipeDownGesture)
     }
     
+    func createShopListUI()
+    {
+        shopListVC.view.frame = rollOutView.bounds
+        rollOutView.addSubview(shopListVC.view)
+    }
+    
     @objc func toggleViewUp()
     {
         var frame = rollOutView.frame
         
+        print("tab bar height = \(String(describing: tabBarHeight))")
+        print("frame = \(frame)")
         if rollOutView.frame.origin.y == UIScreen.main.bounds.size.height
         {
-            frame.origin.y = UIScreen.main.bounds.size.height - self.rollOutViewHeight
+            frame.origin.y = UIScreen.main.bounds.size.height - self.rollOutViewHeight - tabBarHeight
             
             //讓mapView往上移一點
             var center: CLLocationCoordinate2D = mapView.centerCoordinate
@@ -86,9 +100,11 @@ class MapViewController: UIViewController{
         }
         
         UIView.animate(withDuration: 0.3, animations: {
+            print("frame = \(frame)")
             self.rollOutView.frame = frame
         }) { (finished) in
-            
+            self.shopListVC.view.removeFromSuperview()
+            self.rollOutView.addSubview(self.shopListVC.view)
         }
     }
     
@@ -108,7 +124,8 @@ class MapViewController: UIViewController{
         UIView.animate(withDuration: 0.3, animations: {
             self.rollOutView.frame = frame
         }) { (finished) in
-            
+            self.shopListVC.view.removeFromSuperview()
+            self.rollOutView.addSubview(self.shopListVC.view)
         }
     }
     
@@ -199,6 +216,6 @@ extension MapViewController: LocationServiceProtocol {
     
     func lsDidUpdateLocation(_ location: CLLocation)
     {
-        perform(#selector(toggleViewUp), with: nil, afterDelay: 1)
+        perform(#selector(toggleViewUp), with: nil, afterDelay: 1.5)
     }
 }

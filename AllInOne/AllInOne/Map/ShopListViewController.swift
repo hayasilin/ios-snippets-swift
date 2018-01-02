@@ -12,6 +12,9 @@ class ShopListViewController: UIViewController {
 
     var tableView: UITableView!
     
+    let apiService: APIServiceProtocol = APIService()
+    var allShops = [Shop]()
+    
     override func loadView()
     {
         super.loadView()
@@ -31,13 +34,27 @@ class ShopListViewController: UIViewController {
         tableView.separatorStyle = .none
 //        tableView.backgroundColor = UIColor(red: 38.0/255.0, green: 38.0/255.0, blue: 38.0/255.0, alpha: 1)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
+        getShopData()
     }
     
     override func viewWillLayoutSubviews()
     {
         super.viewWillLayoutSubviews()
         
-        tableView.frame = CGRect(x: 0, y: 100, width: view.frame.width, height: 250)
+        tableView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 300)
+    }
+    
+    func getShopData()
+    {
+        apiService.fetchShopData { [weak self] (success, shops, error) in
+            self?.allShops = shops
+            print("allShops = \(String(describing: self?.allShops))")
+            
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
     }
 }
 
@@ -48,14 +65,21 @@ extension ShopListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ["1", "2", "3"].count
+        return allShops.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
-        cell.textLabel?.text = "123"
+        let shop = allShops[indexPath.row]
+        
+        cell.textLabel?.text = shop.name
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        print("indexPath = \(indexPath.row)")
     }
 }
