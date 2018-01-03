@@ -27,24 +27,11 @@
                         <outlet property="delegate" destination="-1" id="aCQ-aF-pMA"/>
                     </connections>
                 </mapView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZHc-P3-GLi">
-                    <rect key="frame" x="299" y="587" width="60" height="60"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="60" id="9Fw-md-M1E"/>
-                        <constraint firstAttribute="height" constant="60" id="Quq-fC-xUq"/>
-                    </constraints>
-                    <state key="normal" image="user_location_button"/>
-                    <connections>
-                        <action selector="showUserLocationAction:" destination="-1" eventType="touchUpInside" id="55H-cp-gd1"/>
-                    </connections>
-                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ZHc-P3-GLi" secondAttribute="trailing" constant="16" id="7hV-Rl-v1j"/>
                 <constraint firstItem="p4F-mj-sYH" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="KmV-8x-MlW"/>
                 <constraint firstItem="p4F-mj-sYH" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Nqc-dz-jMN"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="ZHc-P3-GLi" secondAttribute="bottom" constant="20" id="aEn-IM-F05"/>
                 <constraint firstItem="p4F-mj-sYH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="nqp-93-A6H"/>
                 <constraint firstItem="p4F-mj-sYH" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="rew-nI-88p"/>
             </constraints>
@@ -52,7 +39,4 @@
             <point key="canvasLocation" x="34.5" y="53.5"/>
         </view>
     </objects>
-    <resources>
-        <image name="user_location_button" width="300" height="300"/>
-    </resources>
 </document>

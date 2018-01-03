@@ -15,6 +15,8 @@
 		6516F80D1FF5028400B1AC25 /* ScheduleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6516F80B1FF5028400B1AC25 /* ScheduleTableViewCell.xib */; };
 		6516F8141FF5041400B1AC25 /* ScheduleAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6516F8121FF5041400B1AC25 /* ScheduleAddViewController.swift */; };
 		6516F8151FF5041400B1AC25 /* ScheduleAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6516F8131FF5041400B1AC25 /* ScheduleAddViewController.xib */; };
+		65E0D3DD1FFF2A3E003B781E /* ShopListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E0D3DB1FFF2A3E003B781E /* ShopListTableViewCell.swift */; };
+		65E0D3DE1FFF2A3E003B781E /* ShopListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65E0D3DC1FFF2A3E003B781E /* ShopListTableViewCell.xib */; };
 		AC36D4F41FEE00F500BF94E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC36D4F31FEE00F500BF94E6 /* AppDelegate.swift */; };
 		AC36D4F61FEE00F500BF94E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC36D4F51FEE00F500BF94E6 /* ViewController.swift */; };
 		AC36D4F91FEE00F500BF94E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC36D4F71FEE00F500BF94E6 /* Main.storyboard */; };
@@ -83,6 +85,8 @@
 		6516F80B1FF5028400B1AC25 /* ScheduleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScheduleTableViewCell.xib; sourceTree = "<group>"; };
 		6516F8121FF5041400B1AC25 /* ScheduleAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleAddViewController.swift; sourceTree = "<group>"; };
 		6516F8131FF5041400B1AC25 /* ScheduleAddViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScheduleAddViewController.xib; sourceTree = "<group>"; };
+		65E0D3DB1FFF2A3E003B781E /* ShopListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopListTableViewCell.swift; sourceTree = "<group>"; };
+		65E0D3DC1FFF2A3E003B781E /* ShopListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShopListTableViewCell.xib; sourceTree = "<group>"; };
 		65FE4A431FF3A0E2005BCBD5 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		65FE4A441FF3A0EE005BCBD5 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		7621C403D1A1EFDD3096FD0B /* Pods_AllInOne.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AllInOne.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -281,6 +285,8 @@
 				AC36D5391FEE147000BF94E6 /* MapViewController.xib */,
 				ACA1C2101FF8750F00307B52 /* Shop.swift */,
 				ACA4813A1FFA543500BF4490 /* ShopListViewController.swift */,
+				65E0D3DB1FFF2A3E003B781E /* ShopListTableViewCell.swift */,
+				65E0D3DC1FFF2A3E003B781E /* ShopListTableViewCell.xib */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -448,6 +454,7 @@
 				AC36D5431FEE157400BF94E6 /* ScheduleViewController.xib in Resources */,
 				ACA136F61FEF4DE60088B2CC /* InstructionViewController.xib in Resources */,
 				AC8C06801FF7D15100018CFB /* QRCodeScanViewController.xib in Resources */,
+				65E0D3DE1FFF2A3E003B781E /* ShopListTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,6 +659,7 @@
 				AC8C06831FF7DD7000018CFB /* ControlDeviceViewController.swift in Sources */,
 				6516F8091FF4FDB100B1AC25 /* Schedule.swift in Sources */,
 				AC36D53E1FEE153700BF94E6 /* SettingsViewController.swift in Sources */,
+				65E0D3DD1FFF2A3E003B781E /* ShopListTableViewCell.swift in Sources */,
 				AC86E0CF1FEEAB2D00427C30 /* RestfulRequestManager.swift in Sources */,
 				ACA1C2151FF9E5F700307B52 /* YahooLocalManager.swift in Sources */,
 				6516F80C1FF5028400B1AC25 /* ScheduleTableViewCell.swift in Sources */,
