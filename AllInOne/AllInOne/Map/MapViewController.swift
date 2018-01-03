@@ -11,12 +11,14 @@ import MapKit
 
 class MapViewController: UIViewController{
 
+    //UI
     @IBOutlet weak var mapView: MKMapView!
+    
+    var myLocationButton: UIButton!
+    var filterButton: UIButton!
+    
     let locationService = LocationService()
     var isFirstEntry = true
-    
-    let apiService: APIServiceProtocol = APIService()
-    var allShops = [Shop]()
     
     var rollOutView: UIView!
     var rollOutViewHeight = CGFloat()
@@ -24,6 +26,12 @@ class MapViewController: UIViewController{
     
     var shopListVC = ShopListViewController()
     var tabBarHeight: CGFloat!
+    
+    var selectedPin: MKPointAnnotation!
+    
+    //Data
+    let apiService: APIServiceProtocol = APIService()
+    var allShops = [Shop]()
     
     override func viewDidLoad()
     {
@@ -53,6 +61,14 @@ class MapViewController: UIViewController{
         apiService.fetchShopData { [weak self] (success, shops, error) in
             self?.allShops = shops
             print("allShops = \(String(describing: self?.allShops))")
+            
+            for shop in shops {
+                let ann = MKPointAnnotation()
+                ann.coordinate = CLLocationCoordinate2DMake(shop.lat!, shop.lon!)
+                ann.title = shop.name
+                ann.subtitle = shop.address
+                self?.mapView.addAnnotation(ann)
+            }
         }
         
         rollOutViewHeight = 300;
@@ -60,6 +76,15 @@ class MapViewController: UIViewController{
         
         createUI()
         createShopListUI()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
+    {
+        if filterButton.isHidden
+        {
+            toggleViewDown()
+            filterButton.isHidden = false
+        }
     }
     
     func createUI()
@@ -71,6 +96,24 @@ class MapViewController: UIViewController{
         let swipeDownGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(toggleViewDown))
         swipeDownGesture.direction = UISwipeGestureRecognizerDirection.down
         rollOutView.addGestureRecognizer(swipeDownGesture)
+        
+        myLocationButton = UIButton(frame: CGRect(x: UIScreen.main.bounds.maxX - 68, y: UIScreen.main.bounds.size.height - 120, width: 52, height: 52))
+        let locationImage = UIImage(named: "user_location_button")
+        myLocationButton.setImage(locationImage, for: .normal)
+        myLocationButton.addTarget(self, action: #selector(showUserLoaction), for: .touchUpInside)
+        view.addSubview(myLocationButton)
+        
+        filterButton = UIButton(frame: CGRect(x: 16, y: UIScreen.main.bounds.size.height - self.rollOutViewHeight - 80, width: 52, height: 52))
+        let filterImage = UIImage(named: "filter_button")
+        filterButton.setImage(filterImage, for: .normal)
+        filterButton.addTarget(self, action: #selector(doFilterAction), for: .touchUpInside)
+        view.addSubview(filterButton)
+        filterButton.isHidden = true
+    }
+    
+    @objc func doFilterAction()
+    {
+        toggleViewUp()
     }
     
     func createShopListUI()
@@ -82,12 +125,16 @@ class MapViewController: UIViewController{
     @objc func toggleViewUp()
     {
         var frame = rollOutView.frame
+        var myLocationButtonFrame = myLocationButton.frame
+        var filterButtonFrame = filterButton.frame
         
-        print("tab bar height = \(String(describing: tabBarHeight))")
-        print("frame = \(frame)")
         if rollOutView.frame.origin.y == UIScreen.main.bounds.size.height
         {
-            frame.origin.y = UIScreen.main.bounds.size.height - self.rollOutViewHeight - tabBarHeight
+            frame.origin.y = UIScreen.main.bounds.size.height - rollOutViewHeight - tabBarHeight
+            myLocationButtonFrame.origin.y = UIScreen.main.bounds.size.height - rollOutViewHeight - tabBarHeight - 80
+            filterButtonFrame.origin.y = UIScreen.main.bounds.size.height - rollOutViewHeight - tabBarHeight - 80
+            
+            filterButton.isHidden = true
             
             //讓mapView往上移一點
             var center: CLLocationCoordinate2D = mapView.centerCoordinate
@@ -100,8 +147,9 @@ class MapViewController: UIViewController{
         }
         
         UIView.animate(withDuration: 0.3, animations: {
-            print("frame = \(frame)")
             self.rollOutView.frame = frame
+            self.myLocationButton.frame = myLocationButtonFrame
+            self.filterButton.frame = filterButtonFrame
         }) { (finished) in
             self.shopListVC.view.removeFromSuperview()
             self.rollOutView.addSubview(self.shopListVC.view)
@@ -111,6 +159,8 @@ class MapViewController: UIViewController{
     @objc func toggleViewDown()
     {
         var frame = rollOutView.frame
+        var myLocationButtonFrame = myLocationButton.frame
+        var filterButtonFrame = filterButton.frame
         
         if rollOutView.frame.origin.y == UIScreen.main.bounds.size.height - rollOutViewMargin
         {
@@ -119,10 +169,14 @@ class MapViewController: UIViewController{
         else
         {
             frame.origin.y = UIScreen.main.bounds.size.height
+            myLocationButtonFrame.origin.y = UIScreen.main.bounds.size.height - 120
+            filterButtonFrame.origin.y = UIScreen.main.bounds.size.height - 120
         }
         
         UIView.animate(withDuration: 0.3, animations: {
             self.rollOutView.frame = frame
+            self.myLocationButton.frame = myLocationButtonFrame
+            self.filterButton.frame = filterButtonFrame
         }) { (finished) in
             self.shopListVC.view.removeFromSuperview()
             self.rollOutView.addSubview(self.shopListVC.view)
@@ -138,25 +192,30 @@ class MapViewController: UIViewController{
         mapView.showsPointsOfInterest = true
     }
     
-    func showUserLoaction()
+    func moveMapViewUp()
     {
-        let userLocation: MKUserLocation = mapView.userLocation
-        
-        print("user lat = \(userLocation.coordinate.latitude)")
-        print("user lon = \(userLocation.coordinate.longitude)")
-        
-        var region = MKCoordinateRegion()
-        region.center = userLocation.coordinate
-        region = MKCoordinateRegionMakeWithDistance(region.center, 1000, 1000)
-        
-        mapView.setRegion(region, animated: true)
+        var center = mapView.userLocation.coordinate
+        center.latitude -= mapView.region.span.latitudeDelta * 0.10
+        mapView.setCenter(center, animated: true)
     }
     
-    @IBAction func showUserLocationAction(_ sender: UIButton)
+    @objc func showUserLoaction()
     {
-        showUserLoaction()
+        
+            let userLocation: MKUserLocation = mapView.userLocation
+            
+            var region = MKCoordinateRegion()
+            region.center = userLocation.coordinate
+            region = MKCoordinateRegionMakeWithDistance(region.center, 2000, 2000)
+            
+            mapView.setRegion(region, animated: true)
+            
+//            if filterButton.isHidden
+//            {
+//                moveMapViewUp()
+//            }
+//        }
     }
-    
 }
 
 extension MapViewController: MKMapViewDelegate{
@@ -184,31 +243,31 @@ extension MapViewController: MKMapViewDelegate{
     }
     
     func mapViewDidFailLoadingMap(_ mapView: MKMapView, withError error: Error) {
-        print("mapViewDidFailLoadingMap")
+//        print("mapViewDidFailLoadingMap")
     }
     
     func mapViewWillStartRenderingMap(_ mapView: MKMapView) {
-        print("mapViewWillStartRenderingMap")
+//        print("mapViewWillStartRenderingMap")
     }
     
     func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
-        print("mapViewDidFinishRenderingMap")
+//        print("mapViewDidFinishRenderingMap")
     }
     
     func mapViewWillStartLocatingUser(_ mapView: MKMapView) {
-        print("mapViewWillStartLocatingUser")
+//        print("mapViewWillStartLocatingUser")
     }
     
     func mapViewDidStopLocatingUser(_ mapView: MKMapView) {
-        print("mapViewDidStopLocatingUser")
+//        print("mapViewDidStopLocatingUser")
     }
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        print("didUpdate")
+//        print("didUpdate")
     }
     
     func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
-        print("didChange")
+//        print("didChange")
     }
 }
 
