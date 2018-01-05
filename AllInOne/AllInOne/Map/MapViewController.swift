@@ -100,6 +100,7 @@ class MapViewController: UIViewController{
 
     func createShopListUI()
     {
+        shopListVC.delegate = self
         shopListVC.view.frame = rollOutView.bounds
         rollOutView.addSubview(shopListVC.view)
     }
@@ -248,17 +249,51 @@ extension MapViewController: MKMapViewDelegate{
 //        print("didChange")
     }
 
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?
+    {
+        if annotation is MKUserLocation
+        {
+            return nil
+        }
+
+        let reusedID = "pin"
+
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reusedID) as? MKPinAnnotationView
+
+        if pinView == nil
+        {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reusedID)
+            pinView?.canShowCallout = true
+//            pinView?.animatesDrop = true
+        }
+        else
+        {
+            pinView?.annotation = annotation
+        }
+
+
+        return pinView
+    }
+
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView)
+    {
+        let shopName = view.annotation?.title
+        toggleViewUp()
+
+        shopListVC.selectShopFromListByName(shopName!!)
+
+
+    }
+
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        print("calloutAccessoryControlTapped")
+    }
 }
 
 extension MapViewController: LocationServiceProtocol {
     
     func lsDidUpdateLocation(_ location: CLLocation)
     {
-//        perform(#selector(toggleViewUp), with: nil, afterDelay: 1.5)
-
-        print("location coor = \(location.coordinate)")
-        print("user coor = \(mapView.userLocation.coordinate)")
-
         apiService.fetchShopData(location.coordinate.latitude, location.coordinate.longitude) { (success, shops, error) in
 
             self.allShops = shops
@@ -275,5 +310,31 @@ extension MapViewController: LocationServiceProtocol {
                 self.toggleViewUp()
             })
         }
+    }
+}
+
+extension MapViewController: ShopListViewControllerProtocol {
+
+    func didSelectShopAtIndexPath(_ indexPath: IndexPath) {
+        print("\(indexPath.row)")
+        let shop = self.allShops[indexPath.row]
+
+        //地圖範圍
+        var coordinate = CLLocationCoordinate2DMake(shop.lat!, shop.lon!)
+        let region = MKCoordinateRegionMakeWithDistance(coordinate, 500, 500)
+        mapView.setRegion(region, animated: true)
+
+        //加pin
+        let pin = MKPointAnnotation()
+        pin.coordinate = coordinate
+        pin.title = shop.name
+        pin.subtitle = shop.address
+        mapView.addAnnotation(pin)
+
+        self.mapView.selectAnnotation(pin, animated: true)
+
+        //將MapView往上移動一點
+        coordinate.latitude -= mapView.region.span.latitudeDelta * 0.10
+        mapView.setCenter(coordinate, animated: true)
     }
 }

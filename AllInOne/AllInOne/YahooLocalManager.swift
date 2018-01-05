@@ -49,7 +49,7 @@ class YahooLocalManager {
                 
                 if let value = arrJSON["ResultInfo"]
                 {
-                    let totalCount = value["Total"] as? String
+//                    let totalCount = value["Total"] as? String
 //                    print("total = \(String(describing: totalCount))")
 
                     if value["Status"] as! Int == 200

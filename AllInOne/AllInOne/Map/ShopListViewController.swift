@@ -9,13 +9,24 @@
 import UIKit
 import SDWebImage
 
+protocol ShopListViewControllerProtocol {
+
+    func didSelectShopAtIndexPath(_ indexPath: IndexPath);
+}
+
 class ShopListViewController: UIViewController {
+
+    var delegate: ShopListViewControllerProtocol?
 
     var tableView: UITableView!
     
     let apiService: APIServiceProtocol = APIService()
     var allShops = [Shop]()
-    
+
+    var shopDictionary = [String : Int]()
+
+    var selectedIndex: Int?
+
     override func loadView()
     {
         super.loadView()
@@ -48,9 +59,31 @@ class ShopListViewController: UIViewController {
     {
         self.allShops = shops
 
+        var index = 0
+        for shop in allShops
+        {
+            shopDictionary.updateValue(index, forKey: shop.name!)
+            index += 1
+        }
+
         DispatchQueue.main.async {
             self.tableView.reloadData()
             completion()
+        }
+    }
+
+    func selectShopFromListByName(_ shopName: String)
+    {
+        for (key, value) in shopDictionary
+        {
+            if key == shopName
+            {
+                let indexPath = IndexPath(row: value, section: 0)
+                tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.middle, animated: true)
+                selectedIndex = value
+
+                tableView.reloadData()
+            }
         }
     }
 }
@@ -92,10 +125,20 @@ extension ShopListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         print("indexPath = \(indexPath.row)")
+        delegate?.didSelectShopAtIndexPath(indexPath)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
         return 70
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
+    {
+        cell.contentView.backgroundColor = UIColor.white
+        if indexPath.row == selectedIndex
+        {
+            cell.contentView.backgroundColor = UIColor.groupTableViewBackground
+        }
     }
 }
