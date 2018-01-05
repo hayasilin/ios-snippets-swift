@@ -8,16 +8,27 @@
 
 import Foundation
 
-let apiRequestUrl = "https://map.yahooapis.jp/search/local/V1/localSearch?appid=dj0zaiZpPUhhdVJPbm9hMnVUMSZzPWNvbnN1bWVyc2VjcmV0Jng9ZmE-&device=mobile&group=gid&sort=score&output=json&gc=01&query=%E3%83%8F%E3%83%B3%E3%83%90%E3%83%BC%E3%82%AC%E3%83%BC&lat=35.7020691&lon=139.7753269&dist=2"
+let apiRequestUrl = "https://map.yahooapis.jp/search/local/V1/localSearch?appid=dj0zaiZpPUhhdVJPbm9hMnVUMSZzPWNvbnN1bWVyc2VjcmV0Jng9ZmE-&device=mobile&group=gid&sort=geo&output=json&gc=01&image=true&lat=35.7020691&lon=139.7753269&dist=3"
 
 class YahooLocalManager {
     
     let requestManager: RestfulRequestManager = RestfulRequestManager.sharedInstance
     private var shops = [Shop]()
+
+    private var latitute: Double
+    private var longuitude: Double
+    private var requestString: String!
     
-    init()
+    init(_ latitute: Double, _ longuitude: Double)
     {
-        
+        self.latitute = latitute
+        self.longuitude = longuitude
+    }
+
+    func composeRequestString() -> String
+    {
+        let requestString = "https://map.yahooapis.jp/search/local/V1/localSearch?appid=dj0zaiZpPUhhdVJPbm9hMnVUMSZzPWNvbnN1bWVyc2VjcmV0Jng9ZmE-&device=mobile&group=gid&sort=geo&output=json&gc=01&image=true&lat=\(latitute)&lon=\(longuitude)&dist=3"
+        return requestString
     }
     
     func getShops() -> [Shop]
@@ -27,20 +38,20 @@ class YahooLocalManager {
     
     func requestShopFromAPI(complete:@escaping(_ success: Bool, _ shops: [Shop]?, _ error: Error?) ->())
     {
-        let url = URL(string: apiRequestUrl)
+        let url = URL(string: composeRequestString())
         
         try? requestManager.get(url: url!, completionHandler: { (data, urlResponse, error) in
             
             let responseObj = try? JSONSerialization.jsonObject(with: data!) as! [String : AnyObject]
-            print("responseObj = \(String(describing: responseObj))")
-            
+//            print("responseObj = \(String(describing: responseObj))")
+
             if let arrJSON = responseObj {
                 
                 if let value = arrJSON["ResultInfo"]
                 {
                     let totalCount = value["Total"] as? String
-                    print("total = \(String(describing: totalCount))")
-                    
+//                    print("total = \(String(describing: totalCount))")
+
                     if value["Status"] as! Int == 200
                     {
                         for item in arrJSON["Feature"] as! [AnyObject]

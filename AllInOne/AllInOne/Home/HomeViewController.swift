@@ -22,7 +22,9 @@ class HomeViewController: UIViewController {
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
+
+        navigationItem.title = "Hot News"
+
         let nib = UINib(nibName: "HomeTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "cell")
         

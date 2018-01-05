@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ShopListViewController: UIViewController {
 
@@ -32,10 +33,8 @@ class ShopListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-//        tableView.backgroundColor = UIColor(red: 38.0/255.0, green: 38.0/255.0, blue: 38.0/255.0, alpha: 1)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        
-        getShopData()
+        let nib = UINib(nibName: "ShopListTableViewCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "cell")
     }
     
     override func viewWillLayoutSubviews()
@@ -45,15 +44,13 @@ class ShopListViewController: UIViewController {
         tableView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 300)
     }
     
-    func getShopData()
+    func getShopData(_ shops: [Shop], completion:@escaping () -> Void)
     {
-        apiService.fetchShopData { [weak self] (success, shops, error) in
-            self?.allShops = shops
-            print("allShops = \(String(describing: self?.allShops))")
-            
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-            }
+        self.allShops = shops
+
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            completion()
         }
     }
 }
@@ -68,18 +65,37 @@ extension ShopListViewController: UITableViewDataSource, UITableViewDelegate {
         return allShops.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ShopListTableViewCell else{
+            fatalError("Can not dequeue cell")
+        }
         
-        let shop = allShops[indexPath.row]
-        
-        cell.textLabel?.text = shop.name
-        
+        configurateCell(cell, indexPath)
+
         return cell
+    }
+
+    func configurateCell(_ cell: ShopListTableViewCell, _ indexPath: IndexPath)
+    {
+        let shop = allShops[indexPath.row]
+
+        let placeholderImage = UIImage(named: "no_image")
+        if let urlString = shop.photoUrl {
+            cell.shopImageView?.sd_setImage(with: URL(string: urlString), placeholderImage: placeholderImage, options: SDWebImageOptions(rawValue: 0), completed: nil)
+        }
+
+        cell.shopNameLabel.text = shop.name
+        cell.shopAddressLabel.text = shop.address
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         print("indexPath = \(indexPath.row)")
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        return 70
     }
 }

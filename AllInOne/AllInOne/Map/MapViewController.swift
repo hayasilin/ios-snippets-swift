@@ -13,21 +13,24 @@ class MapViewController: UIViewController{
 
     //UI
     @IBOutlet weak var mapView: MKMapView!
-    
     var myLocationButton: UIButton!
     var filterButton: UIButton!
     
-    let locationService = LocationService()
-    var isFirstEntry = true
-    
     var rollOutView: UIView!
-    var rollOutViewHeight = CGFloat()
-    var rollOutViewMargin = CGFloat()
+    var rollOutViewHeight: CGFloat = 300
+    var rollOutViewMargin: CGFloat = 100
     
     var shopListVC = ShopListViewController()
-    var tabBarHeight: CGFloat!
-    
+
     var selectedPin: MKPointAnnotation!
+
+    var tabBarHeight: CGFloat!
+
+    //Controller
+    var isFirstEntry = true
+
+    //LocationService
+    let locationService = LocationService()
     
     //Data
     let apiService: APIServiceProtocol = APIService()
@@ -37,45 +40,29 @@ class MapViewController: UIViewController{
     {
         super.viewDidLoad()
         
-        self.tabBarController?.tabBar.isTranslucent = false
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        
+        tabBarController?.tabBar.isTranslucent = false
+        navigationController?.setNavigationBarHidden(true, animated: false)
         tabBarHeight = (tabBarController?.tabBar.frame.size.height)!
-        
-        navigationItem.title = "Map";
-        
-        if UIApplication.shared.canOpenURL(URL(string: "line://")!) {
+
+        checkShareConfiguration()
+
+        createUI()
+        createShopListUI()
+
+        //Init location Service delegate
+        createLocationService()
+    }
+
+    func checkShareConfiguration()
+    {
+        if UIApplication.shared.canOpenURL(URL(string: "line://")!)
+        {
             print("User has LINE App")
         }
         else
         {
             print("User doesn't have LINE App")
         }
-        
-        locationService.delegate = self
-        
-        createLocationService()
-        
-        showUserLoaction()
-        
-        apiService.fetchShopData { [weak self] (success, shops, error) in
-            self?.allShops = shops
-            print("allShops = \(String(describing: self?.allShops))")
-            
-            for shop in shops {
-                let ann = MKPointAnnotation()
-                ann.coordinate = CLLocationCoordinate2DMake(shop.lat!, shop.lon!)
-                ann.title = shop.name
-                ann.subtitle = shop.address
-                self?.mapView.addAnnotation(ann)
-            }
-        }
-        
-        rollOutViewHeight = 300;
-        rollOutViewMargin = 100;
-        
-        createUI()
-        createShopListUI()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
@@ -110,16 +97,16 @@ class MapViewController: UIViewController{
         view.addSubview(filterButton)
         filterButton.isHidden = true
     }
-    
-    @objc func doFilterAction()
-    {
-        toggleViewUp()
-    }
-    
+
     func createShopListUI()
     {
         shopListVC.view.frame = rollOutView.bounds
         rollOutView.addSubview(shopListVC.view)
+    }
+    
+    @objc func doFilterAction()
+    {
+        toggleViewUp()
     }
     
     @objc func toggleViewUp()
@@ -185,11 +172,12 @@ class MapViewController: UIViewController{
     
     func createLocationService()
     {
-        locationService.startUpdatingLocation()
-        
         mapView.showsUserLocation = true
         mapView.showsBuildings = true
         mapView.showsPointsOfInterest = true
+
+        locationService.delegate = self
+        locationService.startUpdatingLocation()
     }
     
     func moveMapViewUp()
@@ -201,49 +189,35 @@ class MapViewController: UIViewController{
     
     @objc func showUserLoaction()
     {
-        
-            let userLocation: MKUserLocation = mapView.userLocation
-            
-            var region = MKCoordinateRegion()
-            region.center = userLocation.coordinate
-            region = MKCoordinateRegionMakeWithDistance(region.center, 2000, 2000)
-            
-            mapView.setRegion(region, animated: true)
-            
-//            if filterButton.isHidden
-//            {
-//                moveMapViewUp()
-//            }
-//        }
+        let userLocation: MKUserLocation = mapView.userLocation
+        var region = MKCoordinateRegion()
+        region.center = userLocation.coordinate
+        region = MKCoordinateRegionMakeWithDistance(region.center, 1000, 1000)
+
+        mapView.setRegion(region, animated: true)
     }
 }
 
 extension MapViewController: MKMapViewDelegate{
     
     func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
-        print("regionWillChangeAnimated")
+//        print("regionWillChangeAnimated")
     }
     
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        print("regionDidChangeAnimated")
+//        print("regionDidChangeAnimated")
     }
     
     func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
-        print("mapViewWillStartLoadingMap")
+//        print("mapViewWillStartLoadingMap")
     }
     
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-        print("mapViewDidFinishLoadingMap")
-        if isFirstEntry
-        {
-            isFirstEntry = false
-            showUserLoaction()
-            
-        }
+//        print("mapViewDidFinishLoadingMap")
     }
     
     func mapViewDidFailLoadingMap(_ mapView: MKMapView, withError error: Error) {
-//        print("mapViewDidFailLoadingMap")
+        print("mapViewDidFailLoadingMap")
     }
     
     func mapViewWillStartRenderingMap(_ mapView: MKMapView) {
@@ -251,7 +225,11 @@ extension MapViewController: MKMapViewDelegate{
     }
     
     func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
-//        print("mapViewDidFinishRenderingMap")
+        print("mapViewDidFinishfullyRenderedMap")
+        if isFirstEntry {
+            isFirstEntry = false
+            showUserLoaction()
+        }
     }
     
     func mapViewWillStartLocatingUser(_ mapView: MKMapView) {
@@ -269,12 +247,33 @@ extension MapViewController: MKMapViewDelegate{
     func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
 //        print("didChange")
     }
+
 }
 
 extension MapViewController: LocationServiceProtocol {
     
     func lsDidUpdateLocation(_ location: CLLocation)
     {
-        perform(#selector(toggleViewUp), with: nil, afterDelay: 1.5)
+//        perform(#selector(toggleViewUp), with: nil, afterDelay: 1.5)
+
+        print("location coor = \(location.coordinate)")
+        print("user coor = \(mapView.userLocation.coordinate)")
+
+        apiService.fetchShopData(location.coordinate.latitude, location.coordinate.longitude) { (success, shops, error) in
+
+            self.allShops = shops
+
+            for shop in shops {
+                let ann = MKPointAnnotation()
+                ann.coordinate = CLLocationCoordinate2DMake(shop.lat!, shop.lon!)
+                ann.title = shop.name
+                ann.subtitle = shop.address
+                self.mapView.addAnnotation(ann)
+            }
+
+            self.shopListVC.getShopData(shops, completion: {
+                self.toggleViewUp()
+            })
+        }
     }
 }
