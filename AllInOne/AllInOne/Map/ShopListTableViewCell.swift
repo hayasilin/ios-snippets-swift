@@ -17,7 +17,9 @@ class ShopListTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        shopImageView.layer.masksToBounds = true
+        shopImageView.layer.cornerRadius = 24
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

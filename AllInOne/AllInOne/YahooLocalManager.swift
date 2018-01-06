@@ -27,7 +27,7 @@ class YahooLocalManager {
 
     func composeRequestString() -> String
     {
-        let requestString = "https://map.yahooapis.jp/search/local/V1/localSearch?appid=dj0zaiZpPUhhdVJPbm9hMnVUMSZzPWNvbnN1bWVyc2VjcmV0Jng9ZmE-&device=mobile&group=gid&sort=geo&output=json&gc=01&image=true&lat=\(latitute)&lon=\(longuitude)&dist=3"
+        let requestString = "https://map.yahooapis.jp/search/local/V1/localSearch?appid=dj0zaiZpPUhhdVJPbm9hMnVUMSZzPWNvbnN1bWVyc2VjcmV0Jng9ZmE-&device=mobile&group=gid&sort=geo&results=100&output=json&gc=01&image=true&lat=\(latitute)&lon=\(longuitude)&dist=3"
         return requestString
     }
     
@@ -45,14 +45,13 @@ class YahooLocalManager {
             let responseObj = try? JSONSerialization.jsonObject(with: data!) as! [String : AnyObject]
 //            print("responseObj = \(String(describing: responseObj))")
 
-            if let arrJSON = responseObj {
-                
+            if let arrJSON = responseObj
+            {
                 if let value = arrJSON["ResultInfo"]
                 {
-//                    let totalCount = value["Total"] as? String
-//                    print("total = \(String(describing: totalCount))")
+                    let totalCount = value["Total"] as? Int
 
-                    if value["Status"] as! Int == 200
+                    if totalCount != 0 && totalCount != nil
                     {
                         for item in arrJSON["Feature"] as! [AnyObject]
                         {
@@ -95,10 +94,13 @@ class YahooLocalManager {
                         
                         complete(true, self.shops, nil)
                     }
+                    else
+                    {
+                        complete(false, nil, error)
+                    }
                 }
                 else
                 {
-                    print("error")
                     complete(false, nil, error)
                 }
             }

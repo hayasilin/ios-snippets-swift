@@ -9,6 +9,14 @@
 import UIKit
 import MapKit
 
+enum mapDispayErrorType: Error {
+    case noResultErrorType
+    case notInJapanErrorType
+}
+
+let tokyoLatitude = 35.6895
+let tokyoLongidude = 139.6917
+
 class MapViewController: UIViewController{
 
     //UI
@@ -41,9 +49,8 @@ class MapViewController: UIViewController{
         super.viewDidLoad()
         
         tabBarController?.tabBar.isTranslucent = false
-        navigationController?.setNavigationBarHidden(true, animated: false)
         tabBarHeight = (tabBarController?.tabBar.frame.size.height)!
-
+        
         checkShareConfiguration()
 
         createUI()
@@ -51,6 +58,12 @@ class MapViewController: UIViewController{
 
         //Init location Service delegate
         createLocationService()
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
 
     func checkShareConfiguration()
@@ -197,6 +210,12 @@ class MapViewController: UIViewController{
 
         mapView.setRegion(region, animated: true)
     }
+    
+    @objc func annotationCalloutButtonPressed(_ sender: UIButton)
+    {
+//        let shopDetailVC = ShopDetailViewController()
+//        navigationController?.pushViewController(shopDetailVC, animated: true)
+    }
 }
 
 extension MapViewController: MKMapViewDelegate{
@@ -230,6 +249,7 @@ extension MapViewController: MKMapViewDelegate{
         if isFirstEntry {
             isFirstEntry = false
             showUserLoaction()
+            self.moveMapViewUp()
         }
     }
     
@@ -257,20 +277,21 @@ extension MapViewController: MKMapViewDelegate{
         }
 
         let reusedID = "pin"
-
         var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reusedID) as? MKPinAnnotationView
 
         if pinView == nil
         {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reusedID)
             pinView?.canShowCallout = true
-//            pinView?.animatesDrop = true
         }
         else
         {
             pinView?.annotation = annotation
         }
-
+        
+        let button = UIButton(type: .detailDisclosure)
+//        button.addTarget(self, action: #selector(annotationCalloutButtonPressed(_:)), for: .touchUpInside)
+        pinView?.rightCalloutAccessoryView = button
 
         return pinView
     }
@@ -280,13 +301,21 @@ extension MapViewController: MKMapViewDelegate{
         let shopName = view.annotation?.title
         toggleViewUp()
 
-        shopListVC.selectShopFromListByName(shopName!!)
-
-
+        self.shopListVC.selectShopFromListByName(shopName!!)
     }
 
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print("calloutAccessoryControlTapped")
+        
+        let shopName = view.annotation?.title
+        
+        for shop in allShops
+        {
+            if shop.name == shopName!
+            {
+                let shopDetailVC = ShopDetailViewController(nibName: "ShopDetailViewController", bundle: nil, shop)
+                navigationController?.pushViewController(shopDetailVC, animated: true)
+            }
+        }
     }
 }
 
@@ -294,21 +323,39 @@ extension MapViewController: LocationServiceProtocol {
     
     func lsDidUpdateLocation(_ location: CLLocation)
     {
-        apiService.fetchShopData(location.coordinate.latitude, location.coordinate.longitude) { (success, shops, error) in
+        var latitude = location.coordinate.latitude
+        var longitude = location.coordinate.longitude
+        
+        if latitude < 25 && longitude < 140
+        {
+            showExceptionAlert(errorType: .notInJapanErrorType)
+            latitude = tokyoLatitude
+            longitude = tokyoLongidude
+        }
+        
+        apiService.fetchShopData(latitude, longitude) { (success: Bool, shops: [Shop]?, error: Error?) in
 
-            self.allShops = shops
-
-            for shop in shops {
-                let ann = MKPointAnnotation()
-                ann.coordinate = CLLocationCoordinate2DMake(shop.lat!, shop.lon!)
-                ann.title = shop.name
-                ann.subtitle = shop.address
-                self.mapView.addAnnotation(ann)
+            if error == nil && shops?.isEmpty == false
+            {
+                self.allShops = shops!
+                
+                for shop in self.allShops {
+                    
+                    let ann = MKPointAnnotation()
+                    ann.coordinate = CLLocationCoordinate2DMake(shop.lat!, shop.lon!)
+                    ann.title = shop.name
+                    ann.subtitle = shop.address
+                    self.mapView.addAnnotation(ann)
+                }
+                
+                self.shopListVC.getShopData(shops!, completion: {
+                    self.toggleViewUp()
+                })
             }
-
-            self.shopListVC.getShopData(shops, completion: {
-                self.toggleViewUp()
-            })
+            else
+            {
+                self.showExceptionAlert(errorType: .noResultErrorType)
+            }
         }
     }
 }
@@ -336,5 +383,28 @@ extension MapViewController: ShopListViewControllerProtocol {
         //將MapView往上移動一點
         coordinate.latitude -= mapView.region.span.latitudeDelta * 0.10
         mapView.setCenter(coordinate, animated: true)
+    }
+}
+
+extension MapViewController
+{
+    func showExceptionAlert(errorType: mapDispayErrorType)
+    {
+        var title: String!
+        var message: String!
+        
+        switch errorType {
+        case .notInJapanErrorType:
+            title = "您人似乎不在日本唷"
+            message = "位於日本才能就近找到餐廳，不如看看台灣目前的熱門討論吧"
+        case .noResultErrorType:
+            title = "周圍沒有餐廳資料唷"
+            message = "請確認網路連線或是移動到有餐廳的地區"
+        }
+    
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
     }
 }

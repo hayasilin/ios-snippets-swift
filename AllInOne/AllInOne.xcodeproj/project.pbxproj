@@ -46,6 +46,8 @@
 		AC8C06801FF7D15100018CFB /* QRCodeScanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC8C067E1FF7D15100018CFB /* QRCodeScanViewController.xib */; };
 		AC8C06831FF7DD7000018CFB /* ControlDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C06811FF7DD7000018CFB /* ControlDeviceViewController.swift */; };
 		AC8C06841FF7DD7000018CFB /* ControlDeviceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC8C06821FF7DD7000018CFB /* ControlDeviceViewController.xib */; };
+		AC91804220006E4300D4502F /* ShopDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC91804020006E4300D4502F /* ShopDetailViewController.swift */; };
+		AC91804320006E4300D4502F /* ShopDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC91804120006E4300D4502F /* ShopDetailViewController.xib */; };
 		ACA136F51FEF4DE60088B2CC /* InstructionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA136F31FEF4DE60088B2CC /* InstructionViewController.swift */; };
 		ACA136F61FEF4DE60088B2CC /* InstructionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ACA136F41FEF4DE60088B2CC /* InstructionViewController.xib */; };
 		ACA136F81FEF50CC0088B2CC /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA136F71FEF50CC0088B2CC /* LocationService.swift */; };
@@ -126,6 +128,8 @@
 		AC8C067E1FF7D15100018CFB /* QRCodeScanViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QRCodeScanViewController.xib; sourceTree = "<group>"; };
 		AC8C06811FF7DD7000018CFB /* ControlDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlDeviceViewController.swift; sourceTree = "<group>"; };
 		AC8C06821FF7DD7000018CFB /* ControlDeviceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ControlDeviceViewController.xib; sourceTree = "<group>"; };
+		AC91804020006E4300D4502F /* ShopDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDetailViewController.swift; sourceTree = "<group>"; };
+		AC91804120006E4300D4502F /* ShopDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShopDetailViewController.xib; sourceTree = "<group>"; };
 		ACA136F31FEF4DE60088B2CC /* InstructionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionViewController.swift; sourceTree = "<group>"; };
 		ACA136F41FEF4DE60088B2CC /* InstructionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InstructionViewController.xib; sourceTree = "<group>"; };
 		ACA136F71FEF50CC0088B2CC /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
@@ -287,6 +291,8 @@
 				ACA4813A1FFA543500BF4490 /* ShopListViewController.swift */,
 				65E0D3DB1FFF2A3E003B781E /* ShopListTableViewCell.swift */,
 				65E0D3DC1FFF2A3E003B781E /* ShopListTableViewCell.xib */,
+				AC91804020006E4300D4502F /* ShopDetailViewController.swift */,
+				AC91804120006E4300D4502F /* ShopDetailViewController.xib */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -443,6 +449,7 @@
 				AC8C06841FF7DD7000018CFB /* ControlDeviceViewController.xib in Resources */,
 				AC36D53B1FEE147000BF94E6 /* MapViewController.xib in Resources */,
 				6516F80D1FF5028400B1AC25 /* ScheduleTableViewCell.xib in Resources */,
+				AC91804320006E4300D4502F /* ShopDetailViewController.xib in Resources */,
 				AC86E0D51FEEBB5E00427C30 /* Settings.plist in Resources */,
 				6516F8151FF5041400B1AC25 /* ScheduleAddViewController.xib in Resources */,
 				AC36D4FE1FEE00F500BF94E6 /* Assets.xcassets in Resources */,
@@ -665,6 +672,7 @@
 				6516F80C1FF5028400B1AC25 /* ScheduleTableViewCell.swift in Sources */,
 				6516F8141FF5041400B1AC25 /* ScheduleAddViewController.swift in Sources */,
 				AC36D5421FEE157400BF94E6 /* ScheduleViewController.swift in Sources */,
+				AC91804220006E4300D4502F /* ShopDetailViewController.swift in Sources */,
 				AC8C067F1FF7D15100018CFB /* QRCodeScanViewController.swift in Sources */,
 				AC36D4F61FEE00F500BF94E6 /* ViewController.swift in Sources */,
 				ACA136F51FEF4DE60088B2CC /* InstructionViewController.swift in Sources */,
