@@ -79,10 +79,9 @@ class ShopListViewController: UIViewController {
             if key == shopName
             {
                 let indexPath = IndexPath(row: value, section: 0)
-                tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.middle, animated: true)
                 selectedIndex = value
-
                 tableView.reloadData()
+                tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.middle, animated: false)
             }
         }
     }

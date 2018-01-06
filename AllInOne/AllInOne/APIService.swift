@@ -9,19 +9,19 @@
 import Foundation
 
 protocol APIServiceProtocol {
-    func fetchShopData(_ latitude: Double, _ longitude: Double, complete:@escaping(_ success: Bool, _ shops: [Shop], _ error: Error?) ->())
+    func fetchShopData(_ latitude: Double, _ longitude: Double, complete:@escaping(_ success: Bool, _ shops: [Shop]?, _ error: Error?) ->())
 }
 
 class APIService: APIServiceProtocol  {
     
-    func fetchShopData(_ latitude: Double, _ longitude: Double, complete: @escaping (Bool, [Shop], Error?) -> ())
+    func fetchShopData(_ latitude: Double, _ longitude: Double, complete: @escaping (Bool, [Shop]?, Error?) -> ())
     {
         DispatchQueue.global().async {
 
             let yahooLocalManager = YahooLocalManager(latitude, longitude)
             yahooLocalManager.requestShopFromAPI { (success: Bool, shops: [Shop]?, error: Error?) in
                 
-                complete(true, shops!, nil)
+                complete(true, shops, nil)
             }
         }
     }

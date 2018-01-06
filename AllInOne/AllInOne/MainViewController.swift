@@ -54,8 +54,8 @@ class MainViewController: UITabBarController {
             viewControllers.append(target);
         }
         
-        let itemSelectTintColor = UIColor(red: 0.1647, green: 0.6392, blue: 0.5529, alpha: 1.0)
-        UITabBar.appearance().tintColor = itemSelectTintColor;
+//        let itemSelectTintColor = UIColor(red: 0.1647, green: 0.6392, blue: 0.5529, alpha: 1.0)
+//        UITabBar.appearance().tintColor = itemSelectTintColor;
         
         self.viewControllers = viewControllers;
     }
