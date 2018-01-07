@@ -78,7 +78,12 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate{
     
     func checkChosenCell(cellTitle: String) {
         
-        if cellTitle == "My Favorites"
+        if  cellTitle == "Pick a photo"
+        {
+            let photoPickerVC = PhotoPickerViewController()
+            navigationController?.pushViewController(photoPickerVC, animated: true)
+        }
+        else if cellTitle == "My Favorites"
         {
             let favoriteShopVC = FavoriteShopViewController()
             navigationController?.pushViewController(favoriteShopVC, animated: true)

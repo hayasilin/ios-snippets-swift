@@ -19,6 +19,8 @@ class HomeViewController: UIViewController {
     
     let requestManager: RestfulRequestManager = RestfulRequestManager.sharedInstance
     
+    var edgePanGesture: UISwipeGestureRecognizer!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -43,6 +45,46 @@ class HomeViewController: UIViewController {
             try reachability.startNotifier()
         }catch{
             print("could not start reachability notifier")
+        }
+        
+//        edgePanGesture = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(handleEdgePanGesture(_:)))
+        edgePanGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleEdgePanGesture(_:)))
+        tableView.addGestureRecognizer(edgePanGesture)
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        
+    }
+    
+    @objc func handleEdgePanGesture(_ sender: UISwipeGestureRecognizer)
+    {
+        switch sender.direction {
+        case .right:
+            print("right")
+            
+            let cameraVC = CameraViewController()
+            
+            let transition = CATransition()
+            transition.duration = 0.45
+            transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+            transition.type = kCATransitionMoveIn
+            transition.subtype = kCATransitionFromLeft
+            
+            navigationController?.view.layer.add(transition, forKey: kCATransition)
+            navigationController?.pushViewController(cameraVC, animated: true)
+            
+        case .left:
+            print("left")
+        default:
+            break
         }
     }
     

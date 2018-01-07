@@ -73,5 +73,7 @@
 	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>Need your camera</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Need your photo library</string>
 </dict>
 </plist>

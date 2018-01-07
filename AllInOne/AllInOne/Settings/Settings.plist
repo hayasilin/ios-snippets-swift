@@ -13,6 +13,7 @@
 	<array>
 		<string>QRCode scan</string>
 		<string>Control device</string>
+		<string>Pick a photo</string>
 	</array>
 	<key>Feed back</key>
 	<array>
