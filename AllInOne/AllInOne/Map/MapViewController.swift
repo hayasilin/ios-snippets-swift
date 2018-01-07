@@ -224,8 +224,8 @@ extension MapViewController: MKMapViewDelegate
     {
         if isFirstEntry {
             isFirstEntry = false
-            showUserLoaction()
             self.moveMapViewUp()
+            showUserLoaction()
         }
     }
 
@@ -286,7 +286,7 @@ extension MapViewController: LocationServiceProtocol {
         var latitude = location.coordinate.latitude
         var longitude = location.coordinate.longitude
         
-        if latitude < 25 && longitude < 140
+        if latitude < 26 && longitude < 122
         {
             showExceptionAlert(errorType: .notInJapanErrorType)
             latitude = tokyoLatitude

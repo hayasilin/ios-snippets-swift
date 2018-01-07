@@ -41,14 +41,32 @@
                         <action selector="doSaveAction:" destination="-1" eventType="touchUpInside" id="t0O-6E-52O"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GEF-oA-9Y4">
+                    <rect key="frame" x="139" y="378" width="97" height="30"/>
+                    <state key="normal" title="Up load photo"/>
+                    <connections>
+                        <action selector="uploadPhoto:" destination="-1" eventType="touchUpInside" id="kBM-4D-6St"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6eC-3C-kBd">
+                    <rect key="frame" x="111" y="425" width="152" height="30"/>
+                    <state key="normal" title="Go to photo collection"/>
+                    <connections>
+                        <action selector="pushPhotoCollectionPage:" destination="-1" eventType="touchUpInside" id="sOf-Ra-F8q"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="YAo-e1-ip4" secondAttribute="trailing" constant="16" id="4wL-8T-G6N"/>
+                <constraint firstItem="6eC-3C-kBd" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="57e-kp-4Qs"/>
+                <constraint firstItem="6eC-3C-kBd" firstAttribute="top" secondItem="GEF-oA-9Y4" secondAttribute="bottom" constant="17" id="CJD-2W-WUv"/>
                 <constraint firstItem="a2j-0f-BKb" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="F7M-0m-9F8"/>
                 <constraint firstItem="zu9-oi-E1k" firstAttribute="top" secondItem="YAo-e1-ip4" secondAttribute="bottom" constant="47" id="HfF-5P-WlV"/>
+                <constraint firstItem="GEF-oA-9Y4" firstAttribute="top" secondItem="a2j-0f-BKb" secondAttribute="bottom" constant="82" id="g5L-Wc-QXx"/>
                 <constraint firstItem="zu9-oi-E1k" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="gAl-qY-3RX"/>
                 <constraint firstItem="a2j-0f-BKb" firstAttribute="top" secondItem="zu9-oi-E1k" secondAttribute="bottom" constant="40" id="j1z-dS-UcZ"/>
+                <constraint firstItem="GEF-oA-9Y4" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="kk1-pe-c3f"/>
                 <constraint firstItem="YAo-e1-ip4" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="nA0-Qb-9vK"/>
                 <constraint firstItem="YAo-e1-ip4" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="99" id="oto-G6-dmC"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="zu9-oi-E1k" secondAttribute="trailing" constant="16" id="sHZ-vC-uxC"/>

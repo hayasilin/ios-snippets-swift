@@ -19,6 +19,8 @@ class HomeViewController: UIViewController {
     
     let requestManager: RestfulRequestManager = RestfulRequestManager.sharedInstance
     
+    var edgePanGesture: UISwipeGestureRecognizer!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -32,17 +34,52 @@ class HomeViewController: UIViewController {
         tableView.refreshControl?.addTarget(self, action: #selector(requestDataFromAPI), for: .valueChanged)
         
         requestDataFromAPI()
-        
-        //declare this property where it won't go out of scope relative to your listener
+
+        configurateReachability()
+
+        edgePanGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleEdgePanGesture(_:)))
+        tableView.addGestureRecognizer(edgePanGesture)
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+
+    func configurateReachability()
+    {
         let reachability = Reachability()!
-        
-        //declare this inside of viewWillAppear
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(note:)), name: .reachabilityChanged, object: reachability)
         do{
             try reachability.startNotifier()
         }catch{
             print("could not start reachability notifier")
+        }
+    }
+    
+    @objc func handleEdgePanGesture(_ sender: UISwipeGestureRecognizer)
+    {
+        switch sender.direction {
+        case .right:
+            print("right")
+            
+            let cameraVC = CameraViewController()
+            
+            let transition = CATransition()
+            transition.duration = 0.45
+            transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+            transition.type = kCATransitionMoveIn
+            transition.subtype = kCATransitionFromLeft
+            
+            navigationController?.view.layer.add(transition, forKey: kCATransition)
+            navigationController?.pushViewController(cameraVC, animated: true)
+            
+        case .left:
+            print("left")
+        default:
+            break
         }
     }
     

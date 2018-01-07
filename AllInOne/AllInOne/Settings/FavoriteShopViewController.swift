@@ -104,8 +104,8 @@ extension FavoriteShopViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ShopListTableViewCell else{
-            fatalError("Can not dequeue cell")
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ShopListTableViewCell else {
+            fatalError("Can't dequeue cell")
         }
         
         configurateCell(cell, indexPath)

@@ -22,10 +22,13 @@ class ScheduleViewController: UIViewController {
 
         navigationItem.title = "Schedule"
         
-        let AddBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pushToCreatePage))
-        navigationItem.rightBarButtonItem = AddBarButtonItem
-        
-        
+        let addBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pushToCreatePage))
+        let editBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(doEditAction(_:)))
+        navigationItem.rightBarButtonItems = [addBarButtonItem, editBarButtonItem]
+
+        let logoutBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.plain, target: self, action: #selector(doLogoutAction(_ :)))
+        navigationItem.leftBarButtonItem = logoutBarButtonItem
+
         let nib = UINib(nibName: "ScheduleTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "cell")
         
@@ -53,6 +56,34 @@ class ScheduleViewController: UIViewController {
         let scheduleAddPage = ScheduleAddViewController()
         
         navigationController?.pushViewController(scheduleAddPage, animated: true)
+    }
+
+    @objc func doLogoutAction(_ sender: UIBarButtonItem)
+    {
+        if Auth.auth().currentUser != nil
+        {
+            do {
+                try Auth.auth().signOut()
+                navigationController?.popViewController(animated: true)
+            } catch let error as NSError
+            {
+                print(error.localizedDescription)
+            }
+        }
+    }
+
+    @objc func doEditAction(_ sender: UIBarButtonItem)
+    {
+        if tableView.isEditing
+        {
+            tableView.setEditing(false, animated: true)
+            sender.title = "Edit"
+        }
+        else
+        {
+            tableView.setEditing(true, animated: true)
+            sender.title = "Done"
+        }
     }
 }
 
@@ -96,5 +127,4 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
-    
 }
