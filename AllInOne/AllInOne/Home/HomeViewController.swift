@@ -125,8 +125,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate{
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
         let hotArticle: HotArticle = hotArticleList[indexPath.row]
         let detailVC = DetailViewController(nibName: "DetailViewController", bundle: nil, urlString: hotArticle.url)
         self.navigationController?.pushViewController(detailVC, animated: true)

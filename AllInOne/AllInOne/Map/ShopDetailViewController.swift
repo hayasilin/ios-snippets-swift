@@ -32,8 +32,6 @@ class ShopDetailViewController: UIViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
         self.shop = shop
-        
-        print("self.shop = \(self.shop)")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -46,7 +44,10 @@ class ShopDetailViewController: UIViewController {
         tabBarController?.tabBar.isTranslucent = false
         navigationController?.setNavigationBarHidden(false, animated: false)
         
+        navigationItem.title = shop.name
+        
         createUI()
+        updateFavoriteUI()
         checkShareConfiguration()
     }
     
@@ -68,6 +69,20 @@ class ShopDetailViewController: UIViewController {
         pin.title = shop.name
         pin.subtitle = shop.address
         mapView.addAnnotation(pin)
+    }
+    
+    func updateFavoriteUI()
+    {
+        if FavoriteManager.shared.inFavorites(gid: shop.gid)
+        {
+            favoriteImageView.image = UIImage(named: "star_on")
+            favoriteLabel.text = "從我的最愛中移除"
+        }
+        else
+        {
+            favoriteImageView.image = UIImage(named: "star_off")
+            favoriteLabel.text = "加入我的最愛"
+        }
     }
     
     func checkShareConfiguration()
@@ -132,6 +147,12 @@ class ShopDetailViewController: UIViewController {
     @IBAction func addressButtonPressed(_ sender: UIButton)
     {
         
+    }
+    
+    @IBAction func favoriteButtonPressed(_ sender: UIButton)
+    {
+        FavoriteManager.shared.toggle(gid: shop.gid)
+        updateFavoriteUI()
     }
     
     @IBAction func shareLineButtonPressed(_ sender: UIButton)

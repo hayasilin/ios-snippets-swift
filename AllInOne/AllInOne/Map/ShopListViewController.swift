@@ -123,7 +123,6 @@ extension ShopListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        print("indexPath = \(indexPath.row)")
         delegate?.didSelectShopAtIndexPath(indexPath)
     }
 

@@ -218,55 +218,15 @@ class MapViewController: UIViewController{
     }
 }
 
-extension MapViewController: MKMapViewDelegate{
-    
-    func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
-//        print("regionWillChangeAnimated")
-    }
-    
-    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-//        print("regionDidChangeAnimated")
-    }
-    
-    func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
-//        print("mapViewWillStartLoadingMap")
-    }
-    
-    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-//        print("mapViewDidFinishLoadingMap")
-    }
-    
-    func mapViewDidFailLoadingMap(_ mapView: MKMapView, withError error: Error) {
-        print("mapViewDidFailLoadingMap")
-    }
-    
-    func mapViewWillStartRenderingMap(_ mapView: MKMapView) {
-//        print("mapViewWillStartRenderingMap")
-    }
-    
-    func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
-        print("mapViewDidFinishfullyRenderedMap")
+extension MapViewController: MKMapViewDelegate
+{
+    func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool)
+    {
         if isFirstEntry {
             isFirstEntry = false
             showUserLoaction()
             self.moveMapViewUp()
         }
-    }
-    
-    func mapViewWillStartLocatingUser(_ mapView: MKMapView) {
-//        print("mapViewWillStartLocatingUser")
-    }
-    
-    func mapViewDidStopLocatingUser(_ mapView: MKMapView) {
-//        print("mapViewDidStopLocatingUser")
-    }
-    
-    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-//        print("didUpdate")
-    }
-    
-    func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
-//        print("didChange")
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?
@@ -360,10 +320,10 @@ extension MapViewController: LocationServiceProtocol {
     }
 }
 
-extension MapViewController: ShopListViewControllerProtocol {
-
-    func didSelectShopAtIndexPath(_ indexPath: IndexPath) {
-        print("\(indexPath.row)")
+extension MapViewController: ShopListViewControllerProtocol
+{
+    func didSelectShopAtIndexPath(_ indexPath: IndexPath)
+    {
         let shop = self.allShops[indexPath.row]
 
         //地圖範圍

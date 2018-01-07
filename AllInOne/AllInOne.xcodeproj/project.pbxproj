@@ -39,6 +39,9 @@
 		AC36D54A1FEE226400BF94E6 /* HotArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC36D5491FEE226400BF94E6 /* HotArticle.swift */; };
 		AC36D54D1FEE4BB600BF94E6 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC36D54B1FEE4BB600BF94E6 /* DetailViewController.swift */; };
 		AC36D54E1FEE4BB600BF94E6 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC36D54C1FEE4BB600BF94E6 /* DetailViewController.xib */; };
+		AC706C0E20012146008492B6 /* FavoriteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC706C0D20012146008492B6 /* FavoriteManager.swift */; };
+		AC706C1120012935008492B6 /* FavoriteShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC706C0F20012935008492B6 /* FavoriteShopViewController.swift */; };
+		AC706C1220012935008492B6 /* FavoriteShopViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC706C1020012935008492B6 /* FavoriteShopViewController.xib */; };
 		AC86E0CF1FEEAB2D00427C30 /* RestfulRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86E0CE1FEEAB2D00427C30 /* RestfulRequestManager.swift */; };
 		AC86E0D31FEEBB3700427C30 /* app.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC86E0D21FEEBB3700427C30 /* app.plist */; };
 		AC86E0D51FEEBB5E00427C30 /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC86E0D41FEEBB5E00427C30 /* Settings.plist */; };
@@ -121,6 +124,9 @@
 		AC36D5491FEE226400BF94E6 /* HotArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotArticle.swift; sourceTree = "<group>"; };
 		AC36D54B1FEE4BB600BF94E6 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		AC36D54C1FEE4BB600BF94E6 /* DetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
+		AC706C0D20012146008492B6 /* FavoriteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteManager.swift; sourceTree = "<group>"; };
+		AC706C0F20012935008492B6 /* FavoriteShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteShopViewController.swift; sourceTree = "<group>"; };
+		AC706C1020012935008492B6 /* FavoriteShopViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteShopViewController.xib; sourceTree = "<group>"; };
 		AC86E0CE1FEEAB2D00427C30 /* RestfulRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestfulRequestManager.swift; sourceTree = "<group>"; };
 		AC86E0D21FEEBB3700427C30 /* app.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = app.plist; sourceTree = "<group>"; };
 		AC86E0D41FEEBB5E00427C30 /* Settings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Settings.plist; sourceTree = "<group>"; };
@@ -241,12 +247,8 @@
 				AC36D5451FEE169200BF94E6 /* Map */,
 				AC36D5461FEE16A800BF94E6 /* Schedule */,
 				AC36D5471FEE16B000BF94E6 /* Settings */,
-				AC36D5491FEE226400BF94E6 /* HotArticle.swift */,
-				AC86E0CE1FEEAB2D00427C30 /* RestfulRequestManager.swift */,
-				ACA136F71FEF50CC0088B2CC /* LocationService.swift */,
-				6516F8081FF4FDB100B1AC25 /* Schedule.swift */,
-				ACA1C2141FF9E5F700307B52 /* YahooLocalManager.swift */,
-				ACA481381FFA484D00BF4490 /* APIService.swift */,
+				AC706C0B2001211A008492B6 /* Data */,
+				AC706C0C20012129008492B6 /* Manager */,
 			);
 			path = AllInOne;
 			sourceTree = "<group>";
@@ -322,8 +324,31 @@
 				AC8C067E1FF7D15100018CFB /* QRCodeScanViewController.xib */,
 				AC8C06811FF7DD7000018CFB /* ControlDeviceViewController.swift */,
 				AC8C06821FF7DD7000018CFB /* ControlDeviceViewController.xib */,
+				AC706C0F20012935008492B6 /* FavoriteShopViewController.swift */,
+				AC706C1020012935008492B6 /* FavoriteShopViewController.xib */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		AC706C0B2001211A008492B6 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				AC36D5491FEE226400BF94E6 /* HotArticle.swift */,
+				6516F8081FF4FDB100B1AC25 /* Schedule.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		AC706C0C20012129008492B6 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				AC86E0CE1FEEAB2D00427C30 /* RestfulRequestManager.swift */,
+				ACA136F71FEF50CC0088B2CC /* LocationService.swift */,
+				ACA1C2141FF9E5F700307B52 /* YahooLocalManager.swift */,
+				ACA481381FFA484D00BF4490 /* APIService.swift */,
+				AC706C0D20012146008492B6 /* FavoriteManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -451,6 +476,7 @@
 				6516F80D1FF5028400B1AC25 /* ScheduleTableViewCell.xib in Resources */,
 				AC91804320006E4300D4502F /* ShopDetailViewController.xib in Resources */,
 				AC86E0D51FEEBB5E00427C30 /* Settings.plist in Resources */,
+				AC706C1220012935008492B6 /* FavoriteShopViewController.xib in Resources */,
 				6516F8151FF5041400B1AC25 /* ScheduleAddViewController.xib in Resources */,
 				AC36D4FE1FEE00F500BF94E6 /* Assets.xcassets in Resources */,
 				AC36D4F91FEE00F500BF94E6 /* Main.storyboard in Resources */,
@@ -667,6 +693,7 @@
 				6516F8091FF4FDB100B1AC25 /* Schedule.swift in Sources */,
 				AC36D53E1FEE153700BF94E6 /* SettingsViewController.swift in Sources */,
 				65E0D3DD1FFF2A3E003B781E /* ShopListTableViewCell.swift in Sources */,
+				AC706C1120012935008492B6 /* FavoriteShopViewController.swift in Sources */,
 				AC86E0CF1FEEAB2D00427C30 /* RestfulRequestManager.swift in Sources */,
 				ACA1C2151FF9E5F700307B52 /* YahooLocalManager.swift in Sources */,
 				6516F80C1FF5028400B1AC25 /* ScheduleTableViewCell.swift in Sources */,
@@ -682,6 +709,7 @@
 				AC36D5361FEE101F00BF94E6 /* HomeTableViewCell.swift in Sources */,
 				AC36D4FC1FEE00F500BF94E6 /* AllInOne.xcdatamodeld in Sources */,
 				AC36D54A1FEE226400BF94E6 /* HotArticle.swift in Sources */,
+				AC706C0E20012146008492B6 /* FavoriteManager.swift in Sources */,
 				ACA4813B1FFA543500BF4490 /* ShopListViewController.swift in Sources */,
 				AC36D5291FEE0A5100BF94E6 /* MainViewController.swift in Sources */,
 			);
