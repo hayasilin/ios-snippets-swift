@@ -151,6 +151,15 @@
                                         <action selector="shareFacebookButtonPressed:" destination="-1" eventType="touchUpInside" id="u48-eq-5Fh"/>
                                     </connections>
                                 </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Se-AX-sQJ">
+                                    <rect key="frame" x="8" y="523" width="359" height="50"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="50" id="INF-Mj-KMg"/>
+                                    </constraints>
+                                    <connections>
+                                        <action selector="favoriteButtonPressed:" destination="-1" eventType="touchUpInside" id="CKa-4Q-bCh"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -172,7 +181,9 @@
                                 <constraint firstItem="4eB-ie-OLl" firstAttribute="centerY" secondItem="2Oe-ih-tYk" secondAttribute="centerY" id="ZkM-aP-0YB"/>
                                 <constraint firstItem="8lV-wl-Avb" firstAttribute="leading" secondItem="Ubo-lM-9hx" secondAttribute="leading" constant="8" id="cKQ-qR-glC"/>
                                 <constraint firstItem="KCi-82-gf5" firstAttribute="leading" secondItem="8lV-wl-Avb" secondAttribute="trailing" constant="43" id="dQd-8N-1pJ"/>
+                                <constraint firstAttribute="trailing" secondItem="6Se-AX-sQJ" secondAttribute="trailing" constant="8" id="ebq-uk-gWI"/>
                                 <constraint firstItem="LnI-9d-0RM" firstAttribute="top" secondItem="KCi-82-gf5" secondAttribute="bottom" constant="16" id="f8M-49-wCX"/>
+                                <constraint firstItem="6Se-AX-sQJ" firstAttribute="top" secondItem="EQk-Cl-3EV" secondAttribute="bottom" constant="30" id="fKo-wJ-iAY"/>
                                 <constraint firstItem="KCi-82-gf5" firstAttribute="top" secondItem="WK4-lZ-LX4" secondAttribute="bottom" constant="20" id="hFx-5i-OTt"/>
                                 <constraint firstItem="WK4-lZ-LX4" firstAttribute="leading" secondItem="Wfb-xK-j8Z" secondAttribute="trailing" constant="8" id="hmp-og-fRN"/>
                                 <constraint firstItem="2Oe-ih-tYk" firstAttribute="top" secondItem="EQk-Cl-3EV" secondAttribute="bottom" constant="30" id="iuY-Ja-xUj"/>
@@ -183,6 +194,7 @@
                                 <constraint firstAttribute="trailing" secondItem="WK4-lZ-LX4" secondAttribute="trailing" constant="8" id="pb0-m8-DKD"/>
                                 <constraint firstItem="fKz-Hi-vwV" firstAttribute="centerY" secondItem="iRi-3A-g22" secondAttribute="centerY" id="pcN-f5-DxP"/>
                                 <constraint firstItem="fKz-Hi-vwV" firstAttribute="leading" secondItem="iRi-3A-g22" secondAttribute="trailing" constant="30" id="pf6-o6-Bdq"/>
+                                <constraint firstItem="6Se-AX-sQJ" firstAttribute="leading" secondItem="Ubo-lM-9hx" secondAttribute="leading" constant="8" id="q5v-q6-Hne"/>
                                 <constraint firstItem="Wfb-xK-j8Z" firstAttribute="top" secondItem="6KZ-d4-3dd" secondAttribute="bottom" constant="18" id="qYF-vL-Gc1"/>
                                 <constraint firstAttribute="trailing" secondItem="EQk-Cl-3EV" secondAttribute="trailing" id="tdu-c2-O24"/>
                                 <constraint firstItem="d1f-LH-GtF" firstAttribute="top" secondItem="2Oe-ih-tYk" secondAttribute="bottom" constant="48" id="uUf-lQ-5VM"/>

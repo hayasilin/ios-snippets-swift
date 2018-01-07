@@ -10,25 +10,39 @@ import Foundation
 
 let apiRequestUrl = "https://map.yahooapis.jp/search/local/V1/localSearch?appid=dj0zaiZpPUhhdVJPbm9hMnVUMSZzPWNvbnN1bWVyc2VjcmV0Jng9ZmE-&device=mobile&group=gid&sort=geo&output=json&gc=01&image=true&lat=35.7020691&lon=139.7753269&dist=3"
 
+enum YahooLocalRequestType {
+    case yahooLocationRequestTypeGeneral
+    case yahooLocationRequestTypeFavorite
+}
+
 class YahooLocalManager {
     
     let requestManager: RestfulRequestManager = RestfulRequestManager.sharedInstance
     private var shops = [Shop]()
 
-    private var latitute: Double
-    private var longuitude: Double
-    private var requestString: String!
+    var latitute: Double = 0
+    var longitude: Double = 0
     
-    init(_ latitute: Double, _ longuitude: Double)
+    var gidString = ""
+    var requestString = ""
+    
+    let appID = "appid=dj0zaiZpPUhhdVJPbm9hMnVUMSZzPWNvbnN1bWVyc2VjcmV0Jng9ZmE-"
+    
+    init()
     {
-        self.latitute = latitute
-        self.longuitude = longuitude
+        
     }
 
-    func composeRequestString() -> String
+    func composeRequestString(_ type: YahooLocalRequestType)
     {
-        let requestString = "https://map.yahooapis.jp/search/local/V1/localSearch?appid=dj0zaiZpPUhhdVJPbm9hMnVUMSZzPWNvbnN1bWVyc2VjcmV0Jng9ZmE-&device=mobile&group=gid&sort=geo&results=100&output=json&gc=01&image=true&lat=\(latitute)&lon=\(longuitude)&dist=3"
-        return requestString
+        switch type {
+        case .yahooLocationRequestTypeGeneral:
+            requestString = "https://map.yahooapis.jp/search/local/V1/localSearch?\(appID)&device=mobile&group=gid&sort=geo&results=100&output=json&gc=01&image=true&lat=\(latitute)&lon=\(longitude)&dist=3"
+            break
+        case .yahooLocationRequestTypeFavorite:
+            requestString = "https://map.yahooapis.jp/search/local/V1/localSearch?\(appID)&device=mobile&output=json&gc=01&image=true&gid=\(gidString)"
+            break
+        }
     }
     
     func getShops() -> [Shop]
@@ -38,7 +52,7 @@ class YahooLocalManager {
     
     func requestShopFromAPI(complete:@escaping(_ success: Bool, _ shops: [Shop]?, _ error: Error?) ->())
     {
-        let url = URL(string: composeRequestString())
+        let url = URL(string: requestString)
         
         try? requestManager.get(url: url!, completionHandler: { (data, urlResponse, error) in
             

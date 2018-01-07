@@ -17,7 +17,8 @@ class SettingsViewController: UIViewController {
     var keys = [String]()
     var items = [Array<String>]()
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
 
         navigationItem.title = "Settings"
@@ -27,11 +28,12 @@ class SettingsViewController: UIViewController {
         let path = Bundle.main.path(forResource: "Settings", ofType: "plist")!
         menu = (NSDictionary(contentsOfFile: path) as! [String : [String]])
         
-        if let dict = menu{
-            print(dict)
+        if let dict = menu
+        {
             keys = Array(dict.keys)
             
-            for key in keys{
+            for key in keys
+            {
                 let array = menu[key]
                 items.append(array!)
             }
@@ -68,33 +70,36 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate{
         return keys[section]
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
-        
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
         let cell = tableView.cellForRow(at: indexPath)
         checkChosenCell(cellTitle: (cell?.textLabel?.text)!)
     }
     
     func checkChosenCell(cellTitle: String) {
         
-        if cellTitle == "QRCode scan"
+        if cellTitle == "My Favorites"
+        {
+            let favoriteShopVC = FavoriteShopViewController()
+            navigationController?.pushViewController(favoriteShopVC, animated: true)
+        }
+        else if cellTitle == "QRCode scan"
         {
             let qrCodeScanVC = QRCodeScanViewController()
-            self.navigationController?.pushViewController(qrCodeScanVC, animated: true)
+            navigationController?.pushViewController(qrCodeScanVC, animated: true)
         }
         else if cellTitle == "Control device"
         {
             let controlDeviceVC = ControlDeviceViewController()
-            self.navigationController?.pushViewController(controlDeviceVC, animated: true)
+            navigationController?.pushViewController(controlDeviceVC, animated: true)
         }
         else if cellTitle == "Instruction"
         {
             let instructionVC = InstructionViewController()
-            self.navigationController?.pushViewController(instructionVC, animated: true)
+            navigationController?.pushViewController(instructionVC, animated: true)
         }
         else if cellTitle == "Contact me"
         {
-            print("send mail")
             let to = "kuanwei.hayasi@gmail.com"
             let subject = "問題回報/意見反應"
             
