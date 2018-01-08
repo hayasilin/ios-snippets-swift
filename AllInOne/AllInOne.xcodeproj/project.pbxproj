@@ -21,6 +21,10 @@
 		65AD08EE20032C9400DBD9E7 /* LogInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65AD08EC20032C9400DBD9E7 /* LogInViewController.xib */; };
 		65AD08F120032EC900DBD9E7 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AD08EF20032EC900DBD9E7 /* ResetPasswordViewController.swift */; };
 		65AD08F220032EC900DBD9E7 /* ResetPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65AD08F020032EC900DBD9E7 /* ResetPasswordViewController.xib */; };
+		65AD08F5200354E000DBD9E7 /* PhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AD08F3200354E000DBD9E7 /* PhotoCollectionViewController.swift */; };
+		65AD08F6200354E000DBD9E7 /* PhotoCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65AD08F4200354E000DBD9E7 /* PhotoCollectionViewController.xib */; };
+		65AD08F92003596500DBD9E7 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AD08F72003596500DBD9E7 /* PhotoCollectionViewCell.swift */; };
+		65AD08FA2003596500DBD9E7 /* PhotoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65AD08F82003596500DBD9E7 /* PhotoCollectionViewCell.xib */; };
 		65E0D3DD1FFF2A3E003B781E /* ShopListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E0D3DB1FFF2A3E003B781E /* ShopListTableViewCell.swift */; };
 		65E0D3DE1FFF2A3E003B781E /* ShopListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65E0D3DC1FFF2A3E003B781E /* ShopListTableViewCell.xib */; };
 		AC36D4F41FEE00F500BF94E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC36D4F31FEE00F500BF94E6 /* AppDelegate.swift */; };
@@ -106,6 +110,10 @@
 		65AD08EC20032C9400DBD9E7 /* LogInViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LogInViewController.xib; sourceTree = "<group>"; };
 		65AD08EF20032EC900DBD9E7 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		65AD08F020032EC900DBD9E7 /* ResetPasswordViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResetPasswordViewController.xib; sourceTree = "<group>"; };
+		65AD08F3200354E000DBD9E7 /* PhotoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewController.swift; sourceTree = "<group>"; };
+		65AD08F4200354E000DBD9E7 /* PhotoCollectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoCollectionViewController.xib; sourceTree = "<group>"; };
+		65AD08F72003596500DBD9E7 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		65AD08F82003596500DBD9E7 /* PhotoCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoCollectionViewCell.xib; sourceTree = "<group>"; };
 		65E0D3DB1FFF2A3E003B781E /* ShopListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopListTableViewCell.swift; sourceTree = "<group>"; };
 		65E0D3DC1FFF2A3E003B781E /* ShopListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShopListTableViewCell.xib; sourceTree = "<group>"; };
 		65FE4A431FF3A0E2005BCBD5 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
@@ -336,6 +344,10 @@
 				65AD08EC20032C9400DBD9E7 /* LogInViewController.xib */,
 				65AD08EF20032EC900DBD9E7 /* ResetPasswordViewController.swift */,
 				65AD08F020032EC900DBD9E7 /* ResetPasswordViewController.xib */,
+				65AD08F3200354E000DBD9E7 /* PhotoCollectionViewController.swift */,
+				65AD08F4200354E000DBD9E7 /* PhotoCollectionViewController.xib */,
+				65AD08F72003596500DBD9E7 /* PhotoCollectionViewCell.swift */,
+				65AD08F82003596500DBD9E7 /* PhotoCollectionViewCell.xib */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -509,6 +521,8 @@
 				6516F80D1FF5028400B1AC25 /* ScheduleTableViewCell.xib in Resources */,
 				65AD08EE20032C9400DBD9E7 /* LogInViewController.xib in Resources */,
 				AC91804320006E4300D4502F /* ShopDetailViewController.xib in Resources */,
+				65AD08F6200354E000DBD9E7 /* PhotoCollectionViewController.xib in Resources */,
+				65AD08FA2003596500DBD9E7 /* PhotoCollectionViewCell.xib in Resources */,
 				AC86E0D51FEEBB5E00427C30 /* Settings.plist in Resources */,
 				AC706C1220012935008492B6 /* FavoriteShopViewController.xib in Resources */,
 				6516F8151FF5041400B1AC25 /* ScheduleAddViewController.xib in Resources */,
@@ -739,7 +753,9 @@
 				AC8C067F1FF7D15100018CFB /* QRCodeScanViewController.swift in Sources */,
 				65AD08ED20032C9400DBD9E7 /* LogInViewController.swift in Sources */,
 				AC36D4F61FEE00F500BF94E6 /* ViewController.swift in Sources */,
+				65AD08F5200354E000DBD9E7 /* PhotoCollectionViewController.swift in Sources */,
 				65AD08F120032EC900DBD9E7 /* ResetPasswordViewController.swift in Sources */,
+				65AD08F92003596500DBD9E7 /* PhotoCollectionViewCell.swift in Sources */,
 				ACA136F51FEF4DE60088B2CC /* InstructionViewController.swift in Sources */,
 				AC36D53A1FEE147000BF94E6 /* MapViewController.swift in Sources */,
 				AC36D4F41FEE00F500BF94E6 /* AppDelegate.swift in Sources */,
