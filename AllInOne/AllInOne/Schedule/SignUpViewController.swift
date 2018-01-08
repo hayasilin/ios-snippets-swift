@@ -21,12 +21,6 @@ class SignUpViewController: UIViewController {
 
         navigationItem.title = "Sign Up"
         navigationController?.navigationBar.isTranslucent = false
-
-        if Auth.auth().currentUser != nil
-        {
-            let scheduleVC = ScheduleViewController()
-            navigationController?.pushViewController(scheduleVC, animated: true)
-        }
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

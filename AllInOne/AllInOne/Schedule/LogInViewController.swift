@@ -20,6 +20,12 @@ class LogInViewController: UIViewController {
         super.viewDidLoad()
 
         navigationItem.title = "Log In"
+
+        if Auth.auth().currentUser != nil
+        {
+            let scheduleVC = ScheduleViewController()
+            navigationController?.pushViewController(scheduleVC, animated: true)
+        }
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
