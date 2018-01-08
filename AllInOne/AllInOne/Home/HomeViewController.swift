@@ -34,20 +34,9 @@ class HomeViewController: UIViewController {
         tableView.refreshControl?.addTarget(self, action: #selector(requestDataFromAPI), for: .valueChanged)
         
         requestDataFromAPI()
-        
-        //declare this property where it won't go out of scope relative to your listener
-        let reachability = Reachability()!
-        
-        //declare this inside of viewWillAppear
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(note:)), name: .reachabilityChanged, object: reachability)
-        do{
-            try reachability.startNotifier()
-        }catch{
-            print("could not start reachability notifier")
-        }
-        
-//        edgePanGesture = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(handleEdgePanGesture(_:)))
+
+        configurateReachability()
+
         edgePanGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleEdgePanGesture(_:)))
         tableView.addGestureRecognizer(edgePanGesture)
     }
@@ -57,11 +46,17 @@ class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: false)
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        
+
+    func configurateReachability()
+    {
+        let reachability = Reachability()!
+
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(note:)), name: .reachabilityChanged, object: reachability)
+        do{
+            try reachability.startNotifier()
+        }catch{
+            print("could not start reachability notifier")
+        }
     }
     
     @objc func handleEdgePanGesture(_ sender: UISwipeGestureRecognizer)

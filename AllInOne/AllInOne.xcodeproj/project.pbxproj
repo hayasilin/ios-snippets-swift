@@ -15,6 +15,12 @@
 		6516F80D1FF5028400B1AC25 /* ScheduleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6516F80B1FF5028400B1AC25 /* ScheduleTableViewCell.xib */; };
 		6516F8141FF5041400B1AC25 /* ScheduleAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6516F8121FF5041400B1AC25 /* ScheduleAddViewController.swift */; };
 		6516F8151FF5041400B1AC25 /* ScheduleAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6516F8131FF5041400B1AC25 /* ScheduleAddViewController.xib */; };
+		65AD08E920032C7C00DBD9E7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AD08E720032C7C00DBD9E7 /* SignUpViewController.swift */; };
+		65AD08EA20032C7C00DBD9E7 /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65AD08E820032C7C00DBD9E7 /* SignUpViewController.xib */; };
+		65AD08ED20032C9400DBD9E7 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AD08EB20032C9400DBD9E7 /* LogInViewController.swift */; };
+		65AD08EE20032C9400DBD9E7 /* LogInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65AD08EC20032C9400DBD9E7 /* LogInViewController.xib */; };
+		65AD08F120032EC900DBD9E7 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65AD08EF20032EC900DBD9E7 /* ResetPasswordViewController.swift */; };
+		65AD08F220032EC900DBD9E7 /* ResetPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65AD08F020032EC900DBD9E7 /* ResetPasswordViewController.xib */; };
 		65E0D3DD1FFF2A3E003B781E /* ShopListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E0D3DB1FFF2A3E003B781E /* ShopListTableViewCell.swift */; };
 		65E0D3DE1FFF2A3E003B781E /* ShopListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65E0D3DC1FFF2A3E003B781E /* ShopListTableViewCell.xib */; };
 		AC36D4F41FEE00F500BF94E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC36D4F31FEE00F500BF94E6 /* AppDelegate.swift */; };
@@ -94,6 +100,12 @@
 		6516F80B1FF5028400B1AC25 /* ScheduleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScheduleTableViewCell.xib; sourceTree = "<group>"; };
 		6516F8121FF5041400B1AC25 /* ScheduleAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleAddViewController.swift; sourceTree = "<group>"; };
 		6516F8131FF5041400B1AC25 /* ScheduleAddViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScheduleAddViewController.xib; sourceTree = "<group>"; };
+		65AD08E720032C7C00DBD9E7 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		65AD08E820032C7C00DBD9E7 /* SignUpViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignUpViewController.xib; sourceTree = "<group>"; };
+		65AD08EB20032C9400DBD9E7 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		65AD08EC20032C9400DBD9E7 /* LogInViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LogInViewController.xib; sourceTree = "<group>"; };
+		65AD08EF20032EC900DBD9E7 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		65AD08F020032EC900DBD9E7 /* ResetPasswordViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResetPasswordViewController.xib; sourceTree = "<group>"; };
 		65E0D3DB1FFF2A3E003B781E /* ShopListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopListTableViewCell.swift; sourceTree = "<group>"; };
 		65E0D3DC1FFF2A3E003B781E /* ShopListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShopListTableViewCell.xib; sourceTree = "<group>"; };
 		65FE4A431FF3A0E2005BCBD5 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
@@ -318,6 +330,12 @@
 				6516F80B1FF5028400B1AC25 /* ScheduleTableViewCell.xib */,
 				6516F8121FF5041400B1AC25 /* ScheduleAddViewController.swift */,
 				6516F8131FF5041400B1AC25 /* ScheduleAddViewController.xib */,
+				65AD08E720032C7C00DBD9E7 /* SignUpViewController.swift */,
+				65AD08E820032C7C00DBD9E7 /* SignUpViewController.xib */,
+				65AD08EB20032C9400DBD9E7 /* LogInViewController.swift */,
+				65AD08EC20032C9400DBD9E7 /* LogInViewController.xib */,
+				65AD08EF20032EC900DBD9E7 /* ResetPasswordViewController.swift */,
+				65AD08F020032EC900DBD9E7 /* ResetPasswordViewController.xib */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -481,12 +499,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC706C162001DA2C008492B6 /* CameraViewController.xib in Resources */,
+				65AD08F220032EC900DBD9E7 /* ResetPasswordViewController.xib in Resources */,
 				6516F8071FF4FB3700B1AC25 /* GoogleService-Info.plist in Resources */,
 				AC86E0D31FEEBB3700427C30 /* app.plist in Resources */,
 				AC36D5011FEE00F500BF94E6 /* LaunchScreen.storyboard in Resources */,
 				AC8C06841FF7DD7000018CFB /* ControlDeviceViewController.xib in Resources */,
+				65AD08EA20032C7C00DBD9E7 /* SignUpViewController.xib in Resources */,
 				AC36D53B1FEE147000BF94E6 /* MapViewController.xib in Resources */,
 				6516F80D1FF5028400B1AC25 /* ScheduleTableViewCell.xib in Resources */,
+				65AD08EE20032C9400DBD9E7 /* LogInViewController.xib in Resources */,
 				AC91804320006E4300D4502F /* ShopDetailViewController.xib in Resources */,
 				AC86E0D51FEEBB5E00427C30 /* Settings.plist in Resources */,
 				AC706C1220012935008492B6 /* FavoriteShopViewController.xib in Resources */,
@@ -716,13 +737,16 @@
 				AC36D5421FEE157400BF94E6 /* ScheduleViewController.swift in Sources */,
 				AC91804220006E4300D4502F /* ShopDetailViewController.swift in Sources */,
 				AC8C067F1FF7D15100018CFB /* QRCodeScanViewController.swift in Sources */,
+				65AD08ED20032C9400DBD9E7 /* LogInViewController.swift in Sources */,
 				AC36D4F61FEE00F500BF94E6 /* ViewController.swift in Sources */,
+				65AD08F120032EC900DBD9E7 /* ResetPasswordViewController.swift in Sources */,
 				ACA136F51FEF4DE60088B2CC /* InstructionViewController.swift in Sources */,
 				AC36D53A1FEE147000BF94E6 /* MapViewController.swift in Sources */,
 				AC36D4F41FEE00F500BF94E6 /* AppDelegate.swift in Sources */,
 				ACA481391FFA484D00BF4490 /* APIService.swift in Sources */,
 				AC36D5361FEE101F00BF94E6 /* HomeTableViewCell.swift in Sources */,
 				AC36D4FC1FEE00F500BF94E6 /* AllInOne.xcdatamodeld in Sources */,
+				65AD08E920032C7C00DBD9E7 /* SignUpViewController.swift in Sources */,
 				AC36D54A1FEE226400BF94E6 /* HotArticle.swift in Sources */,
 				AC706C0E20012146008492B6 /* FavoriteManager.swift in Sources */,
 				AC706C152001DA2C008492B6 /* CameraViewController.swift in Sources */,

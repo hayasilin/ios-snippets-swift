@@ -24,8 +24,10 @@ class ScheduleViewController: UIViewController {
         
         let AddBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pushToCreatePage))
         navigationItem.rightBarButtonItem = AddBarButtonItem
-        
-        
+
+        let logoutBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.plain, target: self, action: #selector(doLogoutAction(_ :)))
+        navigationItem.leftBarButtonItem = logoutBarButtonItem
+
         let nib = UINib(nibName: "ScheduleTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "cell")
         
@@ -53,6 +55,20 @@ class ScheduleViewController: UIViewController {
         let scheduleAddPage = ScheduleAddViewController()
         
         navigationController?.pushViewController(scheduleAddPage, animated: true)
+    }
+
+    @objc func doLogoutAction(_ sender: UIBarButtonItem)
+    {
+        if Auth.auth().currentUser != nil
+        {
+            do {
+                try Auth.auth().signOut()
+                navigationController?.popViewController(animated: true)
+            } catch let error as NSError
+            {
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 
