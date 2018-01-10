@@ -21,6 +21,7 @@ class AllInOneTests: XCTestCase {
         super.setUp()
 
         apiService = APIService()
+        XCTAssertNotNil(apiService, "Can't create APIService instance")
     }
     
     override func tearDown()
