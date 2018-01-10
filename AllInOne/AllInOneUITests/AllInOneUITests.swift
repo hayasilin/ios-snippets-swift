@@ -68,16 +68,20 @@ class AllInOneUITests: XCTestCase {
         XCTAssertTrue(!firstHotNewsTitle.isEmpty)
     }
 
-    func removeAllFavoriteItems()
+    func testRemoveAllFavoriteItems()
     {
+        app.tabBars.buttons.element(boundBy: 2).tap()
+
         let table = app.tables
         app.navigationBars.matching(identifier: "Schedule").buttons["Edit"].tap()
 
-        while table.cells.count > 1 {
+        sleep(3)
+
+        while table.cells.count > 0 {
             let count = table.cells.count
-            let cell = table.cells.element(boundBy: 1)
+            let cell = table.cells.element(boundBy: 0)
             cell.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Delete'")).element.tap()
-            cell.children(matching: .button).matching(identifier: "Delete").element(boundBy: 1).tap()
+            cell.children(matching: .button).matching(identifier: "Delete").element(boundBy: 0).tap()
 
             XCTAssertEqual(table.cells.count, count - 1)
         }

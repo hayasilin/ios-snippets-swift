@@ -22,8 +22,9 @@ class ScheduleViewController: UIViewController {
 
         navigationItem.title = "Schedule"
         
-        let AddBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pushToCreatePage))
-        navigationItem.rightBarButtonItem = AddBarButtonItem
+        let addBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pushToCreatePage))
+        let editBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(doEditAction(_:)))
+        navigationItem.rightBarButtonItems = [addBarButtonItem, editBarButtonItem]
 
         let logoutBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.plain, target: self, action: #selector(doLogoutAction(_ :)))
         navigationItem.leftBarButtonItem = logoutBarButtonItem
@@ -70,6 +71,20 @@ class ScheduleViewController: UIViewController {
             }
         }
     }
+
+    @objc func doEditAction(_ sender: UIBarButtonItem)
+    {
+        if tableView.isEditing
+        {
+            tableView.setEditing(false, animated: true)
+            sender.title = "Edit"
+        }
+        else
+        {
+            tableView.setEditing(true, animated: true)
+            sender.title = "Done"
+        }
+    }
 }
 
 extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
@@ -112,5 +127,4 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
-    
 }
