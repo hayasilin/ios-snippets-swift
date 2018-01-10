@@ -75,7 +75,7 @@ class AllInOneUITests: XCTestCase {
         let table = app.tables
         app.navigationBars.matching(identifier: "Schedule").buttons["Edit"].tap()
 
-        sleep(3)
+//        sleep(3)
 
         while table.cells.count > 0 {
             let count = table.cells.count
@@ -85,6 +85,8 @@ class AllInOneUITests: XCTestCase {
 
             XCTAssertEqual(table.cells.count, count - 1)
         }
+
+        waitForExpectations(timeout: 3, handler: nil)
     }
 
     func testCustomButton()
