@@ -19,7 +19,17 @@ class ShopPhotoCollectionViewController: UIViewController, UICollectionViewDeleg
         
         let nib = UINib(nibName: "ShopPhotoCollectionViewCell", bundle: nil)
         collectionView.register(nib, forCellWithReuseIdentifier: "cell")
-        
+
+        var layout = UICollectionViewFlowLayout()
+        layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        let value = view.frame.size.width / 3
+        layout.itemSize = CGSize(width: value, height: value)
+        layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsetsMake(20, 0, 20, 0)
+
+
+        let headerViewNib = UINib(nibName: "ShopPhotoCollectionHeaderView", bundle: nil)
+        collectionView.register(headerViewNib, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "PhotoListHeader")
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -28,12 +38,6 @@ class ShopPhotoCollectionViewController: UIViewController, UICollectionViewDeleg
         
         collectionView.reloadData()
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//
-////        let size = view.frame.size.width / 3
-////        return CGSize(width: size, height: size)
-//    }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int
     {
@@ -52,8 +56,6 @@ class ShopPhotoCollectionViewController: UIViewController, UICollectionViewDeleg
         let gid = ShopPhotoManager.sharedInstance.gids[indexPath.section]
         cell.photoImageView.image = ShopPhotoManager.sharedInstance.getImage(gid, indexPath.row)
         
-        cell.contentView.backgroundColor = UIColor.gray
-        
         return cell
     }
     
@@ -61,10 +63,28 @@ class ShopPhotoCollectionViewController: UIViewController, UICollectionViewDeleg
     {
         print("did select = \(indexPath.row)")
     }
-    
-    
-    
-    
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize
+    {
+        return CGSize(width: view.frame.size.width, height: 50)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView
+    {
+        if kind == UICollectionElementKindSectionHeader
+        {
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "PhotoListHeader", for: indexPath) as! ShopPhotoCollectionHeaderView
+
+            let gid = ShopPhotoManager.sharedInstance.gids[indexPath.section]
+            let name = ShopPhotoManager.sharedInstance.names[gid]
+
+            header.headerLabel.text = name
+
+            return header
+        }
+
+        return UICollectionReusableView()
+    }
 }
 
 

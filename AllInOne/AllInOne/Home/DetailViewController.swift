@@ -9,22 +9,26 @@
 import UIKit
 import WebKit
 
-class DetailViewController: UIViewController, WKNavigationDelegate {
+class DetailViewController: UIViewController {
 
     var webView: WKWebView!
-    
+    var activityIndicatorView = UIActivityIndicatorView()
+    var loadingView = UIView()
     var urlString: String?
     
-    init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, urlString: String?) {
+    init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, urlString: String?)
+    {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.urlString = urlString
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder)
+    {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         
         self.navigationController?.setNavigationBarHidden(false, animated: false)
@@ -38,20 +42,86 @@ class DetailViewController: UIViewController, WKNavigationDelegate {
         webView.allowsBackForwardNavigationGestures = true
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        showLoadingIndicator(view)
     }
-    
 
-    /*
-    // MARK: - Navigation
+    func showLoadingIndicator(_ view: UIView)
+    {
+        loadingView.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
+        loadingView.center = view.center
+        loadingView.clipsToBounds = true
+        loadingView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
+        loadingView.layer.cornerRadius = 10
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        activityIndicatorView.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        activityIndicatorView.activityIndicatorViewStyle = .whiteLarge
+        activityIndicatorView.center = CGPoint(x: loadingView.frame.size.width / 2, y: loadingView.frame.size.height / 2)
+
+        loadingView.addSubview(activityIndicatorView)
+        view.addSubview(loadingView)
+        activityIndicatorView.startAnimating()
     }
-    */
-
 }
+
+extension DetailViewController: WKNavigationDelegate
+{
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!)
+    {
+        print("didStartProvisionalNavigation")
+    }
+
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void)
+    {
+        print("decidePolicyFor navigationAction")
+        if navigationAction.navigationType == WKNavigationType.linkActivated
+        {
+            decisionHandler(WKNavigationActionPolicy.cancel)
+        }
+        else
+        {
+            decisionHandler(WKNavigationActionPolicy.allow)
+        }
+    }
+
+    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void)
+    {
+        print("decidePolicyFor navigationResponse")
+
+        if !navigationResponse.isForMainFrame
+        {
+            decisionHandler(WKNavigationResponsePolicy.cancel)
+        }
+        else
+        {
+            decisionHandler(WKNavigationResponsePolicy.allow)
+        }
+    }
+
+    func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!)
+    {
+        print("didReceiveServerRedirectForProvisionalNavigation")
+    }
+
+
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error)
+    {
+        print("didFail navigation")
+    }
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!)
+    {
+        print("didFinish navigation")
+
+        activityIndicatorView.stopAnimating()
+        loadingView.isHidden = true
+    }
+}
+
+
+
+
+
+
