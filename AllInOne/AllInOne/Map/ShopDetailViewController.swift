@@ -13,7 +13,6 @@ import Social
 
 class ShopDetailViewController: UIViewController {
 
-    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var shopNameLabel: UILabel!
     @IBOutlet weak var phoneButton: UIButton!
@@ -25,6 +24,7 @@ class ShopDetailViewController: UIViewController {
     @IBOutlet weak var facebookButton: UIButton!
     @IBOutlet weak var twitterButton: UIButton!
     
+    let imagePickerVC = UIImagePickerController()
     
     var shop = Shop()
     
@@ -46,9 +46,17 @@ class ShopDetailViewController: UIViewController {
         
         navigationItem.title = shop.name
         
+        let cameraBarButtonItem = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(takePhotos(_:)))
+        let photoCollectionBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(pushShopPhotoCollectionVC(_:)))
+        navigationItem.rightBarButtonItems = [cameraBarButtonItem, photoCollectionBarButtonItem]
+        
         createUI()
         updateFavoriteUI()
         checkShareConfiguration()
+        
+        let fm = FileManager.default
+        let path = NSHomeDirectory()
+        print("home = \(path)")
     }
     
     func createUI()
@@ -196,6 +204,64 @@ extension ShopDetailViewController: UIScrollViewDelegate
             imageView.frame.size.height = 200 - scrollOffset
         }
         
+    }
+}
+
+extension ShopDetailViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate
+{
+    
+    @objc func pushShopPhotoCollectionVC(_ sender: UIBarButtonItem)
+    {
+        let shopPhotoCollectionVC = ShopPhotoCollectionViewController()
+        navigationController?.pushViewController(shopPhotoCollectionVC, animated: true)
+    }
+    
+    @objc func takePhotos(_ sender: UIBarButtonItem)
+    {
+        imagePickerVC.delegate = self
+        
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera)
+        {
+            alert.addAction(
+                UIAlertAction(title: "拍照", style: .default, handler: { (action) in
+                    self.imagePickerVC.sourceType = .camera
+                    self.show(self.imagePickerVC, sender: self)
+                })
+            )
+        }
+        
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary)
+        {
+            alert.addAction(
+                UIAlertAction(title: "選擇照片", style: .default, handler: { (action) in
+                    self.imagePickerVC.sourceType = .photoLibrary
+                    self.show(self.imagePickerVC, sender: self)
+                })
+            )
+        }
+        
+        alert.addAction(
+            UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        )
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
+    {
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        {
+            ShopPhotoManager.sharedInstance.appendPhotos(shop, image)
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController)
+    {
+        dismiss(animated: true, completion: nil)
     }
 }
 
