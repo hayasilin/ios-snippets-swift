@@ -53,10 +53,6 @@ class ShopDetailViewController: UIViewController {
         createUI()
         updateFavoriteUI()
         checkShareConfiguration()
-        
-        let fm = FileManager.default
-        let path = NSHomeDirectory()
-        print("home = \(path)")
     }
     
     func createUI()
@@ -190,7 +186,6 @@ class ShopDetailViewController: UIViewController {
     {
         share(SLServiceTypeTwitter)
     }
-    
 }
 
 extension ShopDetailViewController: UIScrollViewDelegate

@@ -101,6 +101,7 @@ public class LocationService: NSObject, CLLocationManagerDelegate{
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
         cllm.stopUpdatingLocation()
+        cllm.delegate = nil
         
         let lastLocation = locations.last!
         

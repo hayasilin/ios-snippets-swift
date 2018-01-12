@@ -128,15 +128,15 @@ class MapViewController: UIViewController{
         var frame = rollOutView.frame
         var myLocationButtonFrame = myLocationButton.frame
         var filterButtonFrame = filterButton.frame
-        
+
         if rollOutView.frame.origin.y == UIScreen.main.bounds.size.height
         {
             frame.origin.y = UIScreen.main.bounds.size.height - rollOutViewHeight - tabBarHeight
             myLocationButtonFrame.origin.y = UIScreen.main.bounds.size.height - rollOutViewHeight - tabBarHeight - 80
             filterButtonFrame.origin.y = UIScreen.main.bounds.size.height - rollOutViewHeight - tabBarHeight - 80
-            
+
             filterButton.isHidden = true
-            
+
             //讓mapView往上移一點
             var center: CLLocationCoordinate2D = mapView.centerCoordinate
             center.latitude -= mapView.region.span.latitudeDelta * 0.10
@@ -146,7 +146,7 @@ class MapViewController: UIViewController{
         {
             //Do nothing
         }
-        
+
         UIView.animate(withDuration: 0.3, animations: {
             self.rollOutView.frame = frame
             self.myLocationButton.frame = myLocationButtonFrame
@@ -203,6 +203,7 @@ class MapViewController: UIViewController{
     
     @objc func showUserLoaction()
     {
+        print("showUserLoaction")
         let userLocation: MKUserLocation = mapView.userLocation
         var region = MKCoordinateRegion()
         region.center = userLocation.coordinate
@@ -222,9 +223,9 @@ extension MapViewController: MKMapViewDelegate
 {
     func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool)
     {
+        print("mapViewDidFinishRenderingMap")
         if isFirstEntry {
             isFirstEntry = false
-            self.moveMapViewUp()
             showUserLoaction()
         }
     }
@@ -250,7 +251,6 @@ extension MapViewController: MKMapViewDelegate
         }
         
         let button = UIButton(type: .detailDisclosure)
-//        button.addTarget(self, action: #selector(annotationCalloutButtonPressed(_:)), for: .touchUpInside)
         pinView?.rightCalloutAccessoryView = button
 
         return pinView
@@ -283,6 +283,7 @@ extension MapViewController: LocationServiceProtocol {
     
     func lsDidUpdateLocation(_ location: CLLocation)
     {
+        print("lsDidUpdateLocation")
         var latitude = location.coordinate.latitude
         var longitude = location.coordinate.longitude
         
@@ -309,7 +310,9 @@ extension MapViewController: LocationServiceProtocol {
                 }
                 
                 self.shopListVC.getShopData(shops!, completion: {
-                    self.toggleViewUp()
+                    DispatchQueue.main.async {
+                        self.toggleViewUp()
+                    }
                 })
             }
             else
