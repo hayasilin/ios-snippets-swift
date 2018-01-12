@@ -42,12 +42,6 @@ class DetailViewController: UIViewController {
         webView.allowsBackForwardNavigationGestures = true
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        showLoadingIndicator(view)
-    }
-
     func showLoadingIndicator(_ view: UIView)
     {
         loadingView.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
@@ -70,12 +64,11 @@ extension DetailViewController: WKNavigationDelegate
 {
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!)
     {
-        print("didStartProvisionalNavigation")
+        showLoadingIndicator(view)
     }
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void)
     {
-        print("decidePolicyFor navigationAction")
         if navigationAction.navigationType == WKNavigationType.linkActivated
         {
             decisionHandler(WKNavigationActionPolicy.cancel)
@@ -88,8 +81,6 @@ extension DetailViewController: WKNavigationDelegate
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void)
     {
-        print("decidePolicyFor navigationResponse")
-
         if !navigationResponse.isForMainFrame
         {
             decisionHandler(WKNavigationResponsePolicy.cancel)
@@ -100,23 +91,15 @@ extension DetailViewController: WKNavigationDelegate
         }
     }
 
-    func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!)
-    {
-        print("didReceiveServerRedirectForProvisionalNavigation")
-    }
-
-
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error)
     {
-        print("didFail navigation")
+        print("didFail navigation eroor = \(error.localizedDescription)")
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!)
     {
-        print("didFinish navigation")
-
-        activityIndicatorView.stopAnimating()
-        loadingView.isHidden = true
+        self.activityIndicatorView.stopAnimating()
+        self.loadingView.isHidden = true
     }
 }
 

@@ -20,9 +20,5 @@
 		<string>Contact me</string>
 		<string>Instruction</string>
 	</array>
-	<key>Others</key>
-	<array>
-		<string>Log out</string>
-	</array>
 </dict>
 </plist>
