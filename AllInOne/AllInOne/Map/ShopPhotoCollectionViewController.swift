@@ -62,6 +62,12 @@ class ShopPhotoCollectionViewController: UIViewController, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
     {
         print("did select = \(indexPath.row)")
+
+        let gid = ShopPhotoManager.sharedInstance.gids[indexPath.section]
+        let image = ShopPhotoManager.sharedInstance.getImage(gid, indexPath.row)
+
+        let shopPhotoEndVC = ShopPhotoEndViewController(nibName: "ShopPhotoEndViewController", bundle: nil, image)
+        navigationController?.pushViewController(shopPhotoEndVC, animated: true)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize
@@ -84,6 +90,22 @@ class ShopPhotoCollectionViewController: UIViewController, UICollectionViewDeleg
         }
 
         return UICollectionReusableView()
+    }
+
+
+    func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool
+    {
+        return true
+    }
+
+    func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool
+    {
+        return true
+    }
+
+    func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?)
+    {
+
     }
 }
 
