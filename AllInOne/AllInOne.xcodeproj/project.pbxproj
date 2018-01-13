@@ -62,8 +62,6 @@
 		AC706C1220012935008492B6 /* FavoriteShopViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC706C1020012935008492B6 /* FavoriteShopViewController.xib */; };
 		AC706C152001DA2C008492B6 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC706C132001DA2C008492B6 /* CameraViewController.swift */; };
 		AC706C162001DA2C008492B6 /* CameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC706C142001DA2C008492B6 /* CameraViewController.xib */; };
-		AC706C192001E56D008492B6 /* PhotoPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC706C172001E56D008492B6 /* PhotoPickerViewController.swift */; };
-		AC706C1A2001E56D008492B6 /* PhotoPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC706C182001E56D008492B6 /* PhotoPickerViewController.xib */; };
 		AC86E0CF1FEEAB2D00427C30 /* RestfulRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86E0CE1FEEAB2D00427C30 /* RestfulRequestManager.swift */; };
 		AC86E0D31FEEBB3700427C30 /* app.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC86E0D21FEEBB3700427C30 /* app.plist */; };
 		AC86E0D51FEEBB5E00427C30 /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC86E0D41FEEBB5E00427C30 /* Settings.plist */; };
@@ -172,8 +170,6 @@
 		AC706C1020012935008492B6 /* FavoriteShopViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteShopViewController.xib; sourceTree = "<group>"; };
 		AC706C132001DA2C008492B6 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		AC706C142001DA2C008492B6 /* CameraViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CameraViewController.xib; sourceTree = "<group>"; };
-		AC706C172001E56D008492B6 /* PhotoPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerViewController.swift; sourceTree = "<group>"; };
-		AC706C182001E56D008492B6 /* PhotoPickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoPickerViewController.xib; sourceTree = "<group>"; };
 		AC86E0CE1FEEAB2D00427C30 /* RestfulRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestfulRequestManager.swift; sourceTree = "<group>"; };
 		AC86E0D21FEEBB3700427C30 /* app.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = app.plist; sourceTree = "<group>"; };
 		AC86E0D41FEEBB5E00427C30 /* Settings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Settings.plist; sourceTree = "<group>"; };
@@ -396,8 +392,6 @@
 				AC8C06821FF7DD7000018CFB /* ControlDeviceViewController.xib */,
 				AC706C0F20012935008492B6 /* FavoriteShopViewController.swift */,
 				AC706C1020012935008492B6 /* FavoriteShopViewController.xib */,
-				AC706C172001E56D008492B6 /* PhotoPickerViewController.swift */,
-				AC706C182001E56D008492B6 /* PhotoPickerViewController.xib */,
 				ACEE470120098B9A00FB42D2 /* ProfileViewController.swift */,
 				ACEE470220098B9A00FB42D2 /* ProfileViewController.xib */,
 			);
@@ -570,7 +564,6 @@
 				AC36D53F1FEE153700BF94E6 /* SettingsViewController.xib in Resources */,
 				AC36D52D1FEE0B6B00BF94E6 /* HomeViewController.xib in Resources */,
 				ACEE470420098B9A00FB42D2 /* ProfileViewController.xib in Resources */,
-				AC706C1A2001E56D008492B6 /* PhotoPickerViewController.xib in Resources */,
 				AC36D5431FEE157400BF94E6 /* ScheduleViewController.xib in Resources */,
 				ACA136F61FEF4DE60088B2CC /* InstructionViewController.xib in Resources */,
 				AC8C06801FF7D15100018CFB /* QRCodeScanViewController.xib in Resources */,
@@ -812,7 +805,6 @@
 				65E0D3DD1FFF2A3E003B781E /* ShopListTableViewCell.swift in Sources */,
 				AC706C1120012935008492B6 /* FavoriteShopViewController.swift in Sources */,
 				AC86E0CF1FEEAB2D00427C30 /* RestfulRequestManager.swift in Sources */,
-				AC706C192001E56D008492B6 /* PhotoPickerViewController.swift in Sources */,
 				ACA1C2151FF9E5F700307B52 /* YahooLocalManager.swift in Sources */,
 				6516F80C1FF5028400B1AC25 /* ScheduleTableViewCell.swift in Sources */,
 				6516F8141FF5041400B1AC25 /* ScheduleAddViewController.swift in Sources */,

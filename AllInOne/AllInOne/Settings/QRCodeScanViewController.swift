@@ -12,8 +12,10 @@ import AVFoundation
 class QRCodeScanViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
 
     @IBOutlet weak var cameraView: UIView!
-    @IBOutlet weak var codeLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var scanResultButton: UIButton!
+    
+    var urlString = ""
     
     let session = AVCaptureSession()
     let captureVideoPreviewLayer = AVCaptureVideoPreviewLayer()
@@ -21,6 +23,9 @@ class QRCodeScanViewController: UIViewController, AVCaptureMetadataOutputObjects
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        navigationController?.navigationBar.isTranslucent = false
+        tabBarController?.tabBar.isTranslucent = false
 
         let device = AVCaptureDevice.default(for: AVMediaType.video)
         do {
@@ -47,17 +52,24 @@ class QRCodeScanViewController: UIViewController, AVCaptureMetadataOutputObjects
     override func viewWillLayoutSubviews()
     {
         super.viewWillLayoutSubviews()
-        
-        captureVideoPreviewLayer.frame = cameraView.bounds
     }
     
-    @IBAction func doStartAction(_ sender: UIButton)
+    override func viewWillAppear(_ animated: Bool)
     {
+        super.viewWillAppear(animated)
+        captureVideoPreviewLayer.frame = cameraView.bounds
         session.startRunning()
     }
     
-    @IBAction func doStopAction(_ sender: UIButton)
+    override func viewDidAppear(_ animated: Bool)
     {
+        super.viewDidAppear(animated)
+    
+    }
+    
+    override func viewDidDisappear(_ animated: Bool)
+    {
+        super.viewDidDisappear(animated)
         session.stopRunning()
     }
     
@@ -67,7 +79,9 @@ class QRCodeScanViewController: UIViewController, AVCaptureMetadataOutputObjects
         {
             if let data = metaData as? AVMetadataMachineReadableCodeObject
             {
-                codeLabel.text = data.stringValue
+                scanResultButton.setTitle(data.stringValue, for: .normal)
+                scanResultButton.isEnabled = true
+                urlString = data.stringValue!
                 typeLabel.text = data.type.rawValue
             }
             else
@@ -77,4 +91,13 @@ class QRCodeScanViewController: UIViewController, AVCaptureMetadataOutputObjects
         }
     }
 
+    @IBAction func scanResultButtonPressed(_ sender: UIButton)
+    {
+        let webView = UIWebView(frame: view.bounds)
+        let url = URL(string: urlString)
+        let request = URLRequest(url: url!)
+        webView.loadRequest(request)
+        
+        view.addSubview(webView)
+    }
 }

@@ -12,12 +12,11 @@
 	<array>
 		<string>QRCode scan</string>
 		<string>Control device</string>
-		<string>Pick a photo</string>
 	</array>
 	<key>Feed back</key>
 	<array>
 		<string>Contact me</string>
-		<string>Instruction</string>
+		<string>Creator&apos;s Github</string>
 	</array>
 </dict>
 </plist>

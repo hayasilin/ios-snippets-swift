@@ -7,29 +7,56 @@
 //
 
 import UIKit
+import WebKit
 
-class InstructionViewController: UIViewController {
+class InstructionViewController: UIViewController, WKNavigationDelegate {
 
-    override func viewDidLoad() {
+    var webView: WKWebView!
+    var activityIndicatorView = UIActivityIndicatorView()
+    var loadingView = UIView()
+    
+    let githubUrlString = "https://github.com/hayasilin"
+    
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        webView = WKWebView()
+        webView.navigationDelegate = self
+        view = webView
+        
+        let url = URL(string: githubUrlString)
+        webView.load(URLRequest(url: url!))
+        webView.allowsBackForwardNavigationGestures = true
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func showLoadingIndicator(_ view: UIView)
+    {
+        loadingView.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
+        loadingView.center = view.center
+        loadingView.clipsToBounds = true
+        loadingView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
+        loadingView.layer.cornerRadius = 10
+        
+        activityIndicatorView.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        activityIndicatorView.activityIndicatorViewStyle = .whiteLarge
+        activityIndicatorView.center = CGPoint(x: loadingView.frame.size.width / 2, y: loadingView.frame.size.height / 2)
+        
+        loadingView.addSubview(activityIndicatorView)
+        view.addSubview(loadingView)
+        activityIndicatorView.startAnimating()
     }
-    */
-
+    
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!)
+    {
+        showLoadingIndicator(view)
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!)
+    {
+        activityIndicatorView.stopAnimating()
+        loadingView.isHidden = true
+    }
 }
+
+
