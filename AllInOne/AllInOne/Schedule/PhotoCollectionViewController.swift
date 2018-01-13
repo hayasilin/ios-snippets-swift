@@ -86,8 +86,9 @@ class PhotoCollectionViewController: UIViewController, UICollectionViewDelegate,
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    {
+        
     }
 
 }

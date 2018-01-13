@@ -25,7 +25,6 @@ class ScheduleAddViewController: UIViewController, UIImagePickerControllerDelega
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/M/d H:m:s"
         createTime = formatter.string(from: Date())
-        print("now time = \(createTime)")
     }
     
     func saveSchedule()
@@ -111,7 +110,6 @@ class ScheduleAddViewController: UIViewController, UIImagePickerControllerDelega
 
         // 當判斷有 selectedImage 時，我們會在 if 判斷式裡將圖片上傳
         if let selectedImage = selectedImageFromPicker {
-
             print("\(uniqueString), \(selectedImage)")
         }
 
