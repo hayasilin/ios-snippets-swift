@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FBSDKLoginKit
 
 class ScheduleViewController: UIViewController {
     
@@ -60,7 +61,7 @@ class ScheduleViewController: UIViewController {
     
     func checkLoginStatus()
     {
-        if Auth.auth().currentUser == nil
+        if Auth.auth().currentUser == nil && FBSDKAccessToken.current() == nil
         {
             let LoginVC = LogInViewController()
             navigationController?.pushViewController(LoginVC, animated: true)
@@ -86,6 +87,12 @@ class ScheduleViewController: UIViewController {
             {
                 print(error.localizedDescription)
             }
+        }
+        
+        if FBSDKAccessToken.current() != nil
+        {
+            FBSDKLoginManager().logOut()
+            self.navigationController?.popViewController(animated: true)
         }
     }
 
