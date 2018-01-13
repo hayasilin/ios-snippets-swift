@@ -80,6 +80,8 @@
 		ACA4813B1FFA543500BF4490 /* ShopListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA4813A1FFA543500BF4490 /* ShopListViewController.swift */; };
 		ACEE470320098B9A00FB42D2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEE470120098B9A00FB42D2 /* ProfileViewController.swift */; };
 		ACEE470420098B9A00FB42D2 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ACEE470220098B9A00FB42D2 /* ProfileViewController.xib */; };
+		ACEE470B200A387C00FB42D2 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEE4709200A387C00FB42D2 /* AboutViewController.swift */; };
+		ACEE470C200A387C00FB42D2 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ACEE470A200A387C00FB42D2 /* AboutViewController.xib */; };
 		ACF7BC2F2007BA6100598A0D /* ShopPhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7BC2E2007BA6100598A0D /* ShopPhotoManager.swift */; };
 		ED891551507B7A8700935000 /* Pods_AllInOneTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CF3148F81876E0E8452EEB /* Pods_AllInOneTests.framework */; };
 /* End PBXBuildFile section */
@@ -188,6 +190,8 @@
 		ACA4813A1FFA543500BF4490 /* ShopListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopListViewController.swift; sourceTree = "<group>"; };
 		ACEE470120098B9A00FB42D2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		ACEE470220098B9A00FB42D2 /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
+		ACEE4709200A387C00FB42D2 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		ACEE470A200A387C00FB42D2 /* AboutViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 		ACF7BC2E2007BA6100598A0D /* ShopPhotoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopPhotoManager.swift; sourceTree = "<group>"; };
 		BC457F5AB43D03C54F79CACB /* Pods-AllInOneUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AllInOneUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AllInOneUITests/Pods-AllInOneUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		CFC3FBC77B36213AC35B8F33 /* Pods-AllInOneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AllInOneTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AllInOneTests/Pods-AllInOneTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -394,6 +398,8 @@
 				AC706C1020012935008492B6 /* FavoriteShopViewController.xib */,
 				ACEE470120098B9A00FB42D2 /* ProfileViewController.swift */,
 				ACEE470220098B9A00FB42D2 /* ProfileViewController.xib */,
+				ACEE4709200A387C00FB42D2 /* AboutViewController.swift */,
+				ACEE470A200A387C00FB42D2 /* AboutViewController.xib */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -539,6 +545,7 @@
 			files = (
 				AC706C162001DA2C008492B6 /* CameraViewController.xib in Resources */,
 				65AD08F220032EC900DBD9E7 /* ResetPasswordViewController.xib in Resources */,
+				ACEE470C200A387C00FB42D2 /* AboutViewController.xib in Resources */,
 				6516F8071FF4FB3700B1AC25 /* GoogleService-Info.plist in Resources */,
 				AC86E0D31FEEBB3700427C30 /* app.plist in Resources */,
 				65E013892008661B006AA206 /* ShopPhotoCollectionHeaderView.xib in Resources */,
@@ -830,6 +837,7 @@
 				65E013882008661B006AA206 /* ShopPhotoCollectionHeaderView.swift in Sources */,
 				AC706C152001DA2C008492B6 /* CameraViewController.swift in Sources */,
 				ACA4813B1FFA543500BF4490 /* ShopListViewController.swift in Sources */,
+				ACEE470B200A387C00FB42D2 /* AboutViewController.swift in Sources */,
 				AC36D5291FEE0A5100BF94E6 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

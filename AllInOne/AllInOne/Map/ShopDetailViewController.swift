@@ -52,8 +52,22 @@ class ShopDetailViewController: UIViewController {
         
         createUI()
         updateFavoriteUI()
-        checkShareConfiguration()
+        checkLineShareConfiguration()
     }
+    
+    func checkLineShareConfiguration()
+    {
+        if UIApplication.shared.canOpenURL(URL(string: "line://")!)
+        {
+            print("User has LINE App")
+            lineButton.isEnabled = true
+        }
+        else
+        {
+            print("User doesn't have LINE App")
+        }
+    }
+    
     
     func createUI()
     {
@@ -86,14 +100,6 @@ class ShopDetailViewController: UIViewController {
         {
             favoriteImageView.image = UIImage(named: "star_off")
             favoriteLabel.text = "加入我的最愛"
-        }
-    }
-    
-    func checkShareConfiguration()
-    {
-        if UIApplication.shared.canOpenURL(URL(string: "line://")!)
-        {
-            lineButton.isEnabled = true
         }
     }
     

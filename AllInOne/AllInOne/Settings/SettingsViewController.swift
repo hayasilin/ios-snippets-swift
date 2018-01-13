@@ -106,6 +106,10 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate{
         {
             nextVC = InstructionViewController()
         }
+        else if cellTitle == "App Information"
+        {
+            nextVC = AboutViewController()
+        }
         else if cellTitle == "Contact me"
         {
             let to = "kuanwei.hayasi@gmail.com"
@@ -115,19 +119,6 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate{
             
             let url = URL(string: mail!)
             UIApplication.shared.open(url!, options: [:], completionHandler: nil)
-        }
-        else if cellTitle == "Log out"
-        {
-            if Auth.auth().currentUser != nil
-            {
-                do {
-                    try Auth.auth().signOut()
-                }
-                catch let error as NSError
-                {
-                    print(error.localizedDescription)
-                }
-            }
         }
         
         navigationController?.pushViewController(nextVC, animated: true)
