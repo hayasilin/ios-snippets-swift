@@ -36,6 +36,17 @@ class ShopPhotoCollectionViewController: UIViewController, UICollectionViewDeleg
     {
         super.viewWillAppear(animated)
         
+        if ShopPhotoManager.sharedInstance.gids.count == 0
+        {
+            let alert = UIAlertController(title: "還沒有照片唷", message: "可以回到上一頁拍照即可保存照片", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                self.navigationController?.popViewController(animated: true)
+            })
+            
+            alert.addAction(okAction)
+            self.present(alert, animated: true, completion: nil)
+        }
+        
         collectionView.reloadData()
     }
     

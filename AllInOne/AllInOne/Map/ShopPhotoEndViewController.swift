@@ -31,14 +31,11 @@ class ShopPhotoEndViewController: UIViewController {
         super.viewDidLoad()
 
         navigationController?.navigationBar.isTranslucent = false
-        tabBarController?.tabBar.isTranslucent = false
-
-        let shareBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareButtonPressed(_:)))
-        navigationItem.rightBarButtonItem = shareBarButtonItem
+        tabBarController?.tabBar.isHidden = true
 
         imageView = UIImageView(image: photo)
 
-        scrollView = UIScrollView(frame: view.bounds)
+        scrollView = UIScrollView(frame: CGRect(x: view.bounds.minX, y: view.bounds.minY, width: view.bounds.size.width, height: view.bounds.size.height - 44))
         scrollView.delegate = self
         scrollView.backgroundColor = UIColor.black
         scrollView.contentSize = imageView.bounds.size
@@ -50,11 +47,12 @@ class ShopPhotoEndViewController: UIViewController {
         setZoomScale()
         setupDoubleTapGestureRecognizer()
     }
-
-    @objc func shareButtonPressed(_ sender: UIBarButtonItem)
+    
+    override func viewWillDisappear(_ animated: Bool)
     {
-        let shareScreen = UIActivityViewController(activityItems: [photo], applicationActivities: nil)
-        self.present(shareScreen, animated: true, completion: nil)
+        super.viewWillDisappear(animated)
+        
+        tabBarController?.tabBar.isHidden = false
     }
 
     override func viewWillLayoutSubviews()
@@ -91,6 +89,12 @@ class ShopPhotoEndViewController: UIViewController {
         {
             scrollView.setZoomScale(scrollView.maximumZoomScale, animated: true)
         }
+    }
+    
+    @IBAction func shareButtonPressed(_ sender: UIBarButtonItem)
+    {
+        let shareScreen = UIActivityViewController(activityItems: [photo], applicationActivities: nil)
+        self.present(shareScreen, animated: true, completion: nil)
     }
 }
 
