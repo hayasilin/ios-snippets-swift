@@ -101,8 +101,6 @@ extension LogInViewController: FBSDKLoginButtonDelegate
     
     func fetchProfile()
     {
-        print("attempt to fetch profile......")
-        
         let parameters = ["fields": "email, first_name, last_name, picture.type(large)"]
         
         FBSDKGraphRequest(graphPath: "me", parameters: parameters).start(completionHandler: {
@@ -110,7 +108,6 @@ extension LogInViewController: FBSDKLoginButtonDelegate
             
             if error != nil
             {
-                print("登入失敗")
                 print("longinerror =\(String(describing: error?.localizedDescription))")
             }
             else
@@ -118,8 +115,6 @@ extension LogInViewController: FBSDKLoginButtonDelegate
                 
                 if let resultNew = result as? [String:Any]
                 {
-                    print("成功登入")
-                    
                     let email = resultNew["email"]  as! String
                     print("email = \(email)")
                     

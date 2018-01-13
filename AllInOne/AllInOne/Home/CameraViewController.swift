@@ -26,15 +26,15 @@ class CameraViewController: UIViewController {
     {
         if UIImagePickerController.isSourceTypeAvailable(.camera)
         {
-            print("有拍照功能")
+            
         }
         if UIImagePickerController.isFlashAvailable(for: .front)
         {
-            print("有前閃光燈")
+            
         }
         if UIImagePickerController.isFlashAvailable(for: .rear)
         {
-            print("後閃光燈")
+            
         }
     }
 }

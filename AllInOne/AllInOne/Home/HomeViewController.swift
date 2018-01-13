@@ -63,8 +63,6 @@ class HomeViewController: UIViewController {
     {
         switch sender.direction {
         case .right:
-            print("right")
-            
             let cameraVC = CameraViewController()
             
             let transition = CATransition()
@@ -75,9 +73,6 @@ class HomeViewController: UIViewController {
             
             navigationController?.view.layer.add(transition, forKey: kCATransition)
             navigationController?.pushViewController(cameraVC, animated: true)
-            
-        case .left:
-            print("left")
         default:
             break
         }

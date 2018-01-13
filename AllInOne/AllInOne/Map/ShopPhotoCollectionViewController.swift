@@ -72,8 +72,6 @@ class ShopPhotoCollectionViewController: UIViewController, UICollectionViewDeleg
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
     {
-        print("did select = \(indexPath.row)")
-
         let gid = ShopPhotoManager.sharedInstance.gids[indexPath.section]
         let image = ShopPhotoManager.sharedInstance.getImage(gid, indexPath.row)
 

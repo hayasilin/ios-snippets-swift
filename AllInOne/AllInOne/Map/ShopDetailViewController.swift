@@ -197,7 +197,6 @@ extension ShopDetailViewController: UIScrollViewDelegate
 
 extension ShopDetailViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate
 {
-    
     @objc func pushShopPhotoCollectionVC(_ sender: UIBarButtonItem)
     {
         let shopPhotoCollectionVC = ShopPhotoCollectionViewController()
