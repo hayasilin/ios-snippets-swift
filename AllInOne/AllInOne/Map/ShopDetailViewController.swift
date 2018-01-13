@@ -10,6 +10,7 @@ import UIKit
 import SDWebImage
 import MapKit
 import Social
+import FBSDKShareKit
 
 class ShopDetailViewController: UIViewController {
 
@@ -96,25 +97,6 @@ class ShopDetailViewController: UIViewController {
         }
     }
     
-    func share(_ type: String)
-    {
-        let vc = SLComposeViewController(forServiceType: type)
-        if let name = shop.name
-        {
-            vc?.setInitialText(name + "\n")
-        }
-//        if let gid = shop.gid
-//        {
-//
-//        }
-        if let urlString = shop.url
-        {
-            vc?.add(URL(string: urlString))
-        }
-        
-        self.present(vc!, animated: true, completion: nil)
-    }
-    
     @IBAction func phoneButtonPressed(_ sender: UIButton)
     {
         if let tel = shop.tel
@@ -178,7 +160,18 @@ class ShopDetailViewController: UIViewController {
     
     @IBAction func shareFacebookButtonPressed(_ sender: UIButton)
     {
+        var image = UIImage()
+        let imageUrl = URL(string: shop.photoUrl!)
+        if let data = try? Data(contentsOf: imageUrl!)
+        {
+            image = UIImage(data: data)!
+        }
         
+        let shareUrlString = "http://loco.yahoo.co.jp/place/g-" + shop.gid!
+        let shareUrl = URL(string: shareUrlString)
+
+        let activity = UIActivityViewController(activityItems: [shop.name!, shareUrl!, image], applicationActivities: nil)
+        self.present(activity, animated: true, completion: nil)
     }
 }
 
