@@ -44,9 +44,7 @@ class SignUpViewController: UIViewController {
                 if error == nil
                 {
                     print("You have successfully signed up")
-
-                    let scheduleVC = ScheduleViewController()
-                    self.navigationController?.pushViewController(scheduleVC, animated: true)
+                    self.navigationController?.popViewController(animated: true)
                 }
                 else
                 {

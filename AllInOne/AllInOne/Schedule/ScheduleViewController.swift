@@ -22,6 +22,8 @@ class ScheduleViewController: UIViewController {
 
         navigationItem.title = "Schedule"
         
+        checkLoginStatus()
+        
         let addBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pushToCreatePage))
         let editBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(doEditAction(_:)))
         navigationItem.rightBarButtonItems = [addBarButtonItem, editBarButtonItem]
@@ -51,6 +53,15 @@ class ScheduleViewController: UIViewController {
         }
     }
     
+    func checkLoginStatus()
+    {
+        if Auth.auth().currentUser == nil
+        {
+            let LoginVC = LogInViewController()
+            navigationController?.pushViewController(LoginVC, animated: true)
+        }
+    }
+    
     @objc func pushToCreatePage(_ sender: UIBarButtonItem)
     {
         let scheduleAddPage = ScheduleAddViewController()
@@ -64,7 +75,8 @@ class ScheduleViewController: UIViewController {
         {
             do {
                 try Auth.auth().signOut()
-                navigationController?.popViewController(animated: true)
+                let loginVC = LogInViewController()
+                self.present(loginVC, animated: true, completion: nil)
             } catch let error as NSError
             {
                 print(error.localizedDescription)

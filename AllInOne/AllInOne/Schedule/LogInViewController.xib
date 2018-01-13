@@ -34,18 +34,25 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eh4-h7-Bbr">
-                    <rect key="frame" x="167" y="579" width="42" height="30"/>
-                    <state key="normal" title="Log In"/>
-                    <connections>
-                        <action selector="doLogInAction:" destination="-1" eventType="touchUpInside" id="gCL-js-eNG"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CdC-M7-jSs">
-                    <rect key="frame" x="133" y="617" width="109" height="30"/>
+                    <rect key="frame" x="133" y="579" width="109" height="30"/>
                     <state key="normal" title="Reset Password"/>
                     <connections>
                         <action selector="doResetPasswordAction:" destination="-1" eventType="touchUpInside" id="yKL-GM-C8V"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NHh-qa-ksk">
+                    <rect key="frame" x="160" y="617" width="55" height="30"/>
+                    <state key="normal" title="Sign Up"/>
+                    <connections>
+                        <action selector="pushSignUpPage:" destination="-1" eventType="touchUpInside" id="5Hi-Tl-4cI"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eh4-h7-Bbr">
+                    <rect key="frame" x="166" y="541" width="42" height="30"/>
+                    <state key="normal" title="Log In"/>
+                    <connections>
+                        <action selector="doLogInAction:" destination="-1" eventType="touchUpInside" id="gCL-js-eNG"/>
                     </connections>
                 </button>
             </subviews>
@@ -54,11 +61,13 @@
                 <constraint firstItem="Qn2-3I-7xx" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="40l-fG-0y8"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Zgt-NB-AYA" secondAttribute="trailing" constant="16" id="Izs-cj-9Dq"/>
                 <constraint firstItem="eh4-h7-Bbr" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="MAH-No-9eS"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="NHh-qa-ksk" secondAttribute="bottom" constant="20" id="Mk9-rf-o6u"/>
                 <constraint firstItem="Qn2-3I-7xx" firstAttribute="top" secondItem="Zgt-NB-AYA" secondAttribute="bottom" constant="24" id="O72-GB-n8O"/>
                 <constraint firstItem="CdC-M7-jSs" firstAttribute="top" secondItem="eh4-h7-Bbr" secondAttribute="bottom" constant="8" id="On7-YW-9SR"/>
+                <constraint firstItem="NHh-qa-ksk" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Qj1-yI-qbn"/>
                 <constraint firstItem="CdC-M7-jSs" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="RC2-gz-8l9"/>
                 <constraint firstItem="Zgt-NB-AYA" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="YX4-d8-kVx"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="CdC-M7-jSs" secondAttribute="bottom" constant="20" id="fCI-hb-GAm"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="CdC-M7-jSs" secondAttribute="bottom" constant="58" id="fCI-hb-GAm"/>
                 <constraint firstItem="Zgt-NB-AYA" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="111" id="ibH-wM-YgT"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Qn2-3I-7xx" secondAttribute="trailing" constant="16" id="rVX-AI-0mb"/>
             </constraints>

@@ -4,9 +4,7 @@
 <dict>
 	<key>Profile</key>
 	<array>
-		<string>Name</string>
-		<string>Phone</string>
-		<string>Information</string>
+		<string>My Profile</string>
 		<string>My Favorites</string>
 	</array>
 	<key>Features</key>

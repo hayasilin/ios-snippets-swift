@@ -32,10 +32,6 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>line</string>
-	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -75,5 +71,26 @@
 	<string>Need your camera</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Need your photo library</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>fb334890810326101</string>
+            </array>
+        </dict>
+    </array>
+    <key>FacebookAppID</key>
+    <string>334890810326101</string>
+    <key>FacebookDisplayName</key>
+    <string>AllInOne</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>fbapi</string>
+        <string>fb-messenger-share-api</string>
+        <string>fbauth2</string>
+        <string>fbshareextension</string>
+        <string>line</string>
+    </array>
 </dict>
 </plist>
