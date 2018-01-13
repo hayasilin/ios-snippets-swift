@@ -86,10 +86,6 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate{
         {
             nextVC = ProfileViewController()
         }
-        else if  cellTitle == "Pick a photo"
-        {
-            nextVC = PhotoPickerViewController()
-        }
         else if cellTitle == "My Favorites"
         {
             nextVC = FavoriteShopViewController()
@@ -106,7 +102,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate{
         {
             nextVC = ControlDeviceViewController()
         }
-        else if cellTitle == "Instruction"
+        else if cellTitle == "Creator's Github"
         {
             nextVC = InstructionViewController()
         }
