@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import FacebookLogin
 
 class LogInViewController: UIViewController {
 
@@ -26,6 +27,45 @@ class LogInViewController: UIViewController {
             let scheduleVC = ScheduleViewController()
             navigationController?.pushViewController(scheduleVC, animated: true)
         }
+        
+        setupFacebookLogin()
+    }
+    
+    func setupFacebookLogin()
+    {
+        // Add a custom login button to your app
+        let myLoginButton = UIButton(type: .custom)
+        myLoginButton.backgroundColor = UIColor.darkGray
+        myLoginButton.frame = CGRect(x: 0, y: 0, width: 180, height: 40)
+        myLoginButton.center = view.center;
+        myLoginButton.setTitle("FB Login", for: .normal)
+        
+        // Handle clicks on the button
+        myLoginButton.addTarget(self, action: #selector(loginButtonClicked), for: .touchUpInside)
+        
+        // Add the button to the view
+        view.addSubview(myLoginButton)
+    }
+    
+    @objc func loginButtonClicked()
+    {
+        let loginManager = LoginManager()
+        
+        loginManager.logIn(readPermissions: [.publicProfile, .userFriends], viewController: self) { (loginResult) in
+            
+            print("loginResult = \(loginResult)")
+            switch loginResult{
+            case .failed(let error):
+                print(error)
+            case .cancelled:
+                print("User cancelled login.")
+            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
+                print("granted = \(grantedPermissions)")
+                print("declinedPermissions = \(declinedPermissions)")
+                print("accessToken = \(accessToken)")
+                print("Logged in!")
+            }
+        }
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -38,8 +78,7 @@ class LogInViewController: UIViewController {
 
             if error == nil
             {
-                let scheduleVC = ScheduleViewController()
-                self.navigationController?.pushViewController(scheduleVC, animated: true)
+                self.navigationController?.popViewController(animated: true)
             }
             else
             {
@@ -57,4 +96,11 @@ class LogInViewController: UIViewController {
         let resetPasswordVC = ResetPasswordViewController()
         navigationController?.pushViewController(resetPasswordVC, animated: true)
     }
+    
+    @IBAction func pushSignUpPage(_ sender: UIButton)
+    {
+        let singupVC = SignUpViewController()
+        navigationController?.pushViewController(singupVC, animated: true)
+    }
+    
 }

@@ -80,30 +80,31 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate{
     
     func checkChosenCell(cellTitle: String) {
         
-        if  cellTitle == "Pick a photo"
+        var nextVC = UIViewController()
+        
+        if cellTitle == "My Profile"
         {
-            let photoPickerVC = PhotoPickerViewController()
-            navigationController?.pushViewController(photoPickerVC, animated: true)
+            nextVC = ProfileViewController()
+        }
+        else if  cellTitle == "Pick a photo"
+        {
+            nextVC = PhotoPickerViewController()
         }
         else if cellTitle == "My Favorites"
         {
-            let favoriteShopVC = FavoriteShopViewController()
-            navigationController?.pushViewController(favoriteShopVC, animated: true)
+            nextVC = FavoriteShopViewController()
         }
         else if cellTitle == "QRCode scan"
         {
-            let qrCodeScanVC = QRCodeScanViewController()
-            navigationController?.pushViewController(qrCodeScanVC, animated: true)
+            nextVC = QRCodeScanViewController()
         }
         else if cellTitle == "Control device"
         {
-            let controlDeviceVC = ControlDeviceViewController()
-            navigationController?.pushViewController(controlDeviceVC, animated: true)
+            nextVC = ControlDeviceViewController()
         }
         else if cellTitle == "Instruction"
         {
-            let instructionVC = InstructionViewController()
-            navigationController?.pushViewController(instructionVC, animated: true)
+            nextVC = InstructionViewController()
         }
         else if cellTitle == "Contact me"
         {
@@ -128,5 +129,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate{
                 }
             }
         }
+        
+        navigationController?.pushViewController(nextVC, animated: true)
     }
 }

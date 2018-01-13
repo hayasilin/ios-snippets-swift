@@ -80,6 +80,8 @@
 		ACA1C2151FF9E5F700307B52 /* YahooLocalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA1C2141FF9E5F700307B52 /* YahooLocalManager.swift */; };
 		ACA481391FFA484D00BF4490 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA481381FFA484D00BF4490 /* APIService.swift */; };
 		ACA4813B1FFA543500BF4490 /* ShopListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA4813A1FFA543500BF4490 /* ShopListViewController.swift */; };
+		ACEE470320098B9A00FB42D2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEE470120098B9A00FB42D2 /* ProfileViewController.swift */; };
+		ACEE470420098B9A00FB42D2 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ACEE470220098B9A00FB42D2 /* ProfileViewController.xib */; };
 		ACF7BC2F2007BA6100598A0D /* ShopPhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7BC2E2007BA6100598A0D /* ShopPhotoManager.swift */; };
 		ED891551507B7A8700935000 /* Pods_AllInOneTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CF3148F81876E0E8452EEB /* Pods_AllInOneTests.framework */; };
 /* End PBXBuildFile section */
@@ -188,6 +190,8 @@
 		ACA1C2141FF9E5F700307B52 /* YahooLocalManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YahooLocalManager.swift; sourceTree = "<group>"; };
 		ACA481381FFA484D00BF4490 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		ACA4813A1FFA543500BF4490 /* ShopListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopListViewController.swift; sourceTree = "<group>"; };
+		ACEE470120098B9A00FB42D2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		ACEE470220098B9A00FB42D2 /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		ACF7BC2E2007BA6100598A0D /* ShopPhotoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopPhotoManager.swift; sourceTree = "<group>"; };
 		BC457F5AB43D03C54F79CACB /* Pods-AllInOneUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AllInOneUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AllInOneUITests/Pods-AllInOneUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		CFC3FBC77B36213AC35B8F33 /* Pods-AllInOneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AllInOneTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AllInOneTests/Pods-AllInOneTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -394,6 +398,8 @@
 				AC706C1020012935008492B6 /* FavoriteShopViewController.xib */,
 				AC706C172001E56D008492B6 /* PhotoPickerViewController.swift */,
 				AC706C182001E56D008492B6 /* PhotoPickerViewController.xib */,
+				ACEE470120098B9A00FB42D2 /* ProfileViewController.swift */,
+				ACEE470220098B9A00FB42D2 /* ProfileViewController.xib */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -563,6 +569,7 @@
 				AC36D5371FEE101F00BF94E6 /* HomeTableViewCell.xib in Resources */,
 				AC36D53F1FEE153700BF94E6 /* SettingsViewController.xib in Resources */,
 				AC36D52D1FEE0B6B00BF94E6 /* HomeViewController.xib in Resources */,
+				ACEE470420098B9A00FB42D2 /* ProfileViewController.xib in Resources */,
 				AC706C1A2001E56D008492B6 /* PhotoPickerViewController.xib in Resources */,
 				AC36D5431FEE157400BF94E6 /* ScheduleViewController.xib in Resources */,
 				ACA136F61FEF4DE60088B2CC /* InstructionViewController.xib in Resources */,
@@ -644,6 +651,13 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-AllInOne/Pods-AllInOne-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookLogin/FacebookLogin.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookShare/FacebookShare.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
@@ -653,6 +667,13 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookLogin.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookShare.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
@@ -800,6 +821,7 @@
 				AC8C067F1FF7D15100018CFB /* QRCodeScanViewController.swift in Sources */,
 				65AD08ED20032C9400DBD9E7 /* LogInViewController.swift in Sources */,
 				AC36D4F61FEE00F500BF94E6 /* ViewController.swift in Sources */,
+				ACEE470320098B9A00FB42D2 /* ProfileViewController.swift in Sources */,
 				65AD08F5200354E000DBD9E7 /* PhotoCollectionViewController.swift in Sources */,
 				AC4B13922008337800D815CC /* ShopPhotoCollectionViewCell.swift in Sources */,
 				65AD08F120032EC900DBD9E7 /* ResetPasswordViewController.swift in Sources */,
