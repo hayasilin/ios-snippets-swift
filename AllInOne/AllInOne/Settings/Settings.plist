@@ -18,5 +18,9 @@
 		<string>Contact me</string>
 		<string>Creator&apos;s Github</string>
 	</array>
+	<key>About</key>
+	<array>
+		<string>App Information</string>
+	</array>
 </dict>
 </plist>

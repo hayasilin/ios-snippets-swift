@@ -50,8 +50,6 @@ class MapViewController: UIViewController{
         
         tabBarController?.tabBar.isTranslucent = false
         tabBarHeight = (tabBarController?.tabBar.frame.size.height)!
-        
-        checkShareConfiguration()
 
         createUI()
         createShopListUI()
@@ -66,18 +64,6 @@ class MapViewController: UIViewController{
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
 
-    func checkShareConfiguration()
-    {
-        if UIApplication.shared.canOpenURL(URL(string: "line://")!)
-        {
-            print("User has LINE App")
-        }
-        else
-        {
-            print("User doesn't have LINE App")
-        }
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
     {
         if filterButton.isHidden
@@ -194,7 +180,7 @@ class MapViewController: UIViewController{
         locationService.startUpdatingLocation()
     }
     
-    func moveMapViewUp()
+    @objc func moveMapViewUp()
     {
         var center = mapView.userLocation.coordinate
         center.latitude -= mapView.region.span.latitudeDelta * 0.10
@@ -203,7 +189,6 @@ class MapViewController: UIViewController{
     
     @objc func showUserLoaction()
     {
-        print("showUserLoaction")
         let userLocation: MKUserLocation = mapView.userLocation
         var region = MKCoordinateRegion()
         region.center = userLocation.coordinate
@@ -211,22 +196,16 @@ class MapViewController: UIViewController{
 
         mapView.setRegion(region, animated: true)
     }
-    
-    @objc func annotationCalloutButtonPressed(_ sender: UIButton)
-    {
-//        let shopDetailVC = ShopDetailViewController()
-//        navigationController?.pushViewController(shopDetailVC, animated: true)
-    }
 }
 
 extension MapViewController: MKMapViewDelegate
 {
     func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool)
     {
-        print("mapViewDidFinishRenderingMap")
         if isFirstEntry {
             isFirstEntry = false
             showUserLoaction()
+            self.perform(#selector(moveMapViewUp), with: nil, afterDelay: 2)
         }
     }
 
@@ -283,7 +262,6 @@ extension MapViewController: LocationServiceProtocol {
     
     func lsDidUpdateLocation(_ location: CLLocation)
     {
-        print("lsDidUpdateLocation")
         var latitude = location.coordinate.latitude
         var longitude = location.coordinate.longitude
         
