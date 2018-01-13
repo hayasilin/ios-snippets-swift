@@ -134,6 +134,9 @@ extension LogInViewController: FBSDKLoginButtonDelegate
                         let url = data["url"] as? String {
                         print("avatar url = \(url)") //臉書大頭貼的url, 再放入imageView內秀出來
                     }
+                    
+                    let scheduleVC = ScheduleViewController()
+                    self.navigationController?.pushViewController(scheduleVC, animated: true)
                 }
             }
         })
