@@ -22,7 +22,6 @@ class ShopDetailViewController: UIViewController {
     @IBOutlet weak var favoriteLabel: UILabel!
     @IBOutlet weak var lineButton: UIButton!
     @IBOutlet weak var facebookButton: UIButton!
-    @IBOutlet weak var twitterButton: UIButton!
     
     let imagePickerVC = UIImagePickerController()
     
@@ -179,12 +178,7 @@ class ShopDetailViewController: UIViewController {
     
     @IBAction func shareFacebookButtonPressed(_ sender: UIButton)
     {
-        share(SLServiceTypeFacebook)
-    }
-    
-    @IBAction func shareTwitterButtonPressed(_ sender: UIButton)
-    {
-        share(SLServiceTypeTwitter)
+        
     }
 }
 

@@ -21,7 +21,6 @@
                 <outlet property="mapView" destination="EQk-Cl-3EV" id="eov-MF-ULu"/>
                 <outlet property="phoneButton" destination="KCi-82-gf5" id="vhQ-IS-AUC"/>
                 <outlet property="shopNameLabel" destination="WK4-lZ-LX4" id="msp-Mw-yvm"/>
-                <outlet property="twitterButton" destination="fKz-Hi-vwV" id="8eU-2x-Zgg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -129,18 +128,7 @@
                                         <action selector="shareLineButtonPressed:" destination="-1" eventType="touchUpInside" id="iU0-2o-fSx"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fKz-Hi-vwV">
-                                    <rect key="frame" x="169" y="621" width="50" height="50"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="50" id="Olz-UX-nMv"/>
-                                        <constraint firstAttribute="height" constant="50" id="nsf-um-jgB"/>
-                                    </constraints>
-                                    <state key="normal" image="Share_Twitter_Logo"/>
-                                    <connections>
-                                        <action selector="shareTwitterButtonPressed:" destination="-1" eventType="touchUpInside" id="L8m-rM-den"/>
-                                    </connections>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iRi-3A-g22">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iRi-3A-g22">
                                     <rect key="frame" x="89" y="621" width="50" height="50"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="9Wu-4p-QtA"/>
@@ -192,8 +180,6 @@
                                 <constraint firstAttribute="trailing" secondItem="LnI-9d-0RM" secondAttribute="trailing" constant="8" id="nNN-dU-AQP"/>
                                 <constraint firstItem="ARX-gv-Oby" firstAttribute="leading" secondItem="Ubo-lM-9hx" secondAttribute="leading" constant="8" id="neg-Ab-Flz"/>
                                 <constraint firstAttribute="trailing" secondItem="WK4-lZ-LX4" secondAttribute="trailing" constant="8" id="pb0-m8-DKD"/>
-                                <constraint firstItem="fKz-Hi-vwV" firstAttribute="centerY" secondItem="iRi-3A-g22" secondAttribute="centerY" id="pcN-f5-DxP"/>
-                                <constraint firstItem="fKz-Hi-vwV" firstAttribute="leading" secondItem="iRi-3A-g22" secondAttribute="trailing" constant="30" id="pf6-o6-Bdq"/>
                                 <constraint firstItem="6Se-AX-sQJ" firstAttribute="leading" secondItem="Ubo-lM-9hx" secondAttribute="leading" constant="8" id="q5v-q6-Hne"/>
                                 <constraint firstItem="Wfb-xK-j8Z" firstAttribute="top" secondItem="6KZ-d4-3dd" secondAttribute="bottom" constant="18" id="qYF-vL-Gc1"/>
                                 <constraint firstAttribute="trailing" secondItem="EQk-Cl-3EV" secondAttribute="trailing" id="tdu-c2-O24"/>
@@ -229,7 +215,6 @@
     <resources>
         <image name="Share_FB_Logo" width="100" height="100"/>
         <image name="Share_Line_Logo" width="80" height="80"/>
-        <image name="Share_Twitter_Logo" width="1139" height="926"/>
         <image name="star_off" width="80" height="80"/>
     </resources>
 </document>

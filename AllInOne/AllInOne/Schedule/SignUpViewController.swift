@@ -44,7 +44,8 @@ class SignUpViewController: UIViewController {
                 if error == nil
                 {
                     print("You have successfully signed up")
-                    self.navigationController?.popViewController(animated: true)
+                    let scheduleVC = ScheduleViewController()
+                    self.navigationController?.pushViewController(scheduleVC, animated: true)
                 }
                 else
                 {
@@ -57,11 +58,4 @@ class SignUpViewController: UIViewController {
             })
         }
     }
-    
-    @IBAction func doLogInAction(_ sender: UIButton)
-    {
-        let loginVC = LogInViewController()
-        navigationController?.pushViewController(loginVC, animated: true)
-    }
-    
 }
