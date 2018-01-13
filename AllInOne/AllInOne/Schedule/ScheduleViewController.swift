@@ -22,8 +22,6 @@ class ScheduleViewController: UIViewController {
 
         navigationItem.title = "Schedule"
         
-        checkLoginStatus()
-        
         let addBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pushToCreatePage))
         let editBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(doEditAction(_:)))
         navigationItem.rightBarButtonItems = [addBarButtonItem, editBarButtonItem]
@@ -53,6 +51,13 @@ class ScheduleViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        
+        checkLoginStatus()
+    }
+    
     func checkLoginStatus()
     {
         if Auth.auth().currentUser == nil
@@ -75,8 +80,8 @@ class ScheduleViewController: UIViewController {
         {
             do {
                 try Auth.auth().signOut()
-                let loginVC = LogInViewController()
-                self.present(loginVC, animated: true, completion: nil)
+                
+                self.navigationController?.popViewController(animated: true)
             } catch let error as NSError
             {
                 print(error.localizedDescription)

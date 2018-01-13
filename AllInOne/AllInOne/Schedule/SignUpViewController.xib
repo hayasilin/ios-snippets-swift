@@ -34,15 +34,8 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xdf-Pa-fPT">
-                    <rect key="frame" x="166" y="617" width="42" height="30"/>
-                    <state key="normal" title="Log In"/>
-                    <connections>
-                        <action selector="doLogInAction:" destination="-1" eventType="touchUpInside" id="b0A-vf-us4"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J8J-jT-E1o">
-                    <rect key="frame" x="160" y="579" width="55" height="30"/>
+                    <rect key="frame" x="160" y="617" width="55" height="30"/>
                     <state key="normal" title="Sign Up"/>
                     <connections>
                         <action selector="doSignUpAction:" destination="-1" eventType="touchUpInside" id="lty-a6-Kck"/>
@@ -52,14 +45,12 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="JQK-Oi-Yjz" firstAttribute="top" secondItem="P6X-yb-NlD" secondAttribute="bottom" constant="24" id="Gqo-SD-Of4"/>
-                <constraint firstItem="xdf-Pa-fPT" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="JGo-By-Lg0"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="P6X-yb-NlD" secondAttribute="trailing" constant="16" id="QBf-ck-I30"/>
                 <constraint firstItem="JQK-Oi-Yjz" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="QV1-aS-ne8"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="xdf-Pa-fPT" secondAttribute="bottom" constant="20" id="YDW-YQ-Zp4"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="J8J-jT-E1o" secondAttribute="bottom" constant="20" id="ZEd-GE-ZnV"/>
                 <constraint firstItem="P6X-yb-NlD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="def-cj-70N"/>
-                <constraint firstItem="xdf-Pa-fPT" firstAttribute="top" secondItem="J8J-jT-E1o" secondAttribute="bottom" constant="8" id="ful-sc-orK"/>
+                <constraint firstItem="J8J-jT-E1o" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="h9Z-Tc-svo"/>
                 <constraint firstItem="P6X-yb-NlD" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="111" id="huQ-xk-xnE"/>
-                <constraint firstItem="J8J-jT-E1o" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="unx-gR-0z7"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="JQK-Oi-Yjz" secondAttribute="trailing" constant="16" id="wVW-2x-65w"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>

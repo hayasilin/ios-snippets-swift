@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LogInViewController" customModule="AllInOne" customModuleProvider="target">
             <connections>
                 <outlet property="emailTextField" destination="Zgt-NB-AYA" id="7RS-UH-W8s"/>
+                <outlet property="facebookLoginButton" destination="N9N-dN-Jxk" id="Uk7-Nl-fwA"/>
                 <outlet property="passwordTextField" destination="Qn2-3I-7xx" id="Zuu-9w-nX0"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -32,7 +33,7 @@
                     <rect key="frame" x="16" y="185" width="343" height="30"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CdC-M7-jSs">
                     <rect key="frame" x="133" y="579" width="109" height="30"/>
@@ -55,6 +56,10 @@
                         <action selector="doLogInAction:" destination="-1" eventType="touchUpInside" id="gCL-js-eNG"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N9N-dN-Jxk" customClass="FBSDKLoginButton">
+                    <rect key="frame" x="131" y="503" width="113" height="30"/>
+                    <state key="normal" title="Facebook Log In"/>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -64,9 +69,11 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="NHh-qa-ksk" secondAttribute="bottom" constant="20" id="Mk9-rf-o6u"/>
                 <constraint firstItem="Qn2-3I-7xx" firstAttribute="top" secondItem="Zgt-NB-AYA" secondAttribute="bottom" constant="24" id="O72-GB-n8O"/>
                 <constraint firstItem="CdC-M7-jSs" firstAttribute="top" secondItem="eh4-h7-Bbr" secondAttribute="bottom" constant="8" id="On7-YW-9SR"/>
+                <constraint firstItem="N9N-dN-Jxk" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Q22-Gz-pBH"/>
                 <constraint firstItem="NHh-qa-ksk" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Qj1-yI-qbn"/>
                 <constraint firstItem="CdC-M7-jSs" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="RC2-gz-8l9"/>
                 <constraint firstItem="Zgt-NB-AYA" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="YX4-d8-kVx"/>
+                <constraint firstItem="eh4-h7-Bbr" firstAttribute="top" secondItem="N9N-dN-Jxk" secondAttribute="bottom" constant="8" id="bCm-61-Jxn"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="CdC-M7-jSs" secondAttribute="bottom" constant="58" id="fCI-hb-GAm"/>
                 <constraint firstItem="Zgt-NB-AYA" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="111" id="ibH-wM-YgT"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Qn2-3I-7xx" secondAttribute="trailing" constant="16" id="rVX-AI-0mb"/>
