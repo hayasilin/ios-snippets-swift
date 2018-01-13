@@ -94,6 +94,10 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate{
         {
             nextVC = FavoriteShopViewController()
         }
+        else if cellTitle == "My Photos"
+        {
+            nextVC = ShopPhotoCollectionViewController()
+        }
         else if cellTitle == "QRCode scan"
         {
             nextVC = QRCodeScanViewController()

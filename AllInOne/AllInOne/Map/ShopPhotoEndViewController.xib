@@ -19,7 +19,24 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2u0-5k-7ab">
+                    <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                    <items>
+                        <barButtonItem systemItem="action" id="x7s-1w-qnU">
+                            <connections>
+                                <action selector="shareButtonPressed:" destination="-1" id="Xec-am-qRa"/>
+                            </connections>
+                        </barButtonItem>
+                    </items>
+                </toolbar>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="2u0-5k-7ab" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="TD7-AB-Z0f"/>
+                <constraint firstItem="2u0-5k-7ab" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="VZ8-3e-eib"/>
+                <constraint firstItem="2u0-5k-7ab" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="b2d-aO-4Q5"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="35.5" y="54.5"/>
         </view>
