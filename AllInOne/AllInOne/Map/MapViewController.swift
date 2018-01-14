@@ -205,7 +205,6 @@ extension MapViewController: MKMapViewDelegate
         if isFirstEntry {
             isFirstEntry = false
             showUserLoaction()
-            self.perform(#selector(moveMapViewUp), with: nil, afterDelay: 2)
         }
     }
 
@@ -289,7 +288,7 @@ extension MapViewController: LocationServiceProtocol {
                 
                 self.shopListVC.getShopData(shops!, completion: {
                     DispatchQueue.main.async {
-                        self.toggleViewUp()
+                        self.perform(#selector(self.toggleViewUp), with: nil, afterDelay: 2)
                     }
                 })
             }
