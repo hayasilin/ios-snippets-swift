@@ -181,6 +181,7 @@
 		AC8C06821FF7DD7000018CFB /* ControlDeviceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ControlDeviceViewController.xib; sourceTree = "<group>"; };
 		AC91804020006E4300D4502F /* ShopDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDetailViewController.swift; sourceTree = "<group>"; };
 		AC91804120006E4300D4502F /* ShopDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShopDetailViewController.xib; sourceTree = "<group>"; };
+		ACA0A710200AE7F70090FD98 /* AllInOne.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AllInOne.entitlements; sourceTree = "<group>"; };
 		ACA136F31FEF4DE60088B2CC /* InstructionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionViewController.swift; sourceTree = "<group>"; };
 		ACA136F41FEF4DE60088B2CC /* InstructionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InstructionViewController.xib; sourceTree = "<group>"; };
 		ACA136F71FEF50CC0088B2CC /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
@@ -282,6 +283,7 @@
 		AC36D4F21FEE00F500BF94E6 /* AllInOne */ = {
 			isa = PBXGroup;
 			children = (
+				ACA0A710200AE7F70090FD98 /* AllInOne.entitlements */,
 				6516F8171FF50EEC00B1AC25 /* Configurations */,
 				6516F8061FF4FB3700B1AC25 /* GoogleService-Info.plist */,
 				AC36D4F31FEE00F500BF94E6 /* AppDelegate.swift */,
@@ -505,6 +507,11 @@
 					AC36D4EF1FEE00F500BF94E6 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					AC36D5061FEE00F500BF94E6 = {
 						CreatedOnToolsVersion = 9.2;
@@ -1007,6 +1014,7 @@
 			baseConfigurationReference = A1EC1572C6A57FC36781E13A /* Pods-AllInOne.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "$(IS_APP_ICON)";
+				CODE_SIGN_ENTITLEMENTS = AllInOne/AllInOne.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = G62233X968;
@@ -1025,6 +1033,7 @@
 			baseConfigurationReference = 00BAFDAED9F36B83F128F30F /* Pods-AllInOne.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "$(IS_APP_ICON)";
+				CODE_SIGN_ENTITLEMENTS = AllInOne/AllInOne.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = G62233X968;
 				INFOPLIST_FILE = AllInOne/Info.plist;
