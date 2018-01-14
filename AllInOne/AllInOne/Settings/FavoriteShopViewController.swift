@@ -31,7 +31,10 @@ class FavoriteShopViewController: UIViewController {
 
         let nib = UINib(nibName: "ShopListTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "cell")
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         showLoadingIndicator(view)
     }
     
@@ -81,6 +84,24 @@ class FavoriteShopViewController: UIViewController {
                 }
             })
         }
+        else
+        {
+            self.showExceptionAlert()
+        }
+    }
+    
+    func showExceptionAlert()
+    {
+        activityIndicatorView.stopAnimating()
+        loadingView.isHidden = true
+        
+        let alert = UIAlertController(title: "沒有資料唷", message: "您還沒加入任何的最愛餐廳", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            self.navigationController?.popViewController(animated: true)
+        }
+        alert.addAction(okAction)
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     func sortByGid()
