@@ -13,6 +13,7 @@ class Schedule {
     private var _scheduleKey: String!
     private var _scheduleTitle: String!
     private var _scheduleDescription: String!
+    private var _shopName: String!
     
     var scheduleKey: String {
         return _scheduleKey
@@ -26,6 +27,10 @@ class Schedule {
         return _scheduleDescription
     }
     
+    var shopName: String {
+        return _shopName
+    }
+    
     init(key: String, dictionary: Dictionary<String, AnyObject>)
     {
         self._scheduleKey = key
@@ -36,6 +41,10 @@ class Schedule {
         
         if let description = dictionary["description"] as? String {
             self._scheduleDescription = description
+        }
+        
+        if let shopName = dictionary["shop_name"] as? String {
+            self._shopName = shopName
         }
     }
 }

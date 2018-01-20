@@ -10,14 +10,19 @@ import UIKit
 import Firebase
 import FirebaseStorage
 import FirebaseDatabase
+import FirebaseAuth
 
 class ScheduleAddViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    
+    @IBOutlet weak var shopNameTextField: UITextField!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var descriptionTextField: UITextField!
     
     var scheduleRef: DatabaseReference = Database.database().reference().ref.child("schedule")
     var createTime: String!
+    
+    var shop: Shop?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +30,44 @@ class ScheduleAddViewController: UIViewController, UIImagePickerControllerDelega
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/M/d H:m:s"
         createTime = formatter.string(from: Date())
+    
+        if Auth.auth().currentUser != nil
+        {
+            print("User is signed in")
+        }
+        else
+        {
+            print("No user is signed")
+            showExecptionAlert()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        
+        shopNameTextField.text = shop?.name
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
+    {
+        view.endEditing(true)
+    }
+    
+    func showExecptionAlert()
+    {
+        let alert = UIAlertController(title: "喔喔！", message: "您還沒登入喔，請至評論頁登入", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "去登入", style: .default) { (action) in
+            self.navigationController?.popViewController(animated: true)
+        }
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (action) in
+            self.navigationController?.popViewController(animated: true)
+        }
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     func saveSchedule()
@@ -32,11 +75,22 @@ class ScheduleAddViewController: UIViewController, UIImagePickerControllerDelega
         let title = titleTextField.text
         let description = descriptionTextField.text
         
+        var shopName = ""
+        if shop == nil
+        {
+            shopName = shopNameTextField.text!
+        }
+        else
+        {
+            shopName = (shop?.name)!
+        }
+        
         if title != "" && description != "" {
             let newSchedule: Dictionary<String, AnyObject> = [
                 "title": title as AnyObject,
                 "description": description as AnyObject,
-                "create_time": createTime as AnyObject
+                "create_time": createTime as AnyObject,
+                "shop_name": shopName as AnyObject,
             ]
             
             createNewSchedule(schedule: newSchedule)

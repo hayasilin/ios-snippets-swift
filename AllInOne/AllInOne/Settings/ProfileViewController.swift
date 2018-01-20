@@ -59,7 +59,7 @@ class ProfileViewController: UIViewController {
     
     func showExecptionAlert()
     {
-        let alert = UIAlertController(title: "喔喔！", message: "您還沒登入喔，請先登入", preferredStyle: .alert)
+        let alert = UIAlertController(title: "喔喔！", message: "您還沒登入喔，請至評論頁登入", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "去登入", style: .default) { (action) in
             self.navigationController?.popViewController(animated: true)
         }

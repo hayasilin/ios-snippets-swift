@@ -179,6 +179,13 @@ class ShopDetailViewController: UIViewController {
         let activity = UIActivityViewController(activityItems: [shop.name!, shareUrl!, image], applicationActivities: nil)
         self.present(activity, animated: true, completion: nil)
     }
+    
+    @IBAction func writeComments(_ sender: UIButton)
+    {
+        let commentAddVC = ScheduleAddViewController()
+        commentAddVC.shop = shop
+        navigationController?.pushViewController(commentAddVC, animated: true)
+    }
 }
 
 extension ShopDetailViewController: UIScrollViewDelegate

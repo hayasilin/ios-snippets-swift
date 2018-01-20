@@ -20,7 +20,7 @@ class MainViewController: UITabBarController {
     {
         let dict1 = ["title" : "Home", "className" : "HomeViewController", "image" : "tabbar-icon-home", "includeNavigation" : "true"]
         let dict2 = ["title" : "Map", "className" : "MapViewController", "image" : "tabbar-icon-family", "includeNavigation" : "true"]
-        let dict3 = ["title" : "Schedule", "className" : "LogInViewController", "image" : "tabbar-icon-schedule", "includeNavigation" : "true"]
+        let dict3 = ["title" : "Comments", "className" : "LogInViewController", "image" : "tabbar-icon-schedule", "includeNavigation" : "true"]
         let dict4 = ["title" : "Settings", "className" : "SettingsViewController", "image" : "tabbar-icon-settings", "includeNavigation" : "true"]
         
         let tabs: Array = [dict1, dict2, dict3, dict4];

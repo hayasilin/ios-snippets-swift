@@ -65,6 +65,8 @@
 		AC86E0CF1FEEAB2D00427C30 /* RestfulRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86E0CE1FEEAB2D00427C30 /* RestfulRequestManager.swift */; };
 		AC86E0D31FEEBB3700427C30 /* app.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC86E0D21FEEBB3700427C30 /* app.plist */; };
 		AC86E0D51FEEBB5E00427C30 /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC86E0D41FEEBB5E00427C30 /* Settings.plist */; };
+		AC87C11C2012DD9A002A016B /* ShopCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC87C11A2012DD9A002A016B /* ShopCommentTableViewCell.swift */; };
+		AC87C11D2012DD9A002A016B /* ShopCommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC87C11B2012DD9A002A016B /* ShopCommentTableViewCell.xib */; };
 		AC8C067F1FF7D15100018CFB /* QRCodeScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C067D1FF7D15100018CFB /* QRCodeScanViewController.swift */; };
 		AC8C06801FF7D15100018CFB /* QRCodeScanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC8C067E1FF7D15100018CFB /* QRCodeScanViewController.xib */; };
 		AC8C06831FF7DD7000018CFB /* ControlDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C06811FF7DD7000018CFB /* ControlDeviceViewController.swift */; };
@@ -175,6 +177,8 @@
 		AC86E0CE1FEEAB2D00427C30 /* RestfulRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestfulRequestManager.swift; sourceTree = "<group>"; };
 		AC86E0D21FEEBB3700427C30 /* app.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = app.plist; sourceTree = "<group>"; };
 		AC86E0D41FEEBB5E00427C30 /* Settings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Settings.plist; sourceTree = "<group>"; };
+		AC87C11A2012DD9A002A016B /* ShopCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopCommentTableViewCell.swift; sourceTree = "<group>"; };
+		AC87C11B2012DD9A002A016B /* ShopCommentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShopCommentTableViewCell.xib; sourceTree = "<group>"; };
 		AC8C067D1FF7D15100018CFB /* QRCodeScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanViewController.swift; sourceTree = "<group>"; };
 		AC8C067E1FF7D15100018CFB /* QRCodeScanViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QRCodeScanViewController.xib; sourceTree = "<group>"; };
 		AC8C06811FF7DD7000018CFB /* ControlDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlDeviceViewController.swift; sourceTree = "<group>"; };
@@ -380,6 +384,8 @@
 				65AD08F4200354E000DBD9E7 /* PhotoCollectionViewController.xib */,
 				65AD08F72003596500DBD9E7 /* PhotoCollectionViewCell.swift */,
 				65AD08F82003596500DBD9E7 /* PhotoCollectionViewCell.xib */,
+				AC87C11A2012DD9A002A016B /* ShopCommentTableViewCell.swift */,
+				AC87C11B2012DD9A002A016B /* ShopCommentTableViewCell.xib */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -551,6 +557,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC706C162001DA2C008492B6 /* CameraViewController.xib in Resources */,
+				AC87C11D2012DD9A002A016B /* ShopCommentTableViewCell.xib in Resources */,
 				65AD08F220032EC900DBD9E7 /* ResetPasswordViewController.xib in Resources */,
 				ACEE470C200A387C00FB42D2 /* AboutViewController.xib in Resources */,
 				6516F8071FF4FB3700B1AC25 /* GoogleService-Info.plist in Resources */,
@@ -846,6 +853,7 @@
 				ACA4813B1FFA543500BF4490 /* ShopListViewController.swift in Sources */,
 				ACEE470B200A387C00FB42D2 /* AboutViewController.swift in Sources */,
 				AC36D5291FEE0A5100BF94E6 /* MainViewController.swift in Sources */,
+				AC87C11C2012DD9A002A016B /* ShopCommentTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -36,23 +36,51 @@
                     </connections>
                 </button>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Input email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P6X-yb-NlD">
-                    <rect key="frame" x="16" y="264" width="343" height="30"/>
+                    <rect key="frame" x="16" y="261" width="343" height="30"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="密碼" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LAQ-gO-bbv">
+                    <rect key="frame" x="16" y="299" width="35" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="帳號" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UcG-zb-oiZ">
+                    <rect key="frame" x="16" y="232" width="35" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="註冊就可閱讀網友對日本餐廳的評價" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YYX-ns-BjJ">
+                    <rect key="frame" x="16" y="153" width="343" height="54"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="54" id="Uek-bu-8z3"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="P6X-yb-NlD" secondAttribute="trailing" constant="16" id="206-s6-eGr"/>
+                <constraint firstItem="P6X-yb-NlD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="C7z-fY-mL7"/>
                 <constraint firstItem="JQK-Oi-Yjz" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="H7A-Os-7WF"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="JQK-Oi-Yjz" secondAttribute="trailing" constant="16" id="Iel-Oj-wz1"/>
-                <constraint firstItem="JQK-Oi-Yjz" firstAttribute="top" secondItem="P6X-yb-NlD" secondAttribute="bottom" constant="34.5" id="Sx9-xg-PKC"/>
-                <constraint firstItem="P6X-yb-NlD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="Vp2-41-efM"/>
+                <constraint firstItem="UcG-zb-oiZ" firstAttribute="top" secondItem="YYX-ns-BjJ" secondAttribute="bottom" constant="25" id="Kib-0q-9P2"/>
+                <constraint firstItem="UcG-zb-oiZ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="Omy-Dw-bvK"/>
+                <constraint firstItem="P6X-yb-NlD" firstAttribute="top" secondItem="UcG-zb-oiZ" secondAttribute="bottom" constant="8" id="S4Q-yR-kpG"/>
+                <constraint firstItem="LAQ-gO-bbv" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="Uqr-Fa-UEU"/>
+                <constraint firstItem="JQK-Oi-Yjz" firstAttribute="top" secondItem="LAQ-gO-bbv" secondAttribute="bottom" constant="8.5" id="VJN-Ic-eH7"/>
+                <constraint firstItem="LAQ-gO-bbv" firstAttribute="top" secondItem="P6X-yb-NlD" secondAttribute="bottom" constant="8" id="Xka-Qh-hqv"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="J8J-jT-E1o" secondAttribute="bottom" constant="20" id="ZEd-GE-ZnV"/>
+                <constraint firstItem="YYX-ns-BjJ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="ckM-LW-4PU"/>
                 <constraint firstItem="J8J-jT-E1o" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="h9Z-Tc-svo"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="YYX-ns-BjJ" secondAttribute="trailing" constant="16" id="jsm-HR-pvF"/>
                 <constraint firstItem="JQK-Oi-Yjz" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="pFE-Vm-oNf"/>
                 <constraint firstItem="JQK-Oi-Yjz" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="uRd-Iw-ihr"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="P6X-yb-NlD" secondAttribute="trailing" constant="16" id="z1C-mp-AlD"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="33.5" y="54.5"/>
