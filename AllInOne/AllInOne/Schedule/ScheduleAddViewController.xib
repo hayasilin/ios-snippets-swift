@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScheduleAddViewController" customModule="AllInOne" customModuleProvider="target">
             <connections>
                 <outlet property="descriptionTextField" destination="zu9-oi-E1k" id="i9N-KP-bpz"/>
+                <outlet property="shopNameTextField" destination="sLO-TX-zPJ" id="LUh-3f-hbe"/>
                 <outlet property="titleTextField" destination="YAo-e1-ip4" id="LrC-kj-8XR"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -23,53 +24,85 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YAo-e1-ip4">
-                    <rect key="frame" x="16" y="119" width="343" height="30"/>
+                    <rect key="frame" x="16" y="261" width="343" height="30"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zu9-oi-E1k">
-                    <rect key="frame" x="16" y="196" width="343" height="30"/>
+                    <rect key="frame" x="16" y="328.5" width="343" height="30"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a2j-0f-BKb">
-                    <rect key="frame" x="170" y="266" width="34" height="30"/>
-                    <state key="normal" title="Save"/>
-                    <connections>
-                        <action selector="doSaveAction:" destination="-1" eventType="touchUpInside" id="t0O-6E-52O"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GEF-oA-9Y4">
-                    <rect key="frame" x="139" y="378" width="97" height="30"/>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GEF-oA-9Y4">
+                    <rect key="frame" x="139" y="438" width="97" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="Up load photo"/>
                     <connections>
                         <action selector="uploadPhoto:" destination="-1" eventType="touchUpInside" id="kBM-4D-6St"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6eC-3C-kBd">
-                    <rect key="frame" x="111" y="425" width="152" height="30"/>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6eC-3C-kBd">
+                    <rect key="frame" x="111" y="485" width="152" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="Go to photo collection"/>
                     <connections>
                         <action selector="pushPhotoCollectionPage:" destination="-1" eventType="touchUpInside" id="sOf-Ra-F8q"/>
                     </connections>
                 </button>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sLO-TX-zPJ">
+                    <rect key="frame" x="16" y="194" width="343" height="30"/>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="店名：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WAF-xz-JqJ">
+                    <rect key="frame" x="16" y="165" width="52" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="標題：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gFY-5Q-Qk0">
+                    <rect key="frame" x="16" y="232" width="52" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="評論：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65H-XW-dBd">
+                    <rect key="frame" x="16" y="299" width="52" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a2j-0f-BKb">
+                    <rect key="frame" x="170" y="400" width="34" height="30"/>
+                    <state key="normal" title="Save"/>
+                    <connections>
+                        <action selector="doSaveAction:" destination="-1" eventType="touchUpInside" id="t0O-6E-52O"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="YAo-e1-ip4" secondAttribute="trailing" constant="16" id="4wL-8T-G6N"/>
-                <constraint firstItem="6eC-3C-kBd" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="57e-kp-4Qs"/>
-                <constraint firstItem="6eC-3C-kBd" firstAttribute="top" secondItem="GEF-oA-9Y4" secondAttribute="bottom" constant="17" id="CJD-2W-WUv"/>
-                <constraint firstItem="a2j-0f-BKb" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="F7M-0m-9F8"/>
-                <constraint firstItem="zu9-oi-E1k" firstAttribute="top" secondItem="YAo-e1-ip4" secondAttribute="bottom" constant="47" id="HfF-5P-WlV"/>
-                <constraint firstItem="GEF-oA-9Y4" firstAttribute="top" secondItem="a2j-0f-BKb" secondAttribute="bottom" constant="82" id="g5L-Wc-QXx"/>
-                <constraint firstItem="zu9-oi-E1k" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="gAl-qY-3RX"/>
-                <constraint firstItem="a2j-0f-BKb" firstAttribute="top" secondItem="zu9-oi-E1k" secondAttribute="bottom" constant="40" id="j1z-dS-UcZ"/>
-                <constraint firstItem="GEF-oA-9Y4" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="kk1-pe-c3f"/>
-                <constraint firstItem="YAo-e1-ip4" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="nA0-Qb-9vK"/>
-                <constraint firstItem="YAo-e1-ip4" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="99" id="oto-G6-dmC"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="zu9-oi-E1k" secondAttribute="trailing" constant="16" id="sHZ-vC-uxC"/>
+                <constraint firstItem="gFY-5Q-Qk0" firstAttribute="top" secondItem="sLO-TX-zPJ" secondAttribute="bottom" constant="8" id="1Wb-JE-LOZ"/>
+                <constraint firstItem="zu9-oi-E1k" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="8iQ-vl-5Vl"/>
+                <constraint firstItem="zu9-oi-E1k" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="9t4-AR-eGf"/>
+                <constraint firstItem="65H-XW-dBd" firstAttribute="top" secondItem="YAo-e1-ip4" secondAttribute="bottom" constant="8" id="C4e-aH-3AC"/>
+                <constraint firstItem="zu9-oi-E1k" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="ESv-ae-4jU"/>
+                <constraint firstItem="65H-XW-dBd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="GfK-C9-rYf"/>
+                <constraint firstItem="YAo-e1-ip4" firstAttribute="top" secondItem="gFY-5Q-Qk0" secondAttribute="bottom" constant="8" id="H9N-3j-1nD"/>
+                <constraint firstItem="YAo-e1-ip4" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="SbX-pR-rbI"/>
+                <constraint firstItem="zu9-oi-E1k" firstAttribute="top" secondItem="65H-XW-dBd" secondAttribute="bottom" constant="8.5" id="T3h-4l-zMx"/>
+                <constraint firstItem="a2j-0f-BKb" firstAttribute="top" secondItem="zu9-oi-E1k" secondAttribute="bottom" constant="41.5" id="Usn-5i-Pui"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="YAo-e1-ip4" secondAttribute="trailing" constant="16" id="brd-SH-5tX"/>
+                <constraint firstItem="sLO-TX-zPJ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="cMi-uQ-Qnb"/>
+                <constraint firstItem="a2j-0f-BKb" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="f0w-Rh-pzo"/>
+                <constraint firstItem="gFY-5Q-Qk0" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="kI5-25-u2y"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="zu9-oi-E1k" secondAttribute="trailing" constant="16" id="nwp-Ov-DOr"/>
+                <constraint firstItem="WAF-xz-JqJ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="pfZ-T3-6dA"/>
+                <constraint firstItem="sLO-TX-zPJ" firstAttribute="top" secondItem="WAF-xz-JqJ" secondAttribute="bottom" constant="8" id="vWo-6G-yNL"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="sLO-TX-zPJ" secondAttribute="trailing" constant="16" id="yN3-yf-u5x"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="33.5" y="54.5"/>

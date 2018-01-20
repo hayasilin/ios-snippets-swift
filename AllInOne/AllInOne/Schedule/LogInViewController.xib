@@ -55,31 +55,60 @@
                     <state key="normal" title="Facebook Log In"/>
                 </button>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Input email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zgt-NB-AYA">
-                    <rect key="frame" x="16" y="265" width="343" height="30"/>
+                    <rect key="frame" x="16" y="261" width="343" height="30"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="帳號" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hDz-Di-zWl">
+                    <rect key="frame" x="16" y="232" width="35" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="密碼" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xCt-RZ-mXo">
+                    <rect key="frame" x="16" y="299" width="35" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="登入或註冊就可閱讀網友對日本餐廳的評價" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UbH-4C-TtG">
+                    <rect key="frame" x="16" y="152" width="343" height="54"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="54" id="bdg-eY-L4I"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="xCt-RZ-mXo" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="40D-9Y-6rk"/>
+                <constraint firstItem="Qn2-3I-7xx" firstAttribute="top" secondItem="xCt-RZ-mXo" secondAttribute="bottom" constant="8.5" id="7lm-y6-zCe"/>
                 <constraint firstItem="Qn2-3I-7xx" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="7me-bK-pu3"/>
-                <constraint firstItem="Zgt-NB-AYA" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="9db-Ya-KOV"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="UbH-4C-TtG" secondAttribute="trailing" constant="16" id="DBv-N1-jmf"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Qn2-3I-7xx" secondAttribute="trailing" constant="16" id="Fpb-zi-8X2"/>
                 <constraint firstItem="Qn2-3I-7xx" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="HTU-qj-5MN"/>
+                <constraint firstItem="Zgt-NB-AYA" firstAttribute="top" secondItem="hDz-Di-zWl" secondAttribute="bottom" constant="8" id="M9q-IP-NBt"/>
                 <constraint firstItem="eh4-h7-Bbr" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="MAH-No-9eS"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="NHh-qa-ksk" secondAttribute="bottom" constant="20" id="Mk9-rf-o6u"/>
                 <constraint firstItem="CdC-M7-jSs" firstAttribute="top" secondItem="eh4-h7-Bbr" secondAttribute="bottom" constant="8" id="On7-YW-9SR"/>
+                <constraint firstItem="hDz-Di-zWl" firstAttribute="top" secondItem="UbH-4C-TtG" secondAttribute="bottom" constant="26" id="Ooc-hc-v2G"/>
                 <constraint firstItem="N9N-dN-Jxk" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Q22-Gz-pBH"/>
                 <constraint firstItem="NHh-qa-ksk" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Qj1-yI-qbn"/>
                 <constraint firstItem="CdC-M7-jSs" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="RC2-gz-8l9"/>
                 <constraint firstItem="Qn2-3I-7xx" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="S1a-RU-BK0"/>
+                <constraint firstItem="hDz-Di-zWl" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="VZp-MD-vxQ"/>
                 <constraint firstItem="eh4-h7-Bbr" firstAttribute="top" secondItem="N9N-dN-Jxk" secondAttribute="bottom" constant="8" id="bCm-61-Jxn"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Zgt-NB-AYA" secondAttribute="trailing" constant="16" id="crO-Al-Vf8"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="CdC-M7-jSs" secondAttribute="bottom" constant="58" id="fCI-hb-GAm"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Zgt-NB-AYA" secondAttribute="trailing" constant="16" id="g7m-di-Afj"/>
-                <constraint firstItem="Qn2-3I-7xx" firstAttribute="top" secondItem="Zgt-NB-AYA" secondAttribute="bottom" constant="33.5" id="oLw-Rb-fHE"/>
+                <constraint firstItem="Zgt-NB-AYA" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="hIQ-5h-mxp"/>
+                <constraint firstItem="UbH-4C-TtG" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="ue7-a5-vid"/>
+                <constraint firstItem="xCt-RZ-mXo" firstAttribute="top" secondItem="Zgt-NB-AYA" secondAttribute="bottom" constant="8" id="vPd-8N-Fh1"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="35.5" y="54.5"/>
         </view>
     </objects>
 </document>

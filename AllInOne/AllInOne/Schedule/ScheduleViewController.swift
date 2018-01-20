@@ -21,7 +21,7 @@ class ScheduleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.title = "Schedule"
+        navigationItem.title = "Comments"
         
         let addBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pushToCreatePage))
         let editBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(doEditAction(_:)))
@@ -30,7 +30,7 @@ class ScheduleViewController: UIViewController {
         let logoutBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.plain, target: self, action: #selector(doLogoutAction(_ :)))
         navigationItem.leftBarButtonItem = logoutBarButtonItem
 
-        let nib = UINib(nibName: "ScheduleTableViewCell", bundle: nil)
+        let nib = UINib(nibName: "ShopCommentTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "cell")
         
         scheduleRef.observe(.value) { (snapshot: DataSnapshot) in
@@ -122,14 +122,15 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ScheduleTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ShopCommentTableViewCell else {
             fatalError("Can't dequeue cell")
         }
         
         let schedule = schedules[indexPath.row]
         
         cell.titleLabel?.text = schedule.scheduleTitle
-        cell.descriptionLabel?.text = schedule.scheduleDescription
+        cell.commentLabel?.text = schedule.scheduleDescription
+        cell.shopNameLabel.text = schedule.shopName
         
         return cell;
     }
@@ -149,6 +150,6 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return 100
     }
 }

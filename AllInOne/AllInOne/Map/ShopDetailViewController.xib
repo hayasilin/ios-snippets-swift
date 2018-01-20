@@ -148,6 +148,17 @@
                                         <action selector="favoriteButtonPressed:" destination="-1" eventType="touchUpInside" id="CKa-4Q-bCh"/>
                                     </connections>
                                 </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hf0-Jm-wtZ">
+                                    <rect key="frame" x="162" y="631" width="62" height="30"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="62" id="R51-yf-Aua"/>
+                                        <constraint firstAttribute="height" constant="30" id="eDL-vW-8OK"/>
+                                    </constraints>
+                                    <state key="normal" title="寫下評論"/>
+                                    <connections>
+                                        <action selector="writeComments:" destination="-1" eventType="touchUpInside" id="3wJ-aw-nS4"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -159,6 +170,7 @@
                                 <constraint firstItem="EQk-Cl-3EV" firstAttribute="leading" secondItem="Ubo-lM-9hx" secondAttribute="leading" id="AqN-We-O3c"/>
                                 <constraint firstItem="d1f-LH-GtF" firstAttribute="leading" secondItem="Ubo-lM-9hx" secondAttribute="leading" constant="9" id="BBL-Xu-Gnt"/>
                                 <constraint firstItem="iRi-3A-g22" firstAttribute="centerY" secondItem="d1f-LH-GtF" secondAttribute="centerY" id="Daw-Qf-wsN"/>
+                                <constraint firstItem="hf0-Jm-wtZ" firstAttribute="centerY" secondItem="iRi-3A-g22" secondAttribute="centerY" id="H6H-CF-fLR"/>
                                 <constraint firstAttribute="trailing" secondItem="4eB-ie-OLl" secondAttribute="trailing" constant="8" id="Hfh-0o-Gaf"/>
                                 <constraint firstItem="2Oe-ih-tYk" firstAttribute="leading" secondItem="Ubo-lM-9hx" secondAttribute="leading" constant="8" id="KLA-mH-jDK"/>
                                 <constraint firstItem="WK4-lZ-LX4" firstAttribute="top" secondItem="6KZ-d4-3dd" secondAttribute="bottom" constant="18" id="OPI-9u-Xen"/>
@@ -182,6 +194,7 @@
                                 <constraint firstAttribute="trailing" secondItem="WK4-lZ-LX4" secondAttribute="trailing" constant="8" id="pb0-m8-DKD"/>
                                 <constraint firstItem="6Se-AX-sQJ" firstAttribute="leading" secondItem="Ubo-lM-9hx" secondAttribute="leading" constant="8" id="q5v-q6-Hne"/>
                                 <constraint firstItem="Wfb-xK-j8Z" firstAttribute="top" secondItem="6KZ-d4-3dd" secondAttribute="bottom" constant="18" id="qYF-vL-Gc1"/>
+                                <constraint firstItem="hf0-Jm-wtZ" firstAttribute="leading" secondItem="iRi-3A-g22" secondAttribute="trailing" constant="23" id="s9b-8F-wWY"/>
                                 <constraint firstAttribute="trailing" secondItem="EQk-Cl-3EV" secondAttribute="trailing" id="tdu-c2-O24"/>
                                 <constraint firstItem="d1f-LH-GtF" firstAttribute="top" secondItem="2Oe-ih-tYk" secondAttribute="bottom" constant="48" id="uUf-lQ-5VM"/>
                                 <constraint firstItem="iRi-3A-g22" firstAttribute="leading" secondItem="d1f-LH-GtF" secondAttribute="trailing" constant="30" id="zwq-ey-agM"/>
