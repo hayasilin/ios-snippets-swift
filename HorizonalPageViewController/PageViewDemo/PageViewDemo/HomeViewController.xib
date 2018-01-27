@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController" customModule="PageViewDemo" customModuleProvider="target">
+            <connections>
+                <outlet property="barView" destination="TAx-dl-fXi" id="SkC-VR-Tn2"/>
+                <outlet property="menuBarView" destination="b0A-Xe-NwI" id="QWg-fU-j5L"/>
+                <outlet property="pageView" destination="O88-jx-Okr" id="lCE-8b-dAe"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O88-jx-Okr">
+                    <rect key="frame" x="0.0" y="97" width="375" height="570"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b0A-Xe-NwI">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="97"/>
+                    <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="b0A-Xe-NwI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="1f0-fD-NcZ"/>
+                <constraint firstItem="b0A-Xe-NwI" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="2Ea-ZF-u2e"/>
+                <constraint firstItem="b0A-Xe-NwI" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Ns5-Wh-ap0"/>
+                <constraint firstItem="O88-jx-Okr" firstAttribute="top" secondItem="b0A-Xe-NwI" secondAttribute="bottom" id="OFZ-tq-PPr"/>
+                <constraint firstItem="O88-jx-Okr" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="PYF-50-7m8"/>
+                <constraint firstItem="O88-jx-Okr" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="VQQ-wV-Dw0"/>
+                <constraint firstItem="O88-jx-Okr" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="77" id="oCE-3w-LC5"/>
+                <constraint firstItem="O88-jx-Okr" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="s4d-MC-auS"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="33.5" y="53.5"/>
+        </view>
+        <view contentMode="scaleToFill" id="TAx-dl-fXi">
+            <rect key="frame" x="0.0" y="0.0" width="125" height="10"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="eIi-vF-8ng"/>
+            <point key="canvasLocation" x="354" y="-342"/>
+        </view>
+    </objects>
+</document>

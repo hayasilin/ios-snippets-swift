@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="a6c-yu-FDm">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <scenes>
+        <!--Map Place-->
+        <scene sceneID="ufC-wZ-h7g">
+            <objects>
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="MapKit_test" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
+                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ZcV-AV-sfr">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ZcV-AV-sfr" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="BzL-eE-4W6"/>
+                            <constraint firstAttribute="trailing" secondItem="ZcV-AV-sfr" secondAttribute="trailing" id="btc-6c-itp"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="ZcV-AV-sfr" secondAttribute="bottom" id="egc-ue-I0O"/>
+                            <constraint firstItem="ZcV-AV-sfr" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="mHA-mA-ZX1"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Map Place" id="xtr-tg-z84">
+                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="U1e-cW-K4T">
+                            <connections>
+                                <action selector="showMapOptions:" destination="vXZ-lx-hvc" id="LnM-Df-O2K"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="e4b-zn-PsG">
+                            <connections>
+                                <action selector="showSearchBar:" destination="vXZ-lx-hvc" id="Dbb-Z7-OF0"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="ZcV-AV-sfr" id="oEi-z2-Hcx"/>
+                        <outlet property="showOptionsBtn" destination="U1e-cW-K4T" id="HLE-wA-Jut"/>
+                        <segue destination="6Pu-qZ-FZo" kind="show" identifier="PinDetails" id="hB0-0t-zvz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1152" y="349"/>
+        </scene>
+        <!--Pin Details View Controller-->
+        <scene sceneID="frN-Pj-DYc">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="6Pu-qZ-FZo" customClass="PinDetailsViewController" customModule="MapKit_test" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="70i-hH-4C9"/>
+                        <viewControllerLayoutGuide type="bottom" id="htZ-9C-u3r"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6Jb-nx-B1F">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="a58-cG-mzE">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="a58-cG-mzE" secondAttribute="trailing" id="01d-St-uiW"/>
+                            <constraint firstItem="htZ-9C-u3r" firstAttribute="top" secondItem="a58-cG-mzE" secondAttribute="bottom" id="avd-6x-GA6"/>
+                            <constraint firstItem="a58-cG-mzE" firstAttribute="leading" secondItem="6Jb-nx-B1F" secondAttribute="leading" id="hpp-To-KcQ"/>
+                            <constraint firstItem="a58-cG-mzE" firstAttribute="top" secondItem="6Jb-nx-B1F" secondAttribute="top" id="luY-Gg-KC3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="a58-cG-mzE" id="opl-sL-qRE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vbq-AN-Jae" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1823" y="349"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="tK6-uK-V1k">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="a6c-yu-FDm" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ko8-fY-oRs">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="p9Y-nY-mus"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6jB-Dg-sGh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="340" y="1010"/>
+        </scene>
+    </scenes>
+</document>

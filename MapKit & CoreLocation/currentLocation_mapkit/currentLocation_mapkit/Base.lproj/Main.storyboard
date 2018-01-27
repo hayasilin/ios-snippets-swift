@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="nQ0-rP-0dc">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="ufC-wZ-h7g">
+            <objects>
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="currentLocation_mapkit" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
+                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jcc-uf-ZMq">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Jcc-uf-ZMq" secondAttribute="bottom" id="5jR-he-E0R"/>
+                            <constraint firstAttribute="trailing" secondItem="Jcc-uf-ZMq" secondAttribute="trailing" id="T1Y-Ja-c8G"/>
+                            <constraint firstItem="Jcc-uf-ZMq" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="Uhq-Y5-p2B"/>
+                            <constraint firstItem="Jcc-uf-ZMq" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="YYw-Tz-K8m"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="kgk-lv-1er">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="Lte-f2-MYs">
+                            <connections>
+                                <action selector="btnShowLocation:" destination="vXZ-lx-hvc" id="xby-mT-oq8"/>
+                            </connections>
+                        </barButtonItem>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="iIG-8l-q6p">
+                            <rect key="frame" x="68" y="7" width="185" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="map"/>
+                                <segment title="衛星"/>
+                                <segment title="Hybird"/>
+                            </segments>
+                            <connections>
+                                <action selector="changeMapStyle:" destination="vXZ-lx-hvc" eventType="valueChanged" id="3gd-wj-h6A"/>
+                            </connections>
+                        </segmentedControl>
+                        <barButtonItem key="rightBarButtonItem" systemItem="bookmarks" id="8qM-4d-TE1">
+                            <connections>
+                                <action selector="showDetail:" destination="vXZ-lx-hvc" id="2Vf-eM-s3g"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="btnDeatil" destination="8qM-4d-TE1" id="Zv4-hB-lZ0"/>
+                        <outlet property="btnShowLocation" destination="Lte-f2-MYs" id="BX3-H3-RIq"/>
+                        <outlet property="mapSegment" destination="iIG-8l-q6p" id="5El-EW-wX0"/>
+                        <outlet property="mapView" destination="Jcc-uf-ZMq" id="2Ry-2q-xgT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="785" y="994"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="370-pE-Rld">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nQ0-rP-0dc" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="sJJ-rd-IC4">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="V8x-p5-7Up"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fOP-6t-7KZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="367" y="994"/>
+        </scene>
+    </scenes>
+</document>
