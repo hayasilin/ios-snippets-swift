@@ -5,6 +5,32 @@ import UIKit
 // https://medium.com/zrealm-ios-dev/%E7%8F%BE%E5%AF%A6%E4%BD%BF%E7%94%A8-codable-%E4%B8%8A%E9%81%87%E5%88%B0%E7%9A%84-decode-%E5%95%8F%E9%A1%8C%E5%A0%B4%E6%99%AF%E7%B8%BD%E5%8C%AF-1aa2f8445642
 // https://zhgchgli.medium.com/%E7%8F%BE%E5%AF%A6%E4%BD%BF%E7%94%A8-codable-%E4%B8%8A%E9%81%87%E5%88%B0%E7%9A%84-decode-%E5%95%8F%E9%A1%8C%E5%A0%B4%E6%99%AF%E7%B8%BD%E5%8C%AF-%E4%B8%8B-cb00b1977537
 
+// 利用 JSONDecoder 和 Codable 解析 JSON 和生成自訂型別資料
+// https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/利用-swift-4-的-jsondecoder-和-codable-解析-json-和生成自訂型別資料-ee793622629e
+// https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/將-json-轉換成-codable-自訂型別的-10-秒驗證方法-c7b1281acfcc
+
+let data = "{\"imageUrl\":\"https://www.example.com\"}".data(using: .utf8)! // The url value can't provide empty string otherwise it would failed.
+
+@propertyWrapper
+struct FailableDecodable<Wrapped: Decodable>: Decodable {
+    var wrappedValue: Wrapped?
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        wrappedValue = try? container.decode(Wrapped.self)
+    }
+}
+
+struct Demo: Decodable {
+    var imageUrl: URL? // The url value can't provide empty string otherwise it would failed.
+}
+
+let result = try? JSONDecoder().decode(Demo.self, from: data)
+print(result!)
+print(result?.imageUrl!)
+
+
+
 struct Payload: Encodable {
     let title: String
     let limit: Int
