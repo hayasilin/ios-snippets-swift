@@ -11,7 +11,6 @@ import UIKit
 class DetailViewController: UIViewController {
     private var sections = Section.allSections
     private lazy var dataSource = makeDataSource()
-    private var searchController = UISearchController(searchResultsController: nil)
 
     typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Item>
@@ -33,7 +32,7 @@ class DetailViewController: UIViewController {
         collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.cellReuseIdentifier)
         collectionView.register(SectionHeaderReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderReusableView.reuseIdentifier)
         collectionView.delegate = self
-        collectionView.dataSource = makeDataSource()
+        collectionView.dataSource = dataSource
 
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)

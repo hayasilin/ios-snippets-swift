@@ -10,12 +10,13 @@ import SafariServices
 
 // https://www.kodeco.com/8241072-ios-tutorial-collection-view-and-diffable-data-source
 class ViewController: UIViewController {
-    private var sections = Section.allSections
-    private lazy var dataSource = makeDataSource()
-    private var searchController = UISearchController(searchResultsController: nil)
-
     typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Item>
+
+    private var sections = Section.allSections
+    private lazy var dataSource = makeDataSource()
+
+    private lazy var searchController = UISearchController(searchResultsController: nil)
 
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -31,12 +32,6 @@ class ViewController: UIViewController {
         applySnapshot(animatingDifferences: false)
     }
 
-    @objc
-    func pushNextPage() {
-        let detailVC = DetailViewController()
-        navigationController?.pushViewController(detailVC, animated: true)
-    }
-
     private func setupViews() {
         let navigationBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pushNextPage))
         navigationItem.rightBarButtonItem = navigationBarButtonItem
@@ -44,7 +39,7 @@ class ViewController: UIViewController {
         collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.cellReuseIdentifier)
         collectionView.register(SectionHeaderReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderReusableView.reuseIdentifier)
         collectionView.delegate = self
-        collectionView.dataSource = makeDataSource()
+        collectionView.dataSource = dataSource
 
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
@@ -114,7 +109,8 @@ class ViewController: UIViewController {
         let dataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: CustomCollectionViewCell.cellReuseIdentifier,
-                for: indexPath) as? CustomCollectionViewCell else {
+                for: indexPath
+            ) as? CustomCollectionViewCell else {
                 return .init()
             }
             cell.textLabel.text = itemIdentifier.title
@@ -129,8 +125,11 @@ class ViewController: UIViewController {
             let view = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
                 withReuseIdentifier: SectionHeaderReusableView.reuseIdentifier,
-                for: indexPath) as? SectionHeaderReusableView
+                for: indexPath
+            ) as? SectionHeaderReusableView
+
             view?.titleLabel.text = section.title
+
             return view
         }
 
@@ -144,6 +143,12 @@ class ViewController: UIViewController {
             snapshot.appendItems(section.items, toSection: section)
         }
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+    }
+
+    @objc
+    private func pushNextPage() {
+        let detailVC = DetailViewController()
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }
 
