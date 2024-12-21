@@ -7,8 +7,8 @@
 
 import UIKit
 
-final class ChatAIReplyTableViewCell: UITableViewCell {
-    static let cellReuseIdentifier = String(describing: ChatAIReplyTableViewCell.self)
+final class ChatAIReplyTextTableViewCell: UITableViewCell {
+    static let cellReuseIdentifier = String(describing: ChatAIReplyTextTableViewCell.self)
 
     private enum Design {
         static let contentInsets = UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 20)
@@ -69,7 +69,7 @@ final class ChatAIReplyTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with item: ChatMessageItem) {
+    func configure(with item: ChatTableMessageItem) {
         titleLabel.text = item.text
     }
 }

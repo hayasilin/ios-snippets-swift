@@ -17,6 +17,7 @@ final class MainTabBarController: UITabBarController {
         let firstVC = UINavigationController(rootViewController: CollectionDiffableDataSourceViewController())
         let secondVC = UINavigationController(rootViewController: TableDiffableDataSourceViewController())
         let thirdVC = UINavigationController(rootViewController: ChatTableViewController(viewModel: ChatTableViewModel()))
+        let fourthVC = UINavigationController(rootViewController: ChatCollectionViewController(viewModel: ChatCollectionViewModel()))
 
         firstVC.tabBarItem = UITabBarItem(
             title: "CollectionView",
@@ -32,10 +33,16 @@ final class MainTabBarController: UITabBarController {
 
         thirdVC.tabBarItem = UITabBarItem(
             title: "Chat TableView",
-            image: UIImage(systemName: "list.bullet.clipboard"),
-            selectedImage: UIImage(systemName: "list.clipboard.fill")
+            image: UIImage(systemName: "text.bubble"),
+            selectedImage: UIImage(systemName: "text.bubble.fill")
         )
 
-        viewControllers = [firstVC, secondVC, thirdVC]
+        fourthVC.tabBarItem = UITabBarItem(
+            title: "Chat CollectionView",
+            image: UIImage(systemName: "captions.bubble"),
+            selectedImage: UIImage(systemName: "captions.bubble.fill")
+        )
+
+        viewControllers = [firstVC, secondVC, thirdVC, fourthVC]
     }
 }

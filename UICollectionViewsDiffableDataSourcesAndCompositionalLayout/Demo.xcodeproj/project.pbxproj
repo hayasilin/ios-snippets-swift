@@ -25,9 +25,14 @@
 		CEF11FFC2D165958009EA77E /* ChatTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF11FFB2D165958009EA77E /* ChatTableViewController.swift */; };
 		CEF11FFE2D16597E009EA77E /* MessageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF11FFD2D16597E009EA77E /* MessageInputView.swift */; };
 		CEF120002D165BBD009EA77E /* ChatUserInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF11FFF2D165BBD009EA77E /* ChatUserInputTableViewCell.swift */; };
-		CEF120022D165D23009EA77E /* ChatAIReplyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF120012D165D23009EA77E /* ChatAIReplyTableViewCell.swift */; };
+		CEF120022D165D23009EA77E /* ChatAIReplyTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF120012D165D23009EA77E /* ChatAIReplyTextTableViewCell.swift */; };
 		CEF120042D166E5E009EA77E /* ChatTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF120032D166E5E009EA77E /* ChatTableViewModel.swift */; };
 		CEF120062D166F01009EA77E /* KeyboardAppearanceObserverInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF120052D166F01009EA77E /* KeyboardAppearanceObserverInfo.swift */; };
+		CEF1200A2D166FF3009EA77E /* ChatCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF120092D166FF3009EA77E /* ChatCollectionViewController.swift */; };
+		CEF1200C2D16701E009EA77E /* ChatCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF1200B2D16701E009EA77E /* ChatCollectionViewModel.swift */; };
+		CEF1200E2D168DEB009EA77E /* ChatAIReplyTextCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF1200D2D168DEB009EA77E /* ChatAIReplyTextCollectionViewCell.swift */; };
+		CEF120102D168E80009EA77E /* ChatUserInputCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF1200F2D168E80009EA77E /* ChatUserInputCollectionViewCell.swift */; };
+		CEF120122D168F17009EA77E /* ChatAIReplyImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF120112D168F17009EA77E /* ChatAIReplyImageCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,9 +56,14 @@
 		CEF11FFB2D165958009EA77E /* ChatTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewController.swift; sourceTree = "<group>"; };
 		CEF11FFD2D16597E009EA77E /* MessageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputView.swift; sourceTree = "<group>"; };
 		CEF11FFF2D165BBD009EA77E /* ChatUserInputTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUserInputTableViewCell.swift; sourceTree = "<group>"; };
-		CEF120012D165D23009EA77E /* ChatAIReplyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAIReplyTableViewCell.swift; sourceTree = "<group>"; };
+		CEF120012D165D23009EA77E /* ChatAIReplyTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAIReplyTextTableViewCell.swift; sourceTree = "<group>"; };
 		CEF120032D166E5E009EA77E /* ChatTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewModel.swift; sourceTree = "<group>"; };
 		CEF120052D166F01009EA77E /* KeyboardAppearanceObserverInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAppearanceObserverInfo.swift; sourceTree = "<group>"; };
+		CEF120092D166FF3009EA77E /* ChatCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCollectionViewController.swift; sourceTree = "<group>"; };
+		CEF1200B2D16701E009EA77E /* ChatCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCollectionViewModel.swift; sourceTree = "<group>"; };
+		CEF1200D2D168DEB009EA77E /* ChatAIReplyTextCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAIReplyTextCollectionViewCell.swift; sourceTree = "<group>"; };
+		CEF1200F2D168E80009EA77E /* ChatUserInputCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUserInputCollectionViewCell.swift; sourceTree = "<group>"; };
+		CEF120112D168F17009EA77E /* ChatAIReplyImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAIReplyImageCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,22 +98,20 @@
 			children = (
 				CE4E8DC62935EAB0001F9B37 /* Info.plist */,
 				CE4E8DB82935EAB0001F9B37 /* AppDelegate.swift */,
-				CEF11FF92D165234009EA77E /* CollectionView */,
-				CEF11FFA2D165241009EA77E /* TableView */,
 				CEAC296B29E7BBDF00494ACC /* DetailViewController.swift */,
+				CEF120052D166F01009EA77E /* KeyboardAppearanceObserverInfo.swift */,
 				CEF11FEF2D15C0CC009EA77E /* MainTabBarController.swift */,
+				CEF11FFD2D16597E009EA77E /* MessageInputView.swift */,
 				CE4E8DBA2935EAB0001F9B37 /* SceneDelegate.swift */,
 				CE26B0D62A540E24000428B4 /* Section.swift */,
 				CE4E8DBC2935EAB0001F9B37 /* ViewController.swift */,
 				CE4E8DC12935EAB0001F9B37 /* Assets.xcassets */,
+				CEF120142D16FC2D009EA77E /* ChatCollectionView */,
+				CEF120132D16FC07009EA77E /* ChatTableView */,
+				CEF11FF92D165234009EA77E /* CollectionView */,
 				CE4E8DC32935EAB0001F9B37 /* LaunchScreen.storyboard */,
 				CE4E8DBE2935EAB0001F9B37 /* Main.storyboard */,
-				CEF11FFB2D165958009EA77E /* ChatTableViewController.swift */,
-				CEF11FFD2D16597E009EA77E /* MessageInputView.swift */,
-				CEF11FFF2D165BBD009EA77E /* ChatUserInputTableViewCell.swift */,
-				CEF120012D165D23009EA77E /* ChatAIReplyTableViewCell.swift */,
-				CEF120032D166E5E009EA77E /* ChatTableViewModel.swift */,
-				CEF120052D166F01009EA77E /* KeyboardAppearanceObserverInfo.swift */,
+				CEF11FFA2D165241009EA77E /* TableView */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -126,6 +134,29 @@
 				CEF11FF72D15C829009EA77E /* TableViewSectionHeaderView.swift */,
 			);
 			path = TableView;
+			sourceTree = "<group>";
+		};
+		CEF120132D16FC07009EA77E /* ChatTableView */ = {
+			isa = PBXGroup;
+			children = (
+				CEF120012D165D23009EA77E /* ChatAIReplyTextTableViewCell.swift */,
+				CEF11FFB2D165958009EA77E /* ChatTableViewController.swift */,
+				CEF120032D166E5E009EA77E /* ChatTableViewModel.swift */,
+				CEF11FFF2D165BBD009EA77E /* ChatUserInputTableViewCell.swift */,
+			);
+			path = ChatTableView;
+			sourceTree = "<group>";
+		};
+		CEF120142D16FC2D009EA77E /* ChatCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				CEF120092D166FF3009EA77E /* ChatCollectionViewController.swift */,
+				CEF1200B2D16701E009EA77E /* ChatCollectionViewModel.swift */,
+				CEF1200D2D168DEB009EA77E /* ChatAIReplyTextCollectionViewCell.swift */,
+				CEF1200F2D168E80009EA77E /* ChatUserInputCollectionViewCell.swift */,
+				CEF120112D168F17009EA77E /* ChatAIReplyImageCollectionViewCell.swift */,
+			);
+			path = ChatCollectionView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -206,16 +237,21 @@
 				CEF11FF82D15C829009EA77E /* TableViewSectionHeaderView.swift in Sources */,
 				CEF11FF62D15C731009EA77E /* CustomTableViewCell.swift in Sources */,
 				CEF11FF02D15C0CC009EA77E /* MainTabBarController.swift in Sources */,
-				CEF120022D165D23009EA77E /* ChatAIReplyTableViewCell.swift in Sources */,
+				CEF120122D168F17009EA77E /* ChatAIReplyImageCollectionViewCell.swift in Sources */,
+				CEF120022D165D23009EA77E /* ChatAIReplyTextTableViewCell.swift in Sources */,
+				CEF1200C2D16701E009EA77E /* ChatCollectionViewModel.swift in Sources */,
 				CEF11FF42D15C158009EA77E /* TableDiffableDataSourceViewController.swift in Sources */,
 				CE4E8DB92935EAB0001F9B37 /* AppDelegate.swift in Sources */,
 				CE26B0D72A540E24000428B4 /* Section.swift in Sources */,
 				CEF120002D165BBD009EA77E /* ChatUserInputTableViewCell.swift in Sources */,
+				CEF1200E2D168DEB009EA77E /* ChatAIReplyTextCollectionViewCell.swift in Sources */,
+				CEF120102D168E80009EA77E /* ChatUserInputCollectionViewCell.swift in Sources */,
 				CE4E8DBB2935EAB0001F9B37 /* SceneDelegate.swift in Sources */,
 				CE26B0D52A540DD9000428B4 /* CollectionViewSectionHeaderReusableView.swift in Sources */,
 				CEF11FF22D15C13F009EA77E /* CollectionDiffableDataSourceViewController.swift in Sources */,
 				CEF11FFC2D165958009EA77E /* ChatTableViewController.swift in Sources */,
 				CEF120042D166E5E009EA77E /* ChatTableViewModel.swift in Sources */,
+				CEF1200A2D166FF3009EA77E /* ChatCollectionViewController.swift in Sources */,
 				CEAC296C29E7BBDF00494ACC /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

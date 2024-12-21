@@ -16,13 +16,21 @@ final class ChatTableViewController: UIViewController {
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 44
+        tableView.contentInset.bottom = 20
         tableView.register(ChatUserInputTableViewCell.self, forCellReuseIdentifier: ChatUserInputTableViewCell.cellReuseIdentifier)
-        tableView.register(ChatAIReplyTableViewCell.self, forCellReuseIdentifier: ChatAIReplyTableViewCell.cellReuseIdentifier)
+        tableView.register(ChatAIReplyTextTableViewCell.self, forCellReuseIdentifier: ChatAIReplyTextTableViewCell.cellReuseIdentifier)
         return tableView
     }()
 
     private let keyboardObserver = KeyboardAppearanceObserver()
-    private let messageInputView = MessageInputView(frame: .zero)
+
+    private lazy var messageInputView: MessageInputView = {
+        let messageInputView = MessageInputView(frame: .zero)
+        messageInputView.delegate = self
+        messageInputView.maxNumberOfLines = 5
+        return messageInputView
+    }()
 
     private lazy var snapshot: Snapshot = {
         var snapshot = Snapshot()
@@ -48,8 +56,58 @@ final class ChatTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        navigationItem.title = "AI Ask"
 
+        configureTitleView()
+        configureViews()
+
+        viewModel.$items.sink { [weak self] items in
+            guard let self else {
+                return
+            }
+            snapshot.appendItems(items)
+            dataSource.apply(snapshot, animatingDifferences: true) {
+                let maxContentOffset = CGPoint(x: 0, y: self.tableView.maximumVerticalContentOffset)
+                self.tableView.setContentOffset(maxContentOffset, animated: true)
+
+                self.messageInputView.isTextViewEditable = true
+            }
+        }
+        .store(in: &subscriptions)
+
+        keyboardObserver.view = view
+        keyboardObserver.delegate = self
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+        tapGesture.numberOfTapsRequired = 1
+        tapGesture.numberOfTouchesRequired = 1
+        tableView.addGestureRecognizer(tapGesture)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        messageInputView.becomeFirstResponderForTextView()
+    }
+
+    private func configureTitleView() {
+        let titleLabel = UILabel(frame: .zero)
+        let attachment = NSTextAttachment()
+        attachment.image = UIImage(systemName: "sparkles")?.withTintColor(.label)
+
+        let font = UIFont.systemFont(ofSize: 15, weight: .bold)
+
+        let attributedString = NSMutableAttributedString(
+            string: "AIにリクエスト",
+            attributes: [
+                .font: font,
+                .foregroundColor: UIColor.label,
+            ]
+        )
+        attributedString.insert(NSAttributedString(attachment: attachment), at: 0)
+        titleLabel.attributedText = attributedString
+        navigationItem.titleView = titleLabel
+    }
+
+    private func configureViews() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
 
@@ -68,30 +126,30 @@ final class ChatTableViewController: UIViewController {
             messageInputView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             messageInputView.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor)
         ])
+    }
 
-        viewModel.$items.sink { [weak self] items in
-            guard let self else {
-                return
-            }
-            snapshot.appendItems(items)
-            dataSource.apply(snapshot, animatingDifferences: true) {
-                let maxContentOffset = CGPoint(x: 0, y: self.tableView.maximumVerticalContentOffset)
-                self.tableView.setContentOffset(maxContentOffset, animated: true)
-            }
-        }
-        .store(in: &subscriptions)
+    func sendTextMessage(_ text: String) {
+        let item = ChatTableMessageItem(id: UUID(), text: text, type: .user)
+        viewModel.refreshMessages(inputMessage: item)
 
-        messageInputView.delegate = self
-        messageInputView.maxNumberOfLines = 5
+        messageInputView.clear()
+        messageInputView.isTextViewEditable = false
+    }
 
-        keyboardObserver.view = view
-        keyboardObserver.delegate = self
+    private func scrollToBottom() {
+        let maxContentOffset = CGPoint(x: 0, y: tableView.maximumVerticalContentOffset)
+        tableView.setContentOffset(maxContentOffset, animated: true)
+    }
+
+    @objc
+    private func handleTapGesture(_ gesture: UITapGestureRecognizer) {
+        messageInputView.resignFirstResponderForTextView()
     }
 }
 
 extension ChatTableViewController {
-    typealias Section = ChatSection
-    typealias Item = ChatMessageItem
+    typealias Section = ChatTableSection
+    typealias Item = ChatTableMessageItem
     typealias DataSource = UITableViewDiffableDataSource<Section, Item>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Item>
 
@@ -109,8 +167,8 @@ extension ChatTableViewController {
 
             case .ai:
                 guard let cell = tableView.dequeueReusableCell(
-                    withIdentifier: ChatAIReplyTableViewCell.cellReuseIdentifier, for: indexPath
-                ) as? ChatAIReplyTableViewCell else {
+                    withIdentifier: ChatAIReplyTextTableViewCell.cellReuseIdentifier, for: indexPath
+                ) as? ChatAIReplyTextTableViewCell else {
                     return UITableViewCell()
                 }
                 cell.configure(with: item)
@@ -136,8 +194,7 @@ extension ChatTableViewController: KeyboardAppearanceObserverDelegate {
     func keyboardAppearanceObserverWillChange(
         _ observer: KeyboardAppearanceObserver, info: KeyboardAppearanceObserverInfo
     ) {
-        let maxContentOffset = CGPoint(x: 0, y: tableView.maximumVerticalContentOffset)
-        tableView.setContentOffset(maxContentOffset, animated: true)
+        scrollToBottom()
     }
 }
 
@@ -147,21 +204,23 @@ extension ChatTableViewController: MessageInputViewDelegate {
         didTapSend text: String
     ) {
         sendTextMessage(text)
-        inputView.clear()
     }
 
     func messageInputView(
         _ inputView: MessageInputView,
         didChangeHeight changes: (old: CGFloat, new: CGFloat)
     ) {
-        let maxContentOffset = CGPoint(x: 0, y: tableView.maximumVerticalContentOffset)
-        tableView.setContentOffset(maxContentOffset, animated: true)
+        scrollToBottom()
     }
 }
 
-extension ChatTableViewController {
-    func sendTextMessage(_ text: String) {
-        let item = ChatMessageItem(id: UUID(), text: text, type: .user)
-        viewModel.refreshMessages(inputMessage: item)
+extension UITableView {
+    var maximumVerticalContentOffset: CGFloat {
+        let contentHeight = contentSize.height
+        let maxContentOffsetY = max(
+            -adjustedContentInset.top,
+            contentHeight - bounds.height + adjustedContentInset.bottom
+        )
+        return maxContentOffsetY
     }
 }

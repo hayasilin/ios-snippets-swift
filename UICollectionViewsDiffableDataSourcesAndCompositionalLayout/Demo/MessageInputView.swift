@@ -25,20 +25,40 @@ final class MessageInputView: UIView {
     }
 
     weak var delegate: (any MessageInputViewDelegate)?
+
     private let sendButton: UIButton = {
-        var configuration = UIButton.Configuration.filled()
-        configuration.title = "Send"
-        configuration.buttonSize = .small
-        configuration.cornerStyle = .capsule
-        configuration.titlePadding = 5
+        var configuration = UIButton.Configuration.plain()
+        configuration.baseBackgroundColor = .clear
+
+        configuration.image = UIImage(systemName: "arrow.up.circle.fill")
+
         let button = UIButton(configuration: configuration)
-        button.translatesAutoresizingMaskIntoConstraints = false
+        button.isEnabled = false
+
+        button.configurationUpdateHandler = { button in
+            switch button.state {
+            case .normal:
+                button.configuration?.baseForegroundColor = .black
+            case .disabled:
+                button.configuration?.baseForegroundColor = .clear
+            default:
+                button.configuration?.baseForegroundColor = .clear
+            }
+        }
         return button
+    }()
+
+    private let placeholderLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.textColor = .lightGray
+        label.font = .systemFont(ofSize: 14)
+        label.text = "気になることは何でも聞いてください。"
+        return label
     }()
 
     private let textView: GrowingTextView = {
         let textView = GrowingTextView(frame: .zero)
-        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = .systemFont(ofSize: 14)
         return textView
     }()
 
@@ -56,63 +76,112 @@ final class MessageInputView: UIView {
             textView.text
         }
         set {
+            placeholderLabel.isHidden = !newValue.isEmpty
             textView.text = newValue
         }
+    }
+
+    var isTextViewEditable = true {
+        didSet {
+            if isTextViewEditable {
+                placeholderLabel.text = "気になることは何でも聞いてください。"
+            }
+            else {
+                placeholderLabel.text = "読み出し中、少々お待ちください。"
+            }
+            textView.isEditable = isTextViewEditable
+        }
+    }
+
+    var replyType: ChatMessageReplyType = .text
+
+    override var intrinsicContentSize: CGSize {
+        .zero
+    }
+
+    override var isFirstResponder: Bool {
+        textView.isFirstResponder
     }
 
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = .secondarySystemBackground
+        let separatorView = UIView(frame: .zero)
+        separatorView.translatesAutoresizingMaskIntoConstraints = false
+        separatorView.backgroundColor = .lightGray
+        addSubview(separatorView)
+
+        textView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(textView)
+
+        sendButton.translatesAutoresizingMaskIntoConstraints = false
         addSubview(sendButton)
 
         NSLayoutConstraint.activate([
+            separatorView.topAnchor.constraint(equalTo: topAnchor),
+            separatorView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            separatorView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            separatorView.heightAnchor.constraint(equalToConstant: 1),
+
             textView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-            textView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            textView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
             textView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -5),
+            textView.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor, constant: -5),
 
             sendButton.topAnchor.constraint(equalTo: textView.topAnchor),
-            sendButton.leadingAnchor.constraint(equalTo: textView.trailingAnchor, constant: 5),
-            sendButton.bottomAnchor.constraint(equalTo: textView.bottomAnchor),
             sendButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -5),
+            sendButton.bottomAnchor.constraint(equalTo: textView.bottomAnchor),
             sendButton.heightAnchor.constraint(equalToConstant: Design.minContentHeight)
         ])
 
-        textView.font = .systemFont(ofSize: 18)
-
         sendButton.addTarget(self, action: #selector(didTapSendButton), for: .touchUpInside)
         sendButton.menu = UIMenu(children: [
-            UIAction(title: "Send", handler: { [weak self] _ in
+            UIAction(title: "Reply image", handler: { [weak self] _ in
                 guard let self else { return }
-                sendButton.configuration?.title = "Send"
+                replyType = .image
             }),
-            UIAction(title: "Receive", handler: { [weak self] _ in
+            UIAction(title: "Reply text", handler: { [weak self] _ in
                 guard let self else { return }
-                sendButton.configuration?.title = "Receive"
+                replyType = .text
             }),
         ])
         maxNumberOfLines = 1
+
+        configurePlaceholder()
+        textView.delegate = self
     }
 
-    @objc private func didTapSendButton(_ sender: UIButton) {
-        let text = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !text.isEmpty else {
-            return
-        }
-        delegate?.messageInputView(self, didTapSend: text)
+    override func resignFirstResponder() -> Bool {
+        textView.resignFirstResponder()
+    }
+
+    func configurePlaceholder() {
+        placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
+        textView.addSubview(placeholderLabel)
+        NSLayoutConstraint.activate([
+            placeholderLabel.centerYAnchor.constraint(equalTo: textView.centerYAnchor),
+            placeholderLabel.leadingAnchor.constraint(equalTo: textView.leadingAnchor, constant: 5)
+        ])
+
+        placeholderLabel.isHidden = !textView.text.isEmpty
     }
 
     func clear() {
         textView.text = ""
     }
 
-    override var intrinsicContentSize: CGSize {
-        .zero
+    func setSendButton(isEnabled: Bool) {
+        sendButton.isEnabled = isEnabled
     }
 
-    override func resignFirstResponder() -> Bool {
+    @discardableResult
+    func becomeFirstResponderForTextView() -> Bool {
+        textView.becomeFirstResponder()
+    }
+
+    @discardableResult
+    func resignFirstResponderForTextView() -> Bool {
         textView.resignFirstResponder()
     }
 
@@ -124,16 +193,18 @@ final class MessageInputView: UIView {
         guard let currentHeight, currentHeight != nextHeight else { return }
         delegate?.messageInputView(self, didChangeHeight: (currentHeight, nextHeight))
     }
+
+    @objc private func didTapSendButton(_ sender: UIButton) {
+        let text = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !text.isEmpty else {
+            return
+        }
+        delegate?.messageInputView(self, didTapSend: text)
+    }
 }
 
 extension MessageInputView {
     private final class GrowingTextView: UITextView {
-        lazy var textViewHeightConstraint: NSLayoutConstraint = {
-            let constraint = heightAnchor.constraint(equalToConstant: Design.minContentHeight)
-            constraint.isActive = true
-            return constraint
-        }()
-
         var maxNumberOfLines = 1 {
             didSet {
                 let lineHeight = font?.lineHeight ?? 0
@@ -142,9 +213,15 @@ extension MessageInputView {
             }
         }
 
-        var maxContentHeight: CGFloat = 0
+        private var maxContentHeight: CGFloat = 0
 
-        func updateTextViewHeightConstraint() {
+        private lazy var textViewHeightConstraint: NSLayoutConstraint = {
+            let constraint = heightAnchor.constraint(equalToConstant: Design.minContentHeight)
+            constraint.isActive = true
+            return constraint
+        }()
+
+        private func updateTextViewHeightConstraint() {
             textViewHeightConstraint.constant = contentSize.height.clamped(
                 minimum: Design.minContentHeight,
                 maximum: maxContentHeight
@@ -157,6 +234,18 @@ extension MessageInputView {
                 superview?.invalidateIntrinsicContentSize()
             }
         }
+    }
+}
+
+extension MessageInputView: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel.isHidden = !textView.text.isEmpty
+        setSendButton(isEnabled: !textView.text.isEmpty)
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        placeholderLabel.isHidden = !textView.text.isEmpty
+        setSendButton(isEnabled: !textView.text.isEmpty)
     }
 }
 

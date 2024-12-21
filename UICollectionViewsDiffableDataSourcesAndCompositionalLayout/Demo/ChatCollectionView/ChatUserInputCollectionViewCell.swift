@@ -1,5 +1,5 @@
 //
-//  ChatUserInputTableViewCell.swift
+//  ChatUserInputCollectionViewCell.swift
 //  Demo
 //
 //  Created by user on 12/21/24.
@@ -7,24 +7,21 @@
 
 import UIKit
 
-final class ChatUserInputTableViewCell: UITableViewCell {
-    static let cellReuseIdentifier = String(describing: ChatUserInputTableViewCell.self)
-
+final class ChatUserInputCollectionViewCell: UICollectionViewCell {
     private enum Design {
-        static let contentInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        static let contentInsets = UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 20)
     }
 
     private let titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = .systemFont(ofSize: 19, weight: .bold)
+        label.font = .systemFont(ofSize: 18, weight: .bold)
         label.textColor = .label
         label.numberOfLines = .zero
         return label
     }()
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        selectionStyle = .none
+    override init(frame: CGRect) {
+        super.init(frame: frame)
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(titleLabel)
@@ -39,7 +36,7 @@ final class ChatUserInputTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with item: ChatMessageItem) {
+    func configure(with item: ChatCollectionMessageItem) {
         titleLabel.text = item.text
     }
 }

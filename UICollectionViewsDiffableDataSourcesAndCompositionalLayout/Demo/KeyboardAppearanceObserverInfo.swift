@@ -227,25 +227,3 @@ extension UIView.AnimationCurve {
         return UIView.AnimationOptions(rawValue: UInt(rawValue << 16))
     }
 }
-
-extension UICollectionView {
-    var maximumVerticalContentOffset: CGFloat {
-        let contentHeight = collectionViewLayout.collectionViewContentSize.height
-        let maxContentOffsetY = max(
-            -adjustedContentInset.top,
-            contentHeight - bounds.height + adjustedContentInset.bottom
-        )
-        return maxContentOffsetY
-    }
-}
-
-extension UITableView {
-    var maximumVerticalContentOffset: CGFloat {
-        let contentHeight = contentSize.height
-        let maxContentOffsetY = max(
-            -adjustedContentInset.top,
-            contentHeight - bounds.height + adjustedContentInset.bottom
-        )
-        return maxContentOffsetY
-    }
-}
