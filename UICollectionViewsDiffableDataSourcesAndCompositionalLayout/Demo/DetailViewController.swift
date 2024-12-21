@@ -30,7 +30,7 @@ class DetailViewController: UIViewController {
 
     private func setupViews() {
         collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.cellReuseIdentifier)
-        collectionView.register(SectionHeaderReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderReusableView.reuseIdentifier)
+        collectionView.register(CollectionViewSectionHeaderReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionViewSectionHeaderReusableView.reuseIdentifier)
         collectionView.delegate = self
         collectionView.dataSource = dataSource
 
@@ -84,8 +84,8 @@ class DetailViewController: UIViewController {
             let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
             let view = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
-                withReuseIdentifier: SectionHeaderReusableView.reuseIdentifier,
-                for: indexPath) as? SectionHeaderReusableView
+                withReuseIdentifier: CollectionViewSectionHeaderReusableView.reuseIdentifier,
+                for: indexPath) as? CollectionViewSectionHeaderReusableView
             view?.titleLabel.text = section.title
             return view
         }
