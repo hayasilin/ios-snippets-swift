@@ -17,6 +17,7 @@ final class TableDiffableDataSourceViewController: UIViewController {
         tableView.contentInsetAdjustmentBehavior = .automatic
         tableView.separatorStyle = .singleLine
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 44
         tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: CustomTableViewCell.cellReuseIdentifier)
         tableView.register(TableViewSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: TableViewSectionHeaderView.reuseIdentifier)
         tableView.register(TableViewSectionFooterView.self, forHeaderFooterViewReuseIdentifier: TableViewSectionFooterView.reuseIdentifier)
@@ -104,24 +105,8 @@ extension TableDiffableDataSourceViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard let section = dataSource.sectionIdentifier(for: section) else {
-            return 0
-        }
-        let headerView = TableViewSectionHeaderView(frame: .zero)
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        headerView.configure(with: section.title)
-
-        let maximumWidth = tableView.frame.size.width
-
-        let withConstraint = headerView.widthAnchor.constraint(equalToConstant: 0)
-        withConstraint.constant = maximumWidth
-        withConstraint.isActive = false
-
-        let size = headerView.systemLayoutSizeFitting(
-            CGSize(width: maximumWidth, height: UIView.layoutFittingCompressedSize.height)
-        )
-
-        return size.height
+        let estimatedLabelHeight = 20.0
+        return estimatedLabelHeight + TableViewSectionHeaderView.Design.contentInset.top + TableViewSectionHeaderView.Design.contentInset.bottom
     }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -133,20 +118,7 @@ extension TableDiffableDataSourceViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let headerView = TableViewSectionFooterView(frame: .zero)
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        headerView.configure(with: "footer")
-
-        let maximumWidth = tableView.frame.size.width
-
-        let withConstraint = headerView.widthAnchor.constraint(equalToConstant: 0)
-        withConstraint.constant = maximumWidth
-        withConstraint.isActive = false
-
-        let size = headerView.systemLayoutSizeFitting(
-            CGSize(width: maximumWidth, height: UIView.layoutFittingCompressedSize.height)
-        )
-
-        return size.height
+        let estimatedLabelHeight = 20.0
+        return estimatedLabelHeight + TableViewSectionFooterView.Design.contentInset.top + TableViewSectionFooterView.Design.contentInset.bottom
     }
 }

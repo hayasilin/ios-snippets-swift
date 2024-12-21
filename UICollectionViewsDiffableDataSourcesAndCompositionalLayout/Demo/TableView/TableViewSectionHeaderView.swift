@@ -10,6 +10,10 @@ import UIKit
 final class TableViewSectionHeaderView: UITableViewHeaderFooterView {
     static let reuseIdentifier = String(describing: TableViewSectionHeaderView.self)
 
+    enum Design {
+        static let contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    }
+
     private let titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.numberOfLines = 0
@@ -23,10 +27,10 @@ final class TableViewSectionHeaderView: UITableViewHeaderFooterView {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(titleLabel)
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-            trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 10),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: Design.contentInset.top),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Design.contentInset.left),
+            bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Design.contentInset.bottom),
+            trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: Design.contentInset.right),
         ])
     }
     
@@ -42,6 +46,10 @@ final class TableViewSectionHeaderView: UITableViewHeaderFooterView {
 final class TableViewSectionFooterView: UITableViewHeaderFooterView {
     static let reuseIdentifier = String(describing: TableViewSectionFooterView.self)
 
+    enum Design {
+        static let contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    }
+
     private let titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.numberOfLines = 0
@@ -55,10 +63,10 @@ final class TableViewSectionFooterView: UITableViewHeaderFooterView {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(titleLabel)
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-            trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 10),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: Design.contentInset.top),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Design.contentInset.left),
+            bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Design.contentInset.bottom),
+            trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: Design.contentInset.right),
         ])
     }
 

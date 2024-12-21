@@ -23,10 +23,10 @@ final class CustomTableViewCell: UITableViewCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(titleLabel)
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-            trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 10),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            contentView.bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+            contentView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 10),
         ])
     }
 
