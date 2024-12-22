@@ -105,13 +105,13 @@
 				CE4E8DBA2935EAB0001F9B37 /* SceneDelegate.swift */,
 				CE26B0D62A540E24000428B4 /* Section.swift */,
 				CE4E8DBC2935EAB0001F9B37 /* ViewController.swift */,
-				CE4E8DC12935EAB0001F9B37 /* Assets.xcassets */,
-				CEF120142D16FC2D009EA77E /* ChatCollectionView */,
-				CEF120132D16FC07009EA77E /* ChatTableView */,
+				CEF11FFA2D165241009EA77E /* TableView */,
 				CEF11FF92D165234009EA77E /* CollectionView */,
+				CEF120132D16FC07009EA77E /* ChatTableView */,
+				CEF120142D16FC2D009EA77E /* ChatCollectionView */,
+				CE4E8DC12935EAB0001F9B37 /* Assets.xcassets */,
 				CE4E8DC32935EAB0001F9B37 /* LaunchScreen.storyboard */,
 				CE4E8DBE2935EAB0001F9B37 /* Main.storyboard */,
-				CEF11FFA2D165241009EA77E /* TableView */,
 			);
 			path = Demo;
 			sourceTree = "<group>";

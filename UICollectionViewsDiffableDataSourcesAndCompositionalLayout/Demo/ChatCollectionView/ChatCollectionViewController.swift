@@ -139,7 +139,7 @@ final class ChatCollectionViewController: UIViewController {
                 case .userInputText:
                     let itemSize = NSCollectionLayoutSize(
                         widthDimension: .fractionalWidth(1),
-                        heightDimension: .estimated(70)
+                        heightDimension: .estimated(100)
                     )
 
                     let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -156,7 +156,7 @@ final class ChatCollectionViewController: UIViewController {
                 case .textSuggestion:
                     let itemSize = NSCollectionLayoutSize(
                         widthDimension: .fractionalWidth(1),
-                        heightDimension: .estimated(70)
+                        heightDimension: .estimated(100)
                     )
 
                     let item = NSCollectionLayoutItem(layoutSize: itemSize)
