@@ -20,14 +20,14 @@ final class MainTabBarController: UITabBarController {
 
         firstVC.tabBarItem = UITabBarItem(
             title: "First",
-            image: nil,
-            selectedImage: nil
+            image: UIImage(systemName: "list.bullet.rectangle"),
+            selectedImage: UIImage(systemName: "list.bullet.rectangle.fill")
         )
 
         secondVC.tabBarItem = UITabBarItem(
             title: "Second",
-            image: nil,
-            selectedImage: nil
+            image: UIImage(systemName: "tablecells"),
+            selectedImage: UIImage(systemName: "tablecells.fill")
         )
 
         viewControllers = [firstVC, secondVC]
