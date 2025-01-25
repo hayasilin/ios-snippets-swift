@@ -11,6 +11,7 @@
 		CE0E5EF02B95A305000CAC2E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0E5EEF2B95A305000CAC2E /* HomeViewController.swift */; };
 		CE0E5EF22B95A375000CAC2E /* SimpleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0E5EF12B95A375000CAC2E /* SimpleTableViewController.swift */; };
 		CE0E5EF42B95A37E000CAC2E /* SimpleCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0E5EF32B95A37E000CAC2E /* SimpleCollectionViewController.swift */; };
+		CE15E9132D3E80920020EE1C /* SQLiteDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE15E9122D3E80920020EE1C /* SQLiteDatabase.swift */; };
 		CE26B0D32A540A93000428B4 /* CustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE26B0D22A540A93000428B4 /* CustomCollectionViewCell.swift */; };
 		CE4E8DB92935EAB0001F9B37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E8DB82935EAB0001F9B37 /* AppDelegate.swift */; };
 		CE4E8DBB2935EAB0001F9B37 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E8DBA2935EAB0001F9B37 /* SceneDelegate.swift */; };
@@ -27,6 +28,7 @@
 		CE0E5EEF2B95A305000CAC2E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		CE0E5EF12B95A375000CAC2E /* SimpleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTableViewController.swift; sourceTree = "<group>"; };
 		CE0E5EF32B95A37E000CAC2E /* SimpleCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCollectionViewController.swift; sourceTree = "<group>"; };
+		CE15E9122D3E80920020EE1C /* SQLiteDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteDatabase.swift; sourceTree = "<group>"; };
 		CE26B0D22A540A93000428B4 /* CustomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE4E8DB52935EAB0001F9B37 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4E8DB82935EAB0001F9B37 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				CE0E5EF12B95A375000CAC2E /* SimpleTableViewController.swift */,
 				CE0E5EF32B95A37E000CAC2E /* SimpleCollectionViewController.swift */,
 				CE9DE5732D214C7600D12BC9 /* DBManager.swift */,
+				CE15E9122D3E80920020EE1C /* SQLiteDatabase.swift */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -167,6 +170,7 @@
 				CE9DE5742D214C7600D12BC9 /* DBManager.swift in Sources */,
 				CE4E8DB92935EAB0001F9B37 /* AppDelegate.swift in Sources */,
 				CE4E8DBB2935EAB0001F9B37 /* SceneDelegate.swift in Sources */,
+				CE15E9132D3E80920020EE1C /* SQLiteDatabase.swift in Sources */,
 				CE0E5EF02B95A305000CAC2E /* HomeViewController.swift in Sources */,
 				CEAC296C29E7BBDF00494ACC /* DetailViewController.swift in Sources */,
 			);
