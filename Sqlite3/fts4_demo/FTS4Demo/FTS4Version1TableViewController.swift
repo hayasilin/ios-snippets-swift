@@ -1,19 +1,14 @@
 //
-//  SimpleTableViewController.swift
+//  FTS4Version1TableViewController.swift
 //  FTS4Demo
 //
-//  Created by user on 1/17/25.
+//  Created by user on 1/25/25.
 //
 
 import UIKit
 import SQLite3
 
-struct Movie {
-    let id: Int32
-    let title: String
-}
-
-final class SimpleTableViewController: UIViewController {
+final class FTS4Version1TableViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
         tableView.delegate = self
@@ -345,7 +340,7 @@ final class SimpleTableViewController: UIViewController {
     }
 }
 
-extension SimpleTableViewController: UITableViewDataSource {
+extension FTS4Version1TableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         isFiltering ? filteredMovies.count : movies.count
     }
@@ -360,7 +355,7 @@ extension SimpleTableViewController: UITableViewDataSource {
     }
 }
 
-extension SimpleTableViewController: UITableViewDelegate {
+extension FTS4Version1TableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
@@ -409,7 +404,7 @@ extension SimpleTableViewController: UITableViewDelegate {
     }
 }
 
-extension SimpleTableViewController: UISearchResultsUpdating {
+extension FTS4Version1TableViewController: UISearchResultsUpdating {
     private func performFTS4Search(with text: String) {
         filteredMovies.removeAll()
 

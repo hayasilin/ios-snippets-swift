@@ -16,13 +16,20 @@ final class MainTabBarController: UITabBarController {
 
     private func configureViews() {
         let firstVC = UINavigationController(rootViewController: SimpleTableViewController())
+        let secondVC = UINavigationController(rootViewController: FTS4Version1TableViewController())
 
         firstVC.tabBarItem = UITabBarItem(
-            title: "First",
+            title: "Version 1",
             image: UIImage(systemName: "list.bullet.rectangle"),
             selectedImage: UIImage(systemName: "list.bullet.rectangle.fill")
         )
 
-        viewControllers = [firstVC]
+        secondVC.tabBarItem = UITabBarItem(
+            title: "Version 2",
+            image: UIImage(systemName: "list.bullet.rectangle"),
+            selectedImage: UIImage(systemName: "list.bullet.rectangle.fill")
+        )
+
+        viewControllers = [firstVC, secondVC]
     }
 }

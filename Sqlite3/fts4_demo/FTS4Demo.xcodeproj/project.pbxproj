@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE2577D52D44B1B700071F96 /* FTS4Version1TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2577D42D44B1B700071F96 /* FTS4Version1TableViewController.swift */; };
+		CE2577D72D44B2B500071F96 /* SQLiteDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2577D62D44B2B500071F96 /* SQLiteDatabase.swift */; };
 		CE83C7312D3A78EE00BADCBC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE83C7302D3A78EE00BADCBC /* AppDelegate.swift */; };
 		CE83C7332D3A78EE00BADCBC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE83C7322D3A78EE00BADCBC /* SceneDelegate.swift */; };
 		CE83C7352D3A78EE00BADCBC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE83C7342D3A78EE00BADCBC /* ViewController.swift */; };
@@ -38,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CE2577D42D44B1B700071F96 /* FTS4Version1TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTS4Version1TableViewController.swift; sourceTree = "<group>"; };
+		CE2577D62D44B2B500071F96 /* SQLiteDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteDatabase.swift; sourceTree = "<group>"; };
 		CE83C72D2D3A78EE00BADCBC /* FTS4Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FTS4Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE83C7302D3A78EE00BADCBC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE83C7322D3A78EE00BADCBC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -112,6 +116,8 @@
 				CE83C73E2D3A78EF00BADCBC /* Info.plist */,
 				CE83C7602D3A79BF00BADCBC /* MainTabBarController.swift */,
 				CE83C7622D3A7A1700BADCBC /* SimpleTableViewController.swift */,
+				CE2577D42D44B1B700071F96 /* FTS4Version1TableViewController.swift */,
+				CE2577D62D44B2B500071F96 /* SQLiteDatabase.swift */,
 			);
 			path = FTS4Demo;
 			sourceTree = "<group>";
@@ -265,10 +271,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE83C7352D3A78EE00BADCBC /* ViewController.swift in Sources */,
+				CE2577D52D44B1B700071F96 /* FTS4Version1TableViewController.swift in Sources */,
 				CE83C7312D3A78EE00BADCBC /* AppDelegate.swift in Sources */,
 				CE83C7632D3A7A1700BADCBC /* SimpleTableViewController.swift in Sources */,
 				CE83C7612D3A79BF00BADCBC /* MainTabBarController.swift in Sources */,
 				CE83C7332D3A78EE00BADCBC /* SceneDelegate.swift in Sources */,
+				CE2577D72D44B2B500071F96 /* SQLiteDatabase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
