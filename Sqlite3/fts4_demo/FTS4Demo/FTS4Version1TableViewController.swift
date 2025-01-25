@@ -8,6 +8,11 @@
 import UIKit
 import SQLite3
 
+private struct Movie {
+    let title: String
+}
+
+// Simple FTS4 without custom value.
 final class FTS4Version1TableViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
@@ -43,6 +48,7 @@ final class FTS4Version1TableViewController: UIViewController {
 
     deinit {
         sqlite3_close(movieDatabase)
+        sqlite3_close(searchDatabase)
     }
 
     override func viewDidLoad() {
@@ -80,7 +86,7 @@ final class FTS4Version1TableViewController: UIViewController {
 
     private func openMovieDatabaseConnection() -> OpaquePointer? {
         guard let libraryPath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).first else {
-            assertionFailure("Configure movie database failure")
+            assertionFailure("Open movie database failure")
             return nil
         }
 
@@ -168,12 +174,10 @@ final class FTS4Version1TableViewController: UIViewController {
         movies.removeAll()
 
         while sqlite3_step(statement) == SQLITE_ROW {
-            let id = sqlite3_column_int(statement, 0)
             let title = String(cString: sqlite3_column_text(statement, 1))
 
             movies.append(
                 Movie(
-                    id: id,
                     title: title
                 )
             )
@@ -222,28 +226,8 @@ final class FTS4Version1TableViewController: UIViewController {
         sqlite3_finalize(statement)
     }
 
-    private func updateMovie(title: String, at index: Int32) {
-        let sqlQueryString = "UPDATE movies SET title = ? WHERE id = ?;"
-        var statement: OpaquePointer?
-
-        if sqlite3_prepare_v2(movieDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
-            sqlite3_bind_text(statement, 1, (title as NSString).utf8String, -1, nil)
-            sqlite3_bind_int(statement, 2, index)
-
-            if sqlite3_step(statement) == SQLITE_DONE {
-                print("Update data success")
-            } else {
-                logSQLErrorMessage()
-            }
-        } else {
-            logSQLErrorMessage()
-        }
-
-        sqlite3_finalize(statement)
-    }
-
-    private func deleteFromMovieTable(at index: Int32) {
-        let sqlQueryString = "DELETE FROM movies WHERE id = \(index)"
+    private func deleteFromMovieTable(with title: String) {
+        let sqlQueryString = "DELETE FROM movies WHERE title = '\(title)'"
         var statement: OpaquePointer?
 
         if sqlite3_prepare_v2(movieDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
@@ -257,14 +241,11 @@ final class FTS4Version1TableViewController: UIViewController {
         }
     }
 
-    private func deleteFromSearchTable(at index: Int32) {
-        let sqlQueryString = "DELETE FROM search WHERE rowid = ?"
+    private func deleteFromSearchTable(with title: String) {
+        let sqlQueryString = "DELETE FROM search WHERE title = '\(title)'"
         var statement: OpaquePointer?
 
         if sqlite3_prepare_v2(searchDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
-            // Bind the row ID to the query
-            sqlite3_bind_int(statement, 1, index)
-
             if sqlite3_step(statement) == SQLITE_DONE {
                 print("Delete data success")
             } else {
@@ -358,24 +339,6 @@ extension FTS4Version1TableViewController: UITableViewDataSource {
 extension FTS4Version1TableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
-        let movie = isFiltering ? filteredMovies[indexPath.row] : movies[indexPath.row]
-
-        let alert = UIAlertController(title: nil, message: "Update", preferredStyle: .alert)
-        alert.addTextField()
-        alert.textFields?.first?.placeholder = movie.title
-
-        let action = UIAlertAction(title: "Update", style: .default) { _ in
-            guard let textField = alert.textFields?.first, let title = textField.text else {
-                return
-            }
-            self.updateMovie(title: title, at: movie.id)
-            self.fetchMovies()
-            self.tableView.reloadData()
-        }
-
-        alert.addAction(action)
-        present(alert, animated: true)
     }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -387,13 +350,13 @@ extension FTS4Version1TableViewController: UITableViewDelegate {
             if self.isFiltering {
                 let movie = self.filteredMovies[indexPath.row]
                 self.filteredMovies.remove(at: indexPath.row)
-                self.deleteFromMovieTable(at: movie.id)
-                self.deleteFromSearchTable(at: movie.id)
+                self.deleteFromMovieTable(with: movie.title)
+                self.deleteFromSearchTable(with: movie.title)
             } else {
                 let movie = self.movies[indexPath.row]
                 self.movies.remove(at: indexPath.row)
-                self.deleteFromMovieTable(at: movie.id)
-                self.deleteFromSearchTable(at: movie.id)
+                self.deleteFromMovieTable(with: movie.title)
+                self.deleteFromSearchTable(with: movie.title)
             }
 
             tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -406,9 +369,7 @@ extension FTS4Version1TableViewController: UITableViewDelegate {
 
 extension FTS4Version1TableViewController: UISearchResultsUpdating {
     private func performFTS4Search(with text: String) {
-        filteredMovies.removeAll()
-
-        let sqlQueryString = "SELECT rowid, title FROM search WHERE search MATCH '\(text)*';"
+        let sqlQueryString = "SELECT * FROM search WHERE search MATCH '\(text)*';"
         var statement: OpaquePointer?
 
         guard sqlite3_prepare_v2(searchDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK else {
@@ -416,10 +377,15 @@ extension FTS4Version1TableViewController: UISearchResultsUpdating {
             return
         }
 
+        filteredMovies.removeAll()
+
         while sqlite3_step(statement) == SQLITE_ROW {
-            let rowid = sqlite3_column_int(statement, 0)
-            let title = String(cString: sqlite3_column_text(statement, 1))
-            filteredMovies.append(Movie(id: rowid, title: title))
+            let title = String(cString: sqlite3_column_text(statement, 0))
+            filteredMovies.append(
+                Movie(
+                    title: title
+                )
+            )
         }
 
         sqlite3_finalize(statement)

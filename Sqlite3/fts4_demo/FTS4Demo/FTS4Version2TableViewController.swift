@@ -1,8 +1,8 @@
 //
-//  SimpleTableViewController.swift
+//  FTS4Version2TableViewController.swift
 //  FTS4Demo
 //
-//  Created by user on 1/17/25.
+//  Created by user on 1/25/25.
 //
 
 import UIKit
@@ -13,7 +13,8 @@ private struct Movie {
     let title: String
 }
 
-final class SimpleTableViewController: UIViewController {
+/// FTS4 with using rowid.
+final class FTS4Version2TableViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
         tableView.delegate = self
@@ -345,7 +346,7 @@ final class SimpleTableViewController: UIViewController {
     }
 }
 
-extension SimpleTableViewController: UITableViewDataSource {
+extension FTS4Version2TableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         isFiltering ? filteredMovies.count : movies.count
     }
@@ -360,7 +361,7 @@ extension SimpleTableViewController: UITableViewDataSource {
     }
 }
 
-extension SimpleTableViewController: UITableViewDelegate {
+extension FTS4Version2TableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
@@ -409,7 +410,7 @@ extension SimpleTableViewController: UITableViewDelegate {
     }
 }
 
-extension SimpleTableViewController: UISearchResultsUpdating {
+extension FTS4Version2TableViewController: UISearchResultsUpdating {
     private func performFTS4Search(with text: String) {
         filteredMovies.removeAll()
 

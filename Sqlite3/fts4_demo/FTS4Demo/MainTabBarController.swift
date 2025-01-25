@@ -15,8 +15,8 @@ final class MainTabBarController: UITabBarController {
     }
 
     private func configureViews() {
-        let firstVC = UINavigationController(rootViewController: SimpleTableViewController())
-        let secondVC = UINavigationController(rootViewController: FTS4Version1TableViewController())
+        let firstVC = UINavigationController(rootViewController: FTS4Version1TableViewController())
+        let secondVC = UINavigationController(rootViewController: FTS4Version2TableViewController())
 
         firstVC.tabBarItem = UITabBarItem(
             title: "Version 1",

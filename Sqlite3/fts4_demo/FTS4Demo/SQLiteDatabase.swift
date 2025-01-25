@@ -28,6 +28,18 @@ extension Contact: SQLTable {
     }
 }
 
+struct FTS4 {
+    let title: String
+}
+
+extension FTS4: SQLTable {
+    static var createStatement: String {
+        """
+        CREATE VIRTUAL TABLE IF NOT EXISTS contacts_search USING fts4(title);
+        """
+    }
+}
+
 enum SQLiteError: Error {
     case openDatabase(message: String)
     case prepare(message: String)
@@ -133,7 +145,7 @@ extension SQLiteDatabase {
     ///     print(db.errorMessage)
     /// }
     /// ```
-    func insertContact(contact: Contact) throws {
+    func insertContact(_ contact: Contact) throws {
         let insertSql = "INSERT INTO contacts (id, name) VALUES (?, ?);"
         let insertStatement = try prepareStatement(sql: insertSql)
 
@@ -151,7 +163,26 @@ extension SQLiteDatabase {
             throw SQLiteError.step(message: errorMessage)
         }
 
-        print("Successfully inserted row.")
+        print("Successfully inserted \(contact)")
+    }
+
+    func insertContactSearch(title: String) throws {
+        let sqlQueryString = "INSERT INTO contacts_search (title) VALUES (?);"
+        var statement: OpaquePointer?
+
+        defer {
+            sqlite3_finalize(statement)
+        }
+
+        guard sqlite3_bind_text(statement, 1, (title as NSString).utf8String, -1, nil) == SQLITE_OK else {
+            throw SQLiteError.bind(message: errorMessage)
+        }
+
+        guard sqlite3_step(statement) == SQLITE_DONE else {
+            throw SQLiteError.step(message: errorMessage)
+        }
+
+        print("Successfully inserted \(title).")
     }
 }
 
@@ -164,6 +195,7 @@ extension SQLiteDatabase {
     /// ```
     func contact(id: Int32) -> Contact? {
         let querySql = "SELECT * FROM contacts WHERE id = ?;"
+
         guard let queryStatement = try? prepareStatement(sql: querySql) else {
             return nil
         }
@@ -190,5 +222,152 @@ extension SQLiteDatabase {
 
         return Contact(id: id, name: name)
     }
+
+    func query() -> [Contact] {
+        let sqlQueryString = "SELECT * FROM contacts";
+
+        guard let queryStatement = try? prepareStatement(sql: sqlQueryString) else {
+            return []
+        }
+
+        defer {
+            sqlite3_finalize(queryStatement)
+        }
+
+        var contacts = [Contact]()
+
+        while sqlite3_step(queryStatement) == SQLITE_ROW {
+            let id = sqlite3_column_int(queryStatement, 0)
+            let title = String(cString: sqlite3_column_text(queryStatement, 1))
+
+            contacts.append(
+                Contact(
+                    id: id,
+                    name: title
+                )
+            )
+        }
+
+        return contacts
+    }
 }
 
+extension SQLiteDatabase {
+    /// - Usage:
+    /// ```
+    /// do {
+    ///     try db.insertContact(contact: Contact(id: 1, name: "Ray"))
+    /// } catch {
+    ///     print(db.errorMessage)
+    /// }
+    /// ```
+    func updateContact(title: String, at index: Int32) throws {
+        let sqlQueryString = "UPDATE movies SET title = ? WHERE id = ?;"
+
+        let statement = try prepareStatement(sql: sqlQueryString)
+
+        defer {
+            sqlite3_finalize(statement)
+        }
+
+        guard sqlite3_bind_text(statement, 1, (title as NSString).utf8String, -1, nil) == SQLITE_OK &&
+                sqlite3_bind_int(statement, 2, index) == SQLITE_OK
+        else {
+            throw SQLiteError.bind(message: errorMessage)
+        }
+
+        guard sqlite3_step(statement) == SQLITE_DONE else {
+            throw SQLiteError.step(message: errorMessage)
+        }
+
+        print("Successfully updated \(title)")
+    }
+
+    func updateContactSearch(title: String, at index: Int32) throws {
+        let sqlQueryString = "UPDATE contacts_search SET title = ? WHERE rowid = ?;"
+
+        let statement = try prepareStatement(sql: sqlQueryString)
+
+        defer {
+            sqlite3_finalize(statement)
+        }
+
+        guard sqlite3_bind_text(statement, 1, (title as NSString).utf8String, -1, nil) == SQLITE_OK &&
+                sqlite3_bind_int(statement, 2, index) == SQLITE_OK
+        else {
+            throw SQLiteError.bind(message: errorMessage)
+        }
+
+        guard sqlite3_step(statement) == SQLITE_DONE else {
+            throw SQLiteError.step(message: errorMessage)
+        }
+
+        print("Successfully updated \(title).")
+    }
+}
+
+extension SQLiteDatabase {
+    func deleteContact(at index: Int32) throws {
+        let sqlQueryString = "DELETE FROM contacts WHERE id = \(index)"
+
+        let statement = try prepareStatement(sql: sqlQueryString)
+
+        defer {
+            sqlite3_finalize(statement)
+        }
+
+        guard sqlite3_step(statement) == SQLITE_DONE else {
+            throw SQLiteError.step(message: errorMessage)
+        }
+
+        print("Successfully deleted at \(index).")
+    }
+
+    func deleteContactSearch(at index: Int32) throws {
+        let sqlQueryString = "DELETE FROM contacts_search WHERE rowid = ?"
+
+        let statement = try prepareStatement(sql: sqlQueryString)
+
+        defer {
+            sqlite3_finalize(statement)
+        }
+
+        // Bind the row ID to the query
+        guard sqlite3_bind_int(statement, 1, index) == SQLITE_OK else {
+            throw SQLiteError.bind(message: errorMessage)
+        }
+
+        guard sqlite3_step(statement) == SQLITE_DONE else {
+            throw SQLiteError.step(message: errorMessage)
+        }
+
+        print("Successfully deleted at \(index).")
+    }
+}
+
+extension SQLiteDatabase {
+    func performSearchContacts(with text: String) throws -> [Contact] {
+        let sqlQueryString = "SELECT rowid, title FROM contacts_search WHERE contacts_search MATCH '\(text)*';"
+
+        let statement = try prepareStatement(sql: sqlQueryString)
+
+        defer {
+            sqlite3_finalize(statement)
+        }
+
+        var contacts = [Contact]()
+
+        while sqlite3_step(statement) == SQLITE_ROW {
+            let rowid = sqlite3_column_int(statement, 0)
+            let name = String(cString: sqlite3_column_text(statement, 1))
+            contacts.append(
+                Contact(
+                    id: rowid,
+                    name: name
+                )
+            )
+        }
+
+        return contacts
+    }
+}
