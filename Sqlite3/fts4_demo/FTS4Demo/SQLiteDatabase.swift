@@ -8,6 +8,26 @@
 import Foundation
 import SQLite3
 
+enum DBScheme {
+    case v1
+    case v2
+    case v3
+    case v4
+
+    var databaseFileName: String {
+        switch self {
+        case .v1:
+            "search_v1.sqlite"
+        case .v2:
+            "search_v2.sqlite"
+        case .v3:
+            "search_v3.sqlite"
+        case .v4:
+            "search_v4.sqlite"
+        }
+    }
+}
+
 protocol SQLTable {
     static var createStatement: String { get }
 }
@@ -18,11 +38,16 @@ struct Contact {
 }
 
 extension Contact: SQLTable {
+    /// We cannot use "id `INT` PRIMARY KEY NOT NULL" to create primary key with auto-increment,
+    /// https://stackoverflow.com/questions/7905859/is-there-auto-increment-in-sqlite
+    /// https://www.sqlite.org/faq.html#q1
+    /// https://www.sqlite.org/autoinc.html
+    /// So change to use "id `INTEGER` PRIMARY KEY NOT NULL" for primary key.
     static var createStatement: String {
         """
-        CREATE TABLE contacts(
-        id INT PRIMARY KEY NOT NULL,
-        name CHAR(255)
+        CREATE TABLE IF NOT EXISTS contacts(
+        id INTEGER PRIMARY KEY NOT NULL,
+        name CHAR(255) NOT NULL
         );
         """
     }
@@ -35,7 +60,7 @@ struct FTS4 {
 extension FTS4: SQLTable {
     static var createStatement: String {
         """
-        CREATE VIRTUAL TABLE IF NOT EXISTS contacts_search USING fts4(title);
+        CREATE VIRTUAL TABLE IF NOT EXISTS search USING fts4(title);
         """
     }
 }
@@ -122,16 +147,16 @@ extension SQLiteDatabase {
     /// }
     /// ```
     func createTable(table: SQLTable.Type) throws {
-        // 1
         let createTableStatement = try prepareStatement(sql: table.createStatement)
-        // 2
+
         defer {
             sqlite3_finalize(createTableStatement)
         }
-        // 3
+
         guard sqlite3_step(createTableStatement) == SQLITE_DONE else {
             throw SQLiteError.step(message: errorMessage)
         }
+
         print("\(table) table created.")
     }
 }
@@ -145,7 +170,7 @@ extension SQLiteDatabase {
     ///     print(db.errorMessage)
     /// }
     /// ```
-    func insertContact(_ contact: Contact) throws {
+    func insertContact(name: String) throws {
         let insertSql = "INSERT INTO contacts (id, name) VALUES (?, ?);"
         let insertStatement = try prepareStatement(sql: insertSql)
 
@@ -153,8 +178,9 @@ extension SQLiteDatabase {
             sqlite3_finalize(insertStatement)
         }
 
-        guard sqlite3_bind_int(insertStatement, 1, contact.id) == SQLITE_OK  &&
-                sqlite3_bind_text(insertStatement, 2, (contact.name as NSString).utf8String, -1, nil) == SQLITE_OK
+        // Comment out below to not set id manually becuase SQLite will do auto increment for it.
+        // sqlite3_bind_int(statement, 1, id)
+        guard sqlite3_bind_text(insertStatement, 2, (name as NSString).utf8String, -1, nil) == SQLITE_OK
         else {
             throw SQLiteError.bind(message: errorMessage)
         }
@@ -163,26 +189,26 @@ extension SQLiteDatabase {
             throw SQLiteError.step(message: errorMessage)
         }
 
-        print("Successfully inserted \(contact)")
+        print("Successfully inserted contact \(name)")
     }
 
-    func insertContactSearch(title: String) throws {
-        let sqlQueryString = "INSERT INTO contacts_search (title) VALUES (?);"
-        var statement: OpaquePointer?
+    func insertContactSearch(name: String) throws {
+        let sqlQueryString = "INSERT INTO search (title) VALUES (?);"
+        let insertStatement = try prepareStatement(sql: sqlQueryString)
 
         defer {
-            sqlite3_finalize(statement)
+            sqlite3_finalize(insertStatement)
         }
 
-        guard sqlite3_bind_text(statement, 1, (title as NSString).utf8String, -1, nil) == SQLITE_OK else {
+        guard sqlite3_bind_text(insertStatement, 1, (name as NSString).utf8String, -1, nil) == SQLITE_OK else {
             throw SQLiteError.bind(message: errorMessage)
         }
 
-        guard sqlite3_step(statement) == SQLITE_DONE else {
+        guard sqlite3_step(insertStatement) == SQLITE_DONE else {
             throw SQLiteError.step(message: errorMessage)
         }
 
-        print("Successfully inserted \(title).")
+        print("Successfully inserted search talbe: \(name).")
     }
 }
 
@@ -256,13 +282,13 @@ extension SQLiteDatabase {
     /// - Usage:
     /// ```
     /// do {
-    ///     try db.insertContact(contact: Contact(id: 1, name: "Ray"))
+    ///     try db.updateContact(name: "Ray", at: 1)
     /// } catch {
     ///     print(db.errorMessage)
     /// }
     /// ```
-    func updateContact(title: String, at index: Int32) throws {
-        let sqlQueryString = "UPDATE movies SET title = ? WHERE id = ?;"
+    func updateContact(name: String, at index: Int32) throws {
+        let sqlQueryString = "UPDATE contacts SET name = ? WHERE id = ?;"
 
         let statement = try prepareStatement(sql: sqlQueryString)
 
@@ -270,7 +296,7 @@ extension SQLiteDatabase {
             sqlite3_finalize(statement)
         }
 
-        guard sqlite3_bind_text(statement, 1, (title as NSString).utf8String, -1, nil) == SQLITE_OK &&
+        guard sqlite3_bind_text(statement, 1, (name as NSString).utf8String, -1, nil) == SQLITE_OK &&
                 sqlite3_bind_int(statement, 2, index) == SQLITE_OK
         else {
             throw SQLiteError.bind(message: errorMessage)
@@ -280,11 +306,11 @@ extension SQLiteDatabase {
             throw SQLiteError.step(message: errorMessage)
         }
 
-        print("Successfully updated \(title)")
+        print("Successfully updated contacts \(name)")
     }
 
-    func updateContactSearch(title: String, at index: Int32) throws {
-        let sqlQueryString = "UPDATE contacts_search SET title = ? WHERE rowid = ?;"
+    func updateContactSearch(name: String, at index: Int32) throws {
+        let sqlQueryString = "UPDATE search SET title = ? WHERE rowid = ?;"
 
         let statement = try prepareStatement(sql: sqlQueryString)
 
@@ -292,7 +318,7 @@ extension SQLiteDatabase {
             sqlite3_finalize(statement)
         }
 
-        guard sqlite3_bind_text(statement, 1, (title as NSString).utf8String, -1, nil) == SQLITE_OK &&
+        guard sqlite3_bind_text(statement, 1, (name as NSString).utf8String, -1, nil) == SQLITE_OK &&
                 sqlite3_bind_int(statement, 2, index) == SQLITE_OK
         else {
             throw SQLiteError.bind(message: errorMessage)
@@ -302,7 +328,7 @@ extension SQLiteDatabase {
             throw SQLiteError.step(message: errorMessage)
         }
 
-        print("Successfully updated \(title).")
+        print("Successfully updated search \(name)")
     }
 }
 
@@ -320,11 +346,11 @@ extension SQLiteDatabase {
             throw SQLiteError.step(message: errorMessage)
         }
 
-        print("Successfully deleted at \(index).")
+        print("Successfully deleted contact at \(index).")
     }
 
     func deleteContactSearch(at index: Int32) throws {
-        let sqlQueryString = "DELETE FROM contacts_search WHERE rowid = ?"
+        let sqlQueryString = "DELETE FROM search WHERE rowid = ?"
 
         let statement = try prepareStatement(sql: sqlQueryString)
 
@@ -341,13 +367,13 @@ extension SQLiteDatabase {
             throw SQLiteError.step(message: errorMessage)
         }
 
-        print("Successfully deleted at \(index).")
+        print("Successfully deleted search at \(index).")
     }
 }
 
 extension SQLiteDatabase {
     func performSearchContacts(with text: String) throws -> [Contact] {
-        let sqlQueryString = "SELECT rowid, title FROM contacts_search WHERE contacts_search MATCH '\(text)*';"
+        let sqlQueryString = "SELECT rowid, title FROM search WHERE search MATCH '\(text)*';"
 
         let statement = try prepareStatement(sql: sqlQueryString)
 

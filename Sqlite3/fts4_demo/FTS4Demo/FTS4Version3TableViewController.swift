@@ -45,7 +45,7 @@ final class FTS4Version3TableViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
 
-        navigationItem.title = "First"
+        navigationItem.title = "Version 3"
         let rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapInsertButton))
         ]
@@ -63,6 +63,10 @@ final class FTS4Version3TableViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+
         openContactDatabaseConnection()
         createContactTable()
 
@@ -79,7 +83,7 @@ final class FTS4Version3TableViewController: UIViewController {
             return
         }
 
-        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent("movie.sqlite")
+        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent("contacts.sqlite")
         let databasePath = libraryURL.path
 
         do {
@@ -108,7 +112,7 @@ final class FTS4Version3TableViewController: UIViewController {
             return
         }
 
-        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent("search_contacts.sqlite")
+        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent(DBScheme.v3.databaseFileName)
         let databasePath = libraryURL.path
 
         do {
@@ -123,7 +127,7 @@ final class FTS4Version3TableViewController: UIViewController {
 
     private func createSearchTable() {
         do {
-            try contactDatabase?.createTable(table: FTS4.self)
+            try searchDatabase?.createTable(table: FTS4.self)
         } catch {
             if let errorMessage = contactDatabase?.errorMessage {
                 print(errorMessage)
@@ -138,9 +142,9 @@ final class FTS4Version3TableViewController: UIViewController {
         self.contacts = contacts
     }
 
-    private func insertContact(with title: String) {
+    private func insertContact(name: String) {
         do {
-            try contactDatabase?.insertContact(Contact(id: 1, name: title))
+            try contactDatabase?.insertContact(name: name)
         } catch {
             if let errorMessage = contactDatabase?.errorMessage {
                 print(errorMessage)
@@ -148,9 +152,9 @@ final class FTS4Version3TableViewController: UIViewController {
         }
     }
 
-    private func insertSearchDatabase(with title: String) {
+    private func insertSearchDatabase(with name: String) {
         do {
-            try searchDatabase?.insertContactSearch(title: title)
+            try searchDatabase?.insertContactSearch(name: name)
         } catch {
             if let errorMessage = contactDatabase?.errorMessage {
                 print(errorMessage)
@@ -158,9 +162,9 @@ final class FTS4Version3TableViewController: UIViewController {
         }
     }
 
-    private func updateContact(title: String, at index: Int32) {
+    private func updateContact(name: String, at index: Int32) {
         do {
-            try contactDatabase?.updateContact(title: title, at: index)
+            try contactDatabase?.updateContact(name: name, at: index)
         } catch {
             if let errorMessage = contactDatabase?.errorMessage {
                 print(errorMessage)
@@ -168,9 +172,9 @@ final class FTS4Version3TableViewController: UIViewController {
         }
     }
 
-    private func updateSearchContact(title: String, at index: Int32) {
+    private func updateSearchContact(name: String, at index: Int32) {
         do {
-            try searchDatabase?.updateContactSearch(title: title, at: index)
+            try searchDatabase?.updateContactSearch(name: name, at: index)
         } catch {
             if let errorMessage = contactDatabase?.errorMessage {
                 print(errorMessage)
@@ -188,27 +192,34 @@ final class FTS4Version3TableViewController: UIViewController {
         }
     }
 
-    private func deleteFromSearchTable(at index: Int32) {
+    private func deleteSearchContact(at index: Int32) {
         do {
             try searchDatabase?.deleteContactSearch(at: index)
         } catch {
-            if let errorMessage = searchDatabase?.errorMessage {
+            if let errorMessage = contactDatabase?.errorMessage {
                 print(errorMessage)
             }
         }
     }
 
     @objc
+    private func refresh(_ sender: UIRefreshControl) {
+        queryContacts()
+        tableView.reloadData()
+        tableView.refreshControl?.endRefreshing()
+    }
+
+    @objc
     private func didTapInsertButton(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(title: nil, message: "Insert", preferredStyle: .alert)
         alert.addTextField()
-        alert.textFields?.first?.placeholder = "Input movie title"
+        alert.textFields?.first?.placeholder = "Input contact name"
 
         let action = UIAlertAction(title: "Save", style: .default) { _ in
             guard let textField = alert.textFields?.first, let title = textField.text else {
                 return
             }
-            self.insertContact(with: title)
+            self.insertContact(name: title)
             self.insertSearchDatabase(with: title)
             self.queryContacts()
             self.tableView.reloadData()
@@ -225,11 +236,13 @@ extension FTS4Version3TableViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: UITableViewCell.self), for: indexPath)
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: String(describing: UITableViewCell.self))
 
         let contact = isFiltering ? filteredContacts[indexPath.row] : contacts[indexPath.row]
 
         cell.textLabel?.text = contact.name
+        cell.detailTextLabel?.text = String(contact.id)
+
         return cell
     }
 }
@@ -238,17 +251,18 @@ extension FTS4Version3TableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        let movie = isFiltering ? filteredContacts[indexPath.row] : contacts[indexPath.row]
+        let contact = isFiltering ? filteredContacts[indexPath.row] : contacts[indexPath.row]
 
         let alert = UIAlertController(title: nil, message: "Update", preferredStyle: .alert)
         alert.addTextField()
-        alert.textFields?.first?.placeholder = movie.name
+        alert.textFields?.first?.placeholder = contact.name
 
         let action = UIAlertAction(title: "Update", style: .default) { _ in
             guard let textField = alert.textFields?.first, let title = textField.text else {
                 return
             }
-            self.updateContact(title: title, at: movie.id)
+            self.updateContact(name: title, at: contact.id)
+            self.updateSearchContact(name: title, at: contact.id)
             self.queryContacts()
             self.tableView.reloadData()
         }
@@ -267,12 +281,12 @@ extension FTS4Version3TableViewController: UITableViewDelegate {
                 let contact = self.filteredContacts[indexPath.row]
                 self.filteredContacts.remove(at: indexPath.row)
                 self.deleteContact(at: contact.id)
-                self.deleteFromSearchTable(at: contact.id)
+                self.deleteSearchContact(at: contact.id)
             } else {
                 let contact = self.contacts[indexPath.row]
                 self.contacts.remove(at: indexPath.row)
                 self.deleteContact(at: contact.id)
-                self.deleteFromSearchTable(at: contact.id)
+                self.deleteSearchContact(at: contact.id)
             }
 
             tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -296,8 +310,6 @@ extension FTS4Version3TableViewController: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text, !searchText.isEmpty else {
-            queryContacts()
-            tableView.reloadData()
             return
         }
 
@@ -305,4 +317,3 @@ extension FTS4Version3TableViewController: UISearchResultsUpdating {
         tableView.reloadData()
     }
 }
-
