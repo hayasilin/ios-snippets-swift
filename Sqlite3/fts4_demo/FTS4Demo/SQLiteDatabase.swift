@@ -38,11 +38,11 @@ struct Contact {
 }
 
 extension Contact: SQLTable {
-    /// We cannot use "id `INT` PRIMARY KEY NOT NULL" to create primary key with auto-increment,
+    /// It's mandatory to use "id `INTEGER` PRIMARY KEY NOT NULL" instead of
+    /// "id `INT` PRIMARY KEY NOT NULL" to create `id` as primary key with auto-increment,
     /// https://stackoverflow.com/questions/7905859/is-there-auto-increment-in-sqlite
     /// https://www.sqlite.org/faq.html#q1
     /// https://www.sqlite.org/autoinc.html
-    /// So change to use "id `INTEGER` PRIMARY KEY NOT NULL" for primary key.
     static var createStatement: String {
         """
         CREATE TABLE IF NOT EXISTS contacts(

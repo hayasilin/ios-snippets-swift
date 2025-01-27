@@ -22,6 +22,7 @@
 		CE83C7542D3A78EF00BADCBC /* FTS4DemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE83C7532D3A78EF00BADCBC /* FTS4DemoUITestsLaunchTests.swift */; };
 		CE83C7612D3A79BF00BADCBC /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE83C7602D3A79BF00BADCBC /* MainTabBarController.swift */; };
 		CE83C7632D3A7A1700BADCBC /* SimpleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE83C7622D3A7A1700BADCBC /* SimpleTableViewController.swift */; };
+		CEB5311D2D471F3B00FD6F59 /* FTS4ContentlessTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB5311C2D471F3B00FD6F59 /* FTS4ContentlessTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		CE83C7532D3A78EF00BADCBC /* FTS4DemoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTS4DemoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		CE83C7602D3A79BF00BADCBC /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		CE83C7622D3A7A1700BADCBC /* SimpleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTableViewController.swift; sourceTree = "<group>"; };
+		CEB5311C2D471F3B00FD6F59 /* FTS4ContentlessTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTS4ContentlessTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 				CE2577D62D44B2B500071F96 /* SQLiteDatabase.swift */,
 				CE2577D82D44C90200071F96 /* FTS4Version2TableViewController.swift */,
 				CE2577DA2D44D03000071F96 /* FTS4Version3TableViewController.swift */,
+				CEB5311C2D471F3B00FD6F59 /* FTS4ContentlessTableViewController.swift */,
 			);
 			path = FTS4Demo;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 				CE2577DB2D44D03000071F96 /* FTS4Version3TableViewController.swift in Sources */,
 				CE2577D52D44B1B700071F96 /* FTS4Version1TableViewController.swift in Sources */,
 				CE83C7312D3A78EE00BADCBC /* AppDelegate.swift in Sources */,
+				CEB5311D2D471F3B00FD6F59 /* FTS4ContentlessTableViewController.swift in Sources */,
 				CE83C7632D3A7A1700BADCBC /* SimpleTableViewController.swift in Sources */,
 				CE83C7612D3A79BF00BADCBC /* MainTabBarController.swift in Sources */,
 				CE83C7332D3A78EE00BADCBC /* SceneDelegate.swift in Sources */,

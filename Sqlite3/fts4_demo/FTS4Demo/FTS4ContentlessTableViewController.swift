@@ -1,8 +1,8 @@
 //
-//  SimpleTableViewController.swift
+//  FTS4ContentlessTableViewController.swift
 //  FTS4Demo
 //
-//  Created by user on 1/17/25.
+//  Created by user on 1/27/25.
 //
 
 import UIKit
@@ -13,7 +13,12 @@ private struct Movie {
     let title: String
 }
 
-final class SimpleTableViewController: UIViewController {
+/// FTS4 using contentless table to perform CRUD.
+/// - Create: "CREATE VIRTUAL TABLE IF NOT EXISTS search USING fts4(title);"
+/// - Insert: "INSERT INTO search(title) VALUES (?);"
+/// - Search: "SELECT rowid, title FROM search WHERE search MATCH '\(text)*';"
+/// - Delete: "DELETE FROM search WHERE rowid = ?"
+final class FTS4ContentlessTableViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
         tableView.delegate = self
@@ -130,7 +135,7 @@ final class SimpleTableViewController: UIViewController {
             return nil
         }
 
-        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent("search.sqlite")
+        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent(DBScheme.v4.databaseFileName)
         let databasePath = libraryURL.path
 
         var db: OpaquePointer?
@@ -148,7 +153,6 @@ final class SimpleTableViewController: UIViewController {
         CREATE VIRTUAL TABLE IF NOT EXISTS search \
         USING FTS4 (content="", text, order=desc);
         """
-//        let sqlQueryString = "CREATE VIRTUAL TABLE IF NOT EXISTS search USING fts4(content="", title);"
 
         var statement: OpaquePointer?
 
@@ -355,7 +359,7 @@ final class SimpleTableViewController: UIViewController {
     }
 }
 
-extension SimpleTableViewController: UITableViewDataSource {
+extension FTS4ContentlessTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         isFiltering ? filteredMovies.count : movies.count
     }
@@ -371,7 +375,7 @@ extension SimpleTableViewController: UITableViewDataSource {
     }
 }
 
-extension SimpleTableViewController: UITableViewDelegate {
+extension FTS4ContentlessTableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
@@ -420,7 +424,7 @@ extension SimpleTableViewController: UITableViewDelegate {
     }
 }
 
-extension SimpleTableViewController: UISearchResultsUpdating {
+extension FTS4ContentlessTableViewController: UISearchResultsUpdating {
     private func performFTS4Search(with text: String) -> [Int32] {
         let sqlQueryString = "SELECT docid FROM search AS d WHERE d.text MATCH '\(text)*';"
         var statement: OpaquePointer?

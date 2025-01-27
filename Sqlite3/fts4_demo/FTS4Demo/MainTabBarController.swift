@@ -19,25 +19,32 @@ final class MainTabBarController: UITabBarController {
         let firstVC = UINavigationController(rootViewController: FTS4Version1TableViewController())
         let secondVC = UINavigationController(rootViewController: FTS4Version2TableViewController())
         let thirdVC = UINavigationController(rootViewController: FTS4Version3TableViewController())
+        let forthVC = UINavigationController(rootViewController: FTS4ContentlessTableViewController())
 
         firstVC.tabBarItem = UITabBarItem(
-            title: "Version 1",
+            title: "Simple",
             image: UIImage(systemName: "list.bullet.rectangle"),
             selectedImage: UIImage(systemName: "list.bullet.rectangle.fill")
         )
 
         secondVC.tabBarItem = UITabBarItem(
-            title: "Version 2",
+            title: "Use rowid",
             image: UIImage(systemName: "list.bullet.rectangle"),
             selectedImage: UIImage(systemName: "list.bullet.rectangle.fill")
         )
 
         thirdVC.tabBarItem = UITabBarItem(
-            title: "Version 3",
+            title: "Use interface",
             image: UIImage(systemName: "list.bullet.rectangle"),
             selectedImage: UIImage(systemName: "list.bullet.rectangle.fill")
         )
 
-        viewControllers = [firstVC, secondVC, thirdVC]
+        forthVC.tabBarItem = UITabBarItem(
+            title: "Contentless table",
+            image: UIImage(systemName: "list.bullet.rectangle"),
+            selectedImage: UIImage(systemName: "list.bullet.rectangle.fill")
+        )
+
+        viewControllers = [firstVC, secondVC, thirdVC, forthVC]
     }
 }
