@@ -20,6 +20,10 @@
 		CE371EEC2DBC9AD9007D7008 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE371EEB2DBC9AD9007D7008 /* MainTabBarController.swift */; };
 		CE371EF02DBCA04A007D7008 /* BasicCollectionReusableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE371EEF2DBCA04A007D7008 /* BasicCollectionReusableHeaderView.swift */; };
 		CE371EF22DBCA209007D7008 /* BasicCollectionReusableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE371EF12DBCA209007D7008 /* BasicCollectionReusableFooterView.swift */; };
+		CE371EF42DBCA401007D7008 /* AdvancedCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE371EF32DBCA401007D7008 /* AdvancedCollectionViewController.swift */; };
+		CE371EF62DBCA71C007D7008 /* AdvancedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE371EF52DBCA71C007D7008 /* AdvancedCollectionViewCell.swift */; };
+		CE371EF82DBCADA8007D7008 /* UICollectionViewDelegateFlowLayoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE371EF72DBCADA8007D7008 /* UICollectionViewDelegateFlowLayoutViewController.swift */; };
+		CE371EFA2DBCAFF3007D7008 /* DelegateFlowLayoutCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE371EF92DBCAFF3007D7008 /* DelegateFlowLayoutCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +42,10 @@
 		CE371EEB2DBC9AD9007D7008 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		CE371EEF2DBCA04A007D7008 /* BasicCollectionReusableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCollectionReusableHeaderView.swift; sourceTree = "<group>"; };
 		CE371EF12DBCA209007D7008 /* BasicCollectionReusableFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCollectionReusableFooterView.swift; sourceTree = "<group>"; };
+		CE371EF32DBCA401007D7008 /* AdvancedCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedCollectionViewController.swift; sourceTree = "<group>"; };
+		CE371EF52DBCA71C007D7008 /* AdvancedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedCollectionViewCell.swift; sourceTree = "<group>"; };
+		CE371EF72DBCADA8007D7008 /* UICollectionViewDelegateFlowLayoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewDelegateFlowLayoutViewController.swift; sourceTree = "<group>"; };
+		CE371EF92DBCAFF3007D7008 /* DelegateFlowLayoutCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateFlowLayoutCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +92,10 @@
 				CE371EEB2DBC9AD9007D7008 /* MainTabBarController.swift */,
 				CE371EEF2DBCA04A007D7008 /* BasicCollectionReusableHeaderView.swift */,
 				CE371EF12DBCA209007D7008 /* BasicCollectionReusableFooterView.swift */,
+				CE371EF32DBCA401007D7008 /* AdvancedCollectionViewController.swift */,
+				CE371EF52DBCA71C007D7008 /* AdvancedCollectionViewCell.swift */,
+				CE371EF72DBCADA8007D7008 /* UICollectionViewDelegateFlowLayoutViewController.swift */,
+				CE371EF92DBCAFF3007D7008 /* DelegateFlowLayoutCollectionViewCell.swift */,
 			);
 			path = CollectionViewDemo;
 			sourceTree = "<group>";
@@ -162,8 +174,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				65260D39207271B600FCF44E /* CollectionViewController.swift in Sources */,
+				CE371EFA2DBCAFF3007D7008 /* DelegateFlowLayoutCollectionViewCell.swift in Sources */,
+				CE371EF42DBCA401007D7008 /* AdvancedCollectionViewController.swift in Sources */,
 				65260D282072717500FCF44E /* ViewController.swift in Sources */,
 				CE371EEC2DBC9AD9007D7008 /* MainTabBarController.swift in Sources */,
+				CE371EF82DBCADA8007D7008 /* UICollectionViewDelegateFlowLayoutViewController.swift in Sources */,
+				CE371EF62DBCA71C007D7008 /* AdvancedCollectionViewCell.swift in Sources */,
 				65260D3D20727DBD00FCF44E /* CollectionViewCell.swift in Sources */,
 				65260D262072717500FCF44E /* AppDelegate.swift in Sources */,
 				CE371EF22DBCA209007D7008 /* BasicCollectionReusableFooterView.swift in Sources */,

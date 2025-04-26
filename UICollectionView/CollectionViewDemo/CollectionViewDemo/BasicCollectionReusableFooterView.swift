@@ -23,8 +23,8 @@ final class BasicCollectionReusableFooterView: UICollectionReusableView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .cyan
-        
+        backgroundColor = .brown
+
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(titleLabel)
         NSLayoutConstraint.activate([

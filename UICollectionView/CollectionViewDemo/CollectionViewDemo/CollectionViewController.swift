@@ -8,6 +8,15 @@
 
 import UIKit
 
+/// A `UIViewController` demostrates basic `UICollectionView` implementation with `.NIB` file.
+///
+/// This UIViewController set up inital values in `UICollectionViewFlowLayout` for `UICollectionView` and will not change.
+/// Although it looks ok when UICollectionView and cells are displayed, however, UI issue could happen with this implementation.
+/// Because the cell size is set according to given display area and will not be changed after it's set,
+/// so the cell size could be different when enter the page either from `portrait mode` or from `landscape mode` and change it
+/// because the given display area is different in each mode so the number of items per row will be different due to the fixed item size.
+///
+/// This UIViewController also demo how to do basic drag and drop to change order of cell item in UICollectionView.
 final class CollectionViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -34,11 +43,14 @@ final class CollectionViewController: UIViewController {
         let editBarButtonItem = UIBarButtonItem(title: "Select Mode", style: .plain, target: self, action: #selector(onEditButtonAction))
         navigationItem.rightBarButtonItem = editBarButtonItem
 
-        configureCollectionView()
-
         let longPressGesture =  UILongPressGestureRecognizer(target: self, action: #selector(handlLongPress(gesture:)) );
         longPressGesture.minimumPressDuration = 1
         self.collectionView.addGestureRecognizer(longPressGesture);
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        configureCollectionView()
     }
 
     func configureCollectionView() {
@@ -50,25 +62,29 @@ final class CollectionViewController: UIViewController {
 
         collectionView.allowsMultipleSelection = true
 
-        // 取得螢幕的尺寸
-        let fullScreenSize = UIScreen.main.bounds.size
-
         // 建立 UICollectionViewFlowLayout
         let layout = UICollectionViewFlowLayout()
 
         // 設置 section 的間距 四個數值分別代表 上、左、下、右 的間距
-        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5);
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20);
 
         // 設置每一行的間距
-        layout.minimumLineSpacing = 5
+        layout.minimumLineSpacing = 10
+
+        layout.minimumInteritemSpacing = 5
 
         // 設置每個 cell 的尺寸
         let itemsPerRow = 3.0
-        layout.itemSize = CGSize(width: fullScreenSize.width / itemsPerRow - 10.0, height: fullScreenSize.width / itemsPerRow - 10.0)
+        let paddingSpace = layout.sectionInset.left * (itemsPerRow + 1)
+
+        let width = collectionView.bounds.width
+        let availableWidth = width - paddingSpace
+        let widthPerItem = availableWidth / itemsPerRow
+        layout.itemSize = CGSize(width: widthPerItem, height: widthPerItem)
 
         // 設置 header 及 footer 的尺寸
-        layout.headerReferenceSize = CGSize(width: fullScreenSize.width, height: 40)
-        layout.footerReferenceSize = CGSize(width: fullScreenSize.width, height: 40)
+        layout.headerReferenceSize = CGSize(width: width, height: 40)
+        layout.footerReferenceSize = CGSize(width: width, height: 40)
 
         collectionView.register(
             BasicCollectionReusableHeaderView.self,

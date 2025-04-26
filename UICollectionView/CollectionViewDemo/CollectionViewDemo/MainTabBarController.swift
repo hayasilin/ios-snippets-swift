@@ -17,7 +17,8 @@ final class MainTabBarController: UITabBarController {
 
     private func configureViews() {
         let firstVC = UINavigationController(rootViewController: CollectionViewController())
-        let secondVC = UINavigationController(rootViewController: CollectionViewController())
+        let secondVC = UINavigationController(rootViewController: AdvancedCollectionViewController())
+        let thirdVC = UINavigationController(rootViewController: UICollectionViewDelegateFlowLayoutViewController())
 
         firstVC.tabBarItem = UITabBarItem(
             title: "Basic",
@@ -31,6 +32,12 @@ final class MainTabBarController: UITabBarController {
             selectedImage: UIImage(systemName: "tablecells.fill")
         )
 
-        viewControllers = [firstVC, secondVC]
+        thirdVC.tabBarItem = UITabBarItem(
+            title: "DelegateFlowLayout",
+            image: UIImage(systemName: "tablecells"),
+            selectedImage: UIImage(systemName: "tablecells.fill")
+        )
+
+        viewControllers = [firstVC, secondVC, thirdVC]
     }
 }
