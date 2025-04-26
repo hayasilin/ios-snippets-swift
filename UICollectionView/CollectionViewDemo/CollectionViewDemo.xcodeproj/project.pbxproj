@@ -17,6 +17,9 @@
 		65260D3D20727DBD00FCF44E /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65260D3B20727DBD00FCF44E /* CollectionViewCell.swift */; };
 		65260D3E20727DBD00FCF44E /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65260D3C20727DBD00FCF44E /* CollectionViewCell.xib */; };
 		6591947220D8DAA20016F9FE /* Tutorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6591947120D8DAA20016F9FE /* Tutorial.swift */; };
+		CE371EEC2DBC9AD9007D7008 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE371EEB2DBC9AD9007D7008 /* MainTabBarController.swift */; };
+		CE371EF02DBCA04A007D7008 /* BasicCollectionReusableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE371EEF2DBCA04A007D7008 /* BasicCollectionReusableHeaderView.swift */; };
+		CE371EF22DBCA209007D7008 /* BasicCollectionReusableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE371EF12DBCA209007D7008 /* BasicCollectionReusableFooterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,9 @@
 		65260D3B20727DBD00FCF44E /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		65260D3C20727DBD00FCF44E /* CollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
 		6591947120D8DAA20016F9FE /* Tutorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial.swift; sourceTree = "<group>"; };
+		CE371EEB2DBC9AD9007D7008 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		CE371EEF2DBCA04A007D7008 /* BasicCollectionReusableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCollectionReusableHeaderView.swift; sourceTree = "<group>"; };
+		CE371EF12DBCA209007D7008 /* BasicCollectionReusableFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCollectionReusableFooterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +81,9 @@
 				65260D3B20727DBD00FCF44E /* CollectionViewCell.swift */,
 				65260D3C20727DBD00FCF44E /* CollectionViewCell.xib */,
 				6591947120D8DAA20016F9FE /* Tutorial.swift */,
+				CE371EEB2DBC9AD9007D7008 /* MainTabBarController.swift */,
+				CE371EEF2DBCA04A007D7008 /* BasicCollectionReusableHeaderView.swift */,
+				CE371EF12DBCA209007D7008 /* BasicCollectionReusableFooterView.swift */,
 			);
 			path = CollectionViewDemo;
 			sourceTree = "<group>";
@@ -154,9 +163,12 @@
 			files = (
 				65260D39207271B600FCF44E /* CollectionViewController.swift in Sources */,
 				65260D282072717500FCF44E /* ViewController.swift in Sources */,
+				CE371EEC2DBC9AD9007D7008 /* MainTabBarController.swift in Sources */,
 				65260D3D20727DBD00FCF44E /* CollectionViewCell.swift in Sources */,
 				65260D262072717500FCF44E /* AppDelegate.swift in Sources */,
+				CE371EF22DBCA209007D7008 /* BasicCollectionReusableFooterView.swift in Sources */,
 				6591947220D8DAA20016F9FE /* Tutorial.swift in Sources */,
+				CE371EF02DBCA04A007D7008 /* BasicCollectionReusableHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,13 +315,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = G62233X968;
 				INFOPLIST_FILE = CollectionViewDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.travostyle.CollectionViewDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -321,13 +334,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = G62233X968;
 				INFOPLIST_FILE = CollectionViewDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.travostyle.CollectionViewDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

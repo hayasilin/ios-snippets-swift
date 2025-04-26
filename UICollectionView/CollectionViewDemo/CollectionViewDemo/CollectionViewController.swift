@@ -8,57 +8,40 @@
 
 import UIKit
 
-class CollectionViewController: UIViewController {
+final class CollectionViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
 
-    fileprivate let sectionInsets = UIEdgeInsets(top: 10.0, left: 20.0, bottom: 10.0, right: 20.0)
-    fileprivate let itemsPerRow: CGFloat = 3
+    private var canEdit = false
 
-    var fullScreenSize :CGSize!
+    private var dataArray = [String]()
 
-    var dataArray = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",]
-
-    var canEdit = false
-
-    var recipeImages = [String]()
-    var selectedRecipes = [String]()
-
-    var longPressGesture = UILongPressGestureRecognizer();
-
-    let tutorial = Tutorial(title: "Swift4", author: "Lin", editor: "Kuan", type: "Swift", publishDate: Date())
+    init() {
+        for i in 1...30 {
+            dataArray.append(String(i))
+        }
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Basic"
 
-        let editBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(onEditButtonAction(_:)))
+        let editBarButtonItem = UIBarButtonItem(title: "Select Mode", style: .plain, target: self, action: #selector(onEditButtonAction))
         navigationItem.rightBarButtonItem = editBarButtonItem
 
-        setCollectionView()
+        configureCollectionView()
 
-        let encoder = JSONEncoder()
-        let jsonData = try! encoder.encode(tutorial)
-        print("jsonData = \(jsonData)")
-        let jsonString = String(data: jsonData, encoding: .utf8)
-        print("jsonString = \(String(describing: jsonString))")
-
-        let decodeer = JSONDecoder()
-        let article = try! decodeer.decode(Tutorial.self, from: jsonData)
-        let info = "\(article.title) \(article.author) \(article.editor) \(article.type) \(article.publishDate)"
-        print("info = \(info)")
-
-        longPressGesture =  UILongPressGestureRecognizer(target: self, action: #selector(handlLongPress(gesture:)) );
+        let longPressGesture =  UILongPressGestureRecognizer(target: self, action: #selector(handlLongPress(gesture:)) );
         longPressGesture.minimumPressDuration = 1
         self.collectionView.addGestureRecognizer(longPressGesture);
     }
 
-    @objc func onEditButtonAction(_ sender: UIBarButtonItem) {
-        canEdit = !canEdit
-
-    }
-
-    func setCollectionView() {
-
+    func configureCollectionView() {
         let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
         collectionView.register(nib, forCellWithReuseIdentifier: "cell")
         
@@ -68,52 +51,62 @@ class CollectionViewController: UIViewController {
         collectionView.allowsMultipleSelection = true
 
         // 取得螢幕的尺寸
-        fullScreenSize = UIScreen.main.bounds.size
+        let fullScreenSize = UIScreen.main.bounds.size
 
         // 建立 UICollectionViewFlowLayout
         let layout = UICollectionViewFlowLayout()
 
         // 設置 section 的間距 四個數值分別代表 上、左、下、右 的間距
-        layout.sectionInset = UIEdgeInsetsMake(5, 5, 5, 5);
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5);
 
         // 設置每一行的間距
         layout.minimumLineSpacing = 5
 
         // 設置每個 cell 的尺寸
-        layout.itemSize = CGSize(width: fullScreenSize.width / 3 - 10.0, height: fullScreenSize.width / 3 - 10.0)
+        let itemsPerRow = 3.0
+        layout.itemSize = CGSize(width: fullScreenSize.width / itemsPerRow - 10.0, height: fullScreenSize.width / itemsPerRow - 10.0)
 
         // 設置 header 及 footer 的尺寸
         layout.headerReferenceSize = CGSize(width: fullScreenSize.width, height: 40)
         layout.footerReferenceSize = CGSize(width: fullScreenSize.width, height: 40)
 
-        collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "header")
-        collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "footer")
+        collectionView.register(
+            BasicCollectionReusableHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: String(describing: BasicCollectionReusableHeaderView.self)
+        )
+        collectionView.register(
+            BasicCollectionReusableFooterView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: String(describing: BasicCollectionReusableFooterView.self)
+        )
 
         collectionView.collectionViewLayout = layout
     }
 
     @objc func handlLongPress(gesture: UILongPressGestureRecognizer) {
         switch gesture.state {
-        case UIGestureRecognizerState.began:
+        case UIGestureRecognizer.State.began:
             guard let selectedIndexPath = self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView)) else {
                 break;
             }
-            print("长按开始");
             collectionView.beginInteractiveMovementForItem(at: selectedIndexPath);
-        case UIGestureRecognizerState.changed:
+        case UIGestureRecognizer.State.changed:
             collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view));
-
-        case UIGestureRecognizerState.ended:
+        case UIGestureRecognizer.State.ended:
             collectionView.endInteractiveMovement()
         default:
             collectionView.cancelInteractiveMovement();
         }
+    }
 
+    @objc func onEditButtonAction(_ sender: UIBarButtonItem) {
+        canEdit = !canEdit
+        navigationItem.rightBarButtonItem?.title = canEdit ? "Delete Mode": "Select Mode"
     }
 }
 
 extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource  {
-
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -125,17 +118,15 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
 
-        cell.contentView.backgroundColor = UIColor.blue
+        cell.contentView.backgroundColor = UIColor.lightGray
         cell.titleLabel.text = dataArray[indexPath.row]
 
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("didselectItemAt = \(indexPath.row)")
-
         let cell = collectionView.cellForItem(at: indexPath)
-        cell?.contentView.backgroundColor = UIColor.yellow
+        cell?.contentView.backgroundColor = UIColor.blue
 
         if canEdit {
             dataArray.remove(at: indexPath.item)
@@ -144,52 +135,39 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDa
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        print("didDeselectItemAt = \(indexPath.row)")
         let cell = collectionView.cellForItem(at: indexPath)
-        cell?.contentView.backgroundColor = UIColor.blue
+        cell?.contentView.backgroundColor = UIColor.lightGray
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader {
+            let headerView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: UICollectionView.elementKindSectionHeader,
+                withReuseIdentifier: String(describing: BasicCollectionReusableHeaderView.self),
+                for: indexPath
+            ) as! BasicCollectionReusableHeaderView
 
-        var reusableView = UICollectionReusableView()
-
-        // 顯示文字
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: fullScreenSize.width, height: 40))
-        label.textAlignment = .center
-
-        // header
-        if kind == UICollectionElementKindSectionHeader {
-            // 依據前面註冊設置的識別名稱 "Header" 取得目前使用的 header
-            reusableView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader,
-                                                                           withReuseIdentifier: "header",
-                                                                           for: indexPath)
-            // 設置 header 的內容
-            reusableView.backgroundColor = UIColor.darkGray
-            label.text = "Header";
-            label.textColor = UIColor.white
-
-        } else if kind == UICollectionElementKindSectionFooter {
-            // 依據前面註冊設置的識別名稱 "Footer" 取得目前使用的 footer
-            reusableView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter,
-                                                                           withReuseIdentifier: "footer",
-                                                                           for: indexPath)
-            // 設置 footer 的內容
-            reusableView.backgroundColor = UIColor.cyan
-            label.text = "Footer";
-            label.textColor = UIColor.black
+            headerView.configure(with: "Header")
+            return headerView
         }
+        else if kind == UICollectionView.elementKindSectionFooter {
+            let footerView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: UICollectionView.elementKindSectionFooter,
+                withReuseIdentifier: String(describing: BasicCollectionReusableFooterView.self),
+                for: indexPath
+            ) as! BasicCollectionReusableFooterView
 
-        reusableView.addSubview(label)
-        return reusableView
+            footerView.configure(with: "Footer")
+            return footerView
+        } else {
+            return UICollectionReusableView()
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-
         let data = dataArray[sourceIndexPath.row]
         dataArray.remove(at: sourceIndexPath.row)
 
         dataArray.insert(data, at: destinationIndexPath.row)
     }
-
-
 }
