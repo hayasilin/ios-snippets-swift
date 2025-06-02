@@ -8,12 +8,6 @@
 import UIKit
 import SQLite3
 
-struct Item {
-    let id: Int32
-    let text: String
-    let messageID: Int32
-}
-
 final class FTS5ContentlessTableViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
@@ -29,7 +23,7 @@ final class FTS5ContentlessTableViewController: UIViewController {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Input to search"
+        searchController.searchBar.placeholder = CommonText.searchBarPlaceholder
         return searchController
     }()
 
@@ -47,15 +41,27 @@ final class FTS5ContentlessTableViewController: UIViewController {
     private var itemDatabase: OpaquePointer?
     private var fts5ContentlessDatabase: OpaquePointer?
 
+    private let ftsTable: FTSTable
+
     deinit {
         sqlite3_close(itemDatabase)
     }
 
+    init(ftsTable: FTSTable) {
+        self.ftsTable = ftsTable
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
 
-        navigationItem.title = "Contentless FTS5"
+        navigationItem.title = ftsTable.title
+
         let rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(didTapDropButton)),
             UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapInsertButton))
@@ -74,7 +80,7 @@ final class FTS5ContentlessTableViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
-        itemDatabase = configureItemDatabase()
+        itemDatabase = configureMainDatabase()
         createItemTable()
 
         fts5ContentlessDatabase = configureFTS5ContentlessDatabase()
@@ -84,13 +90,13 @@ final class FTS5ContentlessTableViewController: UIViewController {
         tableView.reloadData()
     }
 
-    private func configureItemDatabase() -> OpaquePointer? {
+    private func configureMainDatabase() -> OpaquePointer? {
         guard let libraryPath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).first else {
-            assertionFailure("Configure main database failure")
+            assertionFailure()
             return nil
         }
 
-        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent("item.sqlite")
+        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent(ftsTable.mainDatabaseFileName)
         let databasePath = libraryURL.path
 
         var db: OpaquePointer?
@@ -98,7 +104,7 @@ final class FTS5ContentlessTableViewController: UIViewController {
             print("Open main database success, path: \(databasePath)")
             return db
         } else {
-            assertionFailure("Configure main database failure")
+            assertionFailure()
             return nil
         }
     }
@@ -115,7 +121,7 @@ final class FTS5ContentlessTableViewController: UIViewController {
 
         if sqlite3_prepare_v2(itemDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
             if sqlite3_step(statement) == SQLITE_DONE {
-                print("Create main table success")
+                print(ftsTable.log)
             } else {
                 logSQLErrorMessage()
             }
@@ -128,11 +134,11 @@ final class FTS5ContentlessTableViewController: UIViewController {
 
     private func configureFTS5ContentlessDatabase() -> OpaquePointer? {
         guard let libraryPath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).first else {
-            assertionFailure("Configure fts database failure")
+            assertionFailure()
             return nil
         }
 
-        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent("fts5_contentless.sqlite")
+        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent(ftsTable.fts5DatabaseFileName)
         let databasePath = libraryURL.path
 
         var db: OpaquePointer?
@@ -140,19 +146,19 @@ final class FTS5ContentlessTableViewController: UIViewController {
             print("Open fts database success, path: \(databasePath)")
             return db
         } else {
-            assertionFailure("Configure fts database failure")
+            assertionFailure()
             return nil
         }
     }
 
     private func createFTS5ContentlessTable() {
-        let sqlQueryString = "CREATE VIRTUAL TABLE IF NOT EXISTS fts5_contentless USING fts5(content='', text, contentless_delete=1);"
+        let sqlQueryString = "CREATE VIRTUAL TABLE IF NOT EXISTS fts5_contentless USING fts5(content='', text);"
 
         var statement: OpaquePointer?
 
         if sqlite3_prepare_v2(fts5ContentlessDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
             if sqlite3_step(statement) == SQLITE_DONE {
-                print("Create fts table success")
+                print(ftsTable.log)
             } else {
                 logSQLErrorMessage()
             }
@@ -202,9 +208,7 @@ final class FTS5ContentlessTableViewController: UIViewController {
             sqlite3_bind_text(statement, 2, (text as NSString).utf8String, -1, nil)
             sqlite3_bind_int(statement, 3, randomInt)
 
-            if sqlite3_step(statement) == SQLITE_DONE {
-                print("Insert main data success")
-            } else {
+            if sqlite3_step(statement) != SQLITE_DONE {
                 logSQLErrorMessage()
             }
         } else {
@@ -224,9 +228,7 @@ final class FTS5ContentlessTableViewController: UIViewController {
             sqlite3_bind_int(statement, 1, result.messageID)
             sqlite3_bind_text(statement, 2, (result.text as NSString).utf8String, -1, nil)
 
-            if sqlite3_step(statement) == SQLITE_DONE {
-                print("Insert fts data success")
-            } else {
+            if sqlite3_step(statement) != SQLITE_DONE {
                 logSQLErrorMessage()
             }
         } else {
@@ -244,9 +246,7 @@ final class FTS5ContentlessTableViewController: UIViewController {
             sqlite3_bind_text(statement, 1, (text as NSString).utf8String, -1, nil)
             sqlite3_bind_int(statement, 2, index)
 
-            if sqlite3_step(statement) == SQLITE_DONE {
-                print("Update main data success")
-            } else {
+            if sqlite3_step(statement) != SQLITE_DONE {
                 logSQLErrorMessage()
             }
         } else {
@@ -264,9 +264,7 @@ final class FTS5ContentlessTableViewController: UIViewController {
             sqlite3_bind_text(statement, 1, (text as NSString).utf8String, -1, nil)
             sqlite3_bind_int(statement, 2, messageID)
 
-            if sqlite3_step(statement) == SQLITE_DONE {
-                print("Update fts data success")
-            } else {
+            if sqlite3_step(statement) != SQLITE_DONE {
                 logSQLErrorMessage()
             }
         } else {
@@ -277,13 +275,11 @@ final class FTS5ContentlessTableViewController: UIViewController {
     }
 
     private func deleteFromItemTable(at index: Int32) {
-        let sqlQueryString = "DELETE FROM items WHERE id == \(index)"
+        let sqlQueryString = "DELETE FROM items WHERE id = \(index)"
         var statement: OpaquePointer?
 
         if sqlite3_prepare_v2(itemDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
-            if sqlite3_step(statement) == SQLITE_DONE {
-                print("Delete main data success")
-            } else {
+            if sqlite3_step(statement) != SQLITE_DONE {
                 logSQLErrorMessage()
             }
         } else {
@@ -292,16 +288,14 @@ final class FTS5ContentlessTableViewController: UIViewController {
     }
 
     private func deleteFromFTS5ContentlessTable(at index: Int32) {
-        let sqlQueryString = "DELETE FROM fts5_contentless WHERE rowid = ?"
+        let sqlQueryString = "INSERT INTO fts5_contentless(fts5_contentless, rowid) VALUES('delete', ?);"
         var statement: OpaquePointer?
 
         if sqlite3_prepare_v2(fts5ContentlessDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
             // Bind the row ID to the query
             sqlite3_bind_int(statement, 1, index)
 
-            if sqlite3_step(statement) == SQLITE_DONE {
-                print("Delete fts data success")
-            } else {
+            if sqlite3_step(statement) != SQLITE_DONE {
                 logSQLErrorMessage()
             }
         } else {
@@ -318,9 +312,7 @@ final class FTS5ContentlessTableViewController: UIViewController {
             return
         }
 
-        if sqlite3_step(statement) == SQLITE_DONE {
-            print("Drop table success")
-        } else {
+        if sqlite3_step(statement) != SQLITE_DONE {
             logSQLErrorMessage()
         }
     }
@@ -334,7 +326,7 @@ final class FTS5ContentlessTableViewController: UIViewController {
     private func didTapInsertButton(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(title: nil, message: "Insert", preferredStyle: .alert)
         alert.addTextField()
-        alert.textFields?.first?.placeholder = "Input text"
+        alert.textFields?.first?.placeholder = CommonText.insertTextFieldPlaceholder
 
         let action = UIAlertAction(title: "Save", style: .default) { _ in
             guard let textField = alert.textFields?.first, let text = textField.text else {
@@ -354,7 +346,7 @@ final class FTS5ContentlessTableViewController: UIViewController {
     private func didTapDropButton(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(title: nil, message: "Drop Table", preferredStyle: .alert)
         alert.addTextField()
-        alert.textFields?.first?.placeholder = "Input table name"
+        alert.textFields?.first?.placeholder = CommonText.dropTableTextFieldPlaceholder
 
         let action = UIAlertAction(title: "Drop table", style: .destructive) { _ in
             guard let textField = alert.textFields?.first, let text = textField.text else {

@@ -15,21 +15,29 @@ final class MainTabBarController: UITabBarController {
     }
 
     private func configureViews() {
-        let firstVC = UINavigationController(rootViewController: FTS5ContentlessTableViewController())
-        let secondVC = UINavigationController(rootViewController: SimpleTableViewController())
+//        let firstVC = UINavigationController(rootViewController: FTS5ContentlessTableViewController(ftsTable: .contentlessTable))
+//        let secondVC = UINavigationController(rootViewController: FTS5ContentlessDeleteTableViewController(ftsTable: .contentlessDeleteTable))
+        let thridVC = UINavigationController(rootViewController: SimpleTableViewController(ftsTable: .defaultTable))
 
-        firstVC.tabBarItem = UITabBarItem(
-            title: "Contentless FTS5",
+//        firstVC.tabBarItem = UITabBarItem(
+//            title: FTSTable.contentlessTable.title,
+//            image: UIImage(systemName: "list.bullet.rectangle"),
+//            selectedImage: UIImage(systemName: "list.bullet.rectangle.fill")
+//        )
+//
+//        secondVC.tabBarItem = UITabBarItem(
+//            title: FTSTable.contentlessDeleteTable.title,
+//            image: UIImage(systemName: "list.bullet.rectangle"),
+//            selectedImage: UIImage(systemName: "list.bullet.rectangle.fill")
+//        )
+
+        thridVC.tabBarItem = UITabBarItem(
+            title: FTSTable.defaultTable.title,
             image: UIImage(systemName: "list.bullet.rectangle"),
             selectedImage: UIImage(systemName: "list.bullet.rectangle.fill")
         )
 
-        secondVC.tabBarItem = UITabBarItem(
-            title: "Default FTS5",
-            image: UIImage(systemName: "list.bullet.rectangle"),
-            selectedImage: UIImage(systemName: "list.bullet.rectangle.fill")
-        )
-
-        viewControllers = [firstVC, secondVC]
+//        viewControllers = [firstVC, secondVC, thridVC]
+        viewControllers = [thridVC]
     }
 }
