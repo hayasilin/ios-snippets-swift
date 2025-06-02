@@ -18,6 +18,7 @@
 		CE83C7942D3D0C4800BADCBC /* FTS5DemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE83C7932D3D0C4800BADCBC /* FTS5DemoUITestsLaunchTests.swift */; };
 		CE83C7A12D3D0C7B00BADCBC /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE83C7A02D3D0C7B00BADCBC /* MainTabBarController.swift */; };
 		CE83C7A32D3D0C9300BADCBC /* SimpleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE83C7A22D3D0C9300BADCBC /* SimpleTableViewController.swift */; };
+		CEF3F1FE2DE9894C006D037C /* FTS5ContentlessTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3F1FD2DE9894C006D037C /* FTS5ContentlessTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		CE83C7932D3D0C4800BADCBC /* FTS5DemoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTS5DemoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		CE83C7A02D3D0C7B00BADCBC /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		CE83C7A22D3D0C9300BADCBC /* SimpleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTableViewController.swift; sourceTree = "<group>"; };
+		CEF3F1FD2DE9894C006D037C /* FTS5ContentlessTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTS5ContentlessTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				CE83C77E2D3D0C4700BADCBC /* Info.plist */,
 				CE83C7A02D3D0C7B00BADCBC /* MainTabBarController.swift */,
 				CE83C7A22D3D0C9300BADCBC /* SimpleTableViewController.swift */,
+				CEF3F1FD2DE9894C006D037C /* FTS5ContentlessTableViewController.swift */,
 			);
 			path = FTS5Demo;
 			sourceTree = "<group>";
@@ -264,6 +267,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEF3F1FE2DE9894C006D037C /* FTS5ContentlessTableViewController.swift in Sources */,
 				CE83C7752D3D0C4600BADCBC /* ViewController.swift in Sources */,
 				CE83C7712D3D0C4600BADCBC /* AppDelegate.swift in Sources */,
 				CE83C7A32D3D0C9300BADCBC /* SimpleTableViewController.swift in Sources */,
