@@ -15,21 +15,21 @@ final class MainTabBarController: UITabBarController {
     }
 
     private func configureViews() {
-//        let firstVC = UINavigationController(rootViewController: FTS5ContentlessTableViewController(ftsTable: .contentlessTable))
-//        let secondVC = UINavigationController(rootViewController: FTS5ContentlessDeleteTableViewController(ftsTable: .contentlessDeleteTable))
+        let firstVC = UINavigationController(rootViewController: FTS5ContentlessDeleteTableViewController(ftsTable: .contentlessDeleteTable))
+        let secondVC = UINavigationController(rootViewController: FTS5ContentlessTableViewController(ftsTable: .contentlessTable))
         let thridVC = UINavigationController(rootViewController: SimpleTableViewController(ftsTable: .defaultTable))
 
-//        firstVC.tabBarItem = UITabBarItem(
-//            title: FTSTable.contentlessTable.title,
-//            image: UIImage(systemName: "list.bullet.rectangle"),
-//            selectedImage: UIImage(systemName: "list.bullet.rectangle.fill")
-//        )
-//
-//        secondVC.tabBarItem = UITabBarItem(
-//            title: FTSTable.contentlessDeleteTable.title,
-//            image: UIImage(systemName: "list.bullet.rectangle"),
-//            selectedImage: UIImage(systemName: "list.bullet.rectangle.fill")
-//        )
+        firstVC.tabBarItem = UITabBarItem(
+            title: FTSTable.contentlessTable.title,
+            image: UIImage(systemName: "list.bullet.rectangle"),
+            selectedImage: UIImage(systemName: "list.bullet.rectangle.fill")
+        )
+
+        secondVC.tabBarItem = UITabBarItem(
+            title: FTSTable.contentlessDeleteTable.title,
+            image: UIImage(systemName: "list.bullet.rectangle"),
+            selectedImage: UIImage(systemName: "list.bullet.rectangle.fill")
+        )
 
         thridVC.tabBarItem = UITabBarItem(
             title: FTSTable.defaultTable.title,
@@ -37,7 +37,6 @@ final class MainTabBarController: UITabBarController {
             selectedImage: UIImage(systemName: "list.bullet.rectangle.fill")
         )
 
-//        viewControllers = [firstVC, secondVC, thridVC]
-        viewControllers = [thridVC]
+        viewControllers = [firstVC, secondVC, thridVC]
     }
 }

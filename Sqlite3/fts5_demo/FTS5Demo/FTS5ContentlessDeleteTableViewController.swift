@@ -22,6 +22,7 @@ final class FTS5ContentlessDeleteTableViewController: UIViewController {
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = CommonText.searchBarPlaceholder
         return searchController
@@ -457,12 +458,17 @@ extension FTS5ContentlessDeleteTableViewController: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text, !searchText.isEmpty else {
-//            fetchItems()
-//            tableView.reloadData()
             return
         }
 
         performFTS5Search(with: searchText.lowercased())
+        tableView.reloadData()
+    }
+}
+
+extension FTS5ContentlessDeleteTableViewController: UISearchBarDelegate {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        fetchItems()
         tableView.reloadData()
     }
 }
