@@ -467,7 +467,7 @@ extension FTS5ContentlessDeleteTableViewController: UISearchResultsUpdating {
 }
 
 extension FTS5ContentlessDeleteTableViewController: UISearchBarDelegate {
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         fetchItems()
         tableView.reloadData()
     }

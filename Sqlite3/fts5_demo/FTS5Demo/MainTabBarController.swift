@@ -17,7 +17,8 @@ final class MainTabBarController: UITabBarController {
     private func configureViews() {
         let firstVC = UINavigationController(rootViewController: FTS5ContentlessDeleteTableViewController(ftsTable: .contentlessDeleteTable))
         let secondVC = UINavigationController(rootViewController: FTS5ContentlessTableViewController(ftsTable: .contentlessTable))
-        let thridVC = UINavigationController(rootViewController: SimpleTableViewController(ftsTable: .defaultTable))
+//        let thridVC = UINavigationController(rootViewController: SimpleTableViewController(ftsTable: .defaultTable))
+        let thridVC = UINavigationController(rootViewController: FTS4ContentlessTableViewController())
 
         firstVC.tabBarItem = UITabBarItem(
             title: FTSTable.contentlessTable.title,

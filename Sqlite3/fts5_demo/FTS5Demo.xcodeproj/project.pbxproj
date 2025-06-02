@@ -22,6 +22,7 @@
 		CEF3F2022DED74D7006D037C /* FTSTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3F2012DED74D7006D037C /* FTSTable.swift */; };
 		CEF3F2042DED755C006D037C /* FTS5ContentlessDeleteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3F2032DED755C006D037C /* FTS5ContentlessDeleteTableViewController.swift */; };
 		CEF3F2062DEDAEFE006D037C /* FTS5DefaultTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3F2052DEDAEFE006D037C /* FTS5DefaultTableViewController.swift */; };
+		CEF3F2082DEDB10D006D037C /* FTS4ContentlessTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3F2072DEDB10D006D037C /* FTS4ContentlessTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		CEF3F2012DED74D7006D037C /* FTSTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSTable.swift; sourceTree = "<group>"; };
 		CEF3F2032DED755C006D037C /* FTS5ContentlessDeleteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTS5ContentlessDeleteTableViewController.swift; sourceTree = "<group>"; };
 		CEF3F2052DEDAEFE006D037C /* FTS5DefaultTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTS5DefaultTableViewController.swift; sourceTree = "<group>"; };
+		CEF3F2072DEDB10D006D037C /* FTS4ContentlessTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTS4ContentlessTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 				CEF3F2012DED74D7006D037C /* FTSTable.swift */,
 				CEF3F2032DED755C006D037C /* FTS5ContentlessDeleteTableViewController.swift */,
 				CEF3F2052DEDAEFE006D037C /* FTS5DefaultTableViewController.swift */,
+				CEF3F2072DEDB10D006D037C /* FTS4ContentlessTableViewController.swift */,
 			);
 			path = FTS5Demo;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 				CE83C7712D3D0C4600BADCBC /* AppDelegate.swift in Sources */,
 				CEF3F2062DEDAEFE006D037C /* FTS5DefaultTableViewController.swift in Sources */,
 				CE83C7A32D3D0C9300BADCBC /* SimpleTableViewController.swift in Sources */,
+				CEF3F2082DEDB10D006D037C /* FTS4ContentlessTableViewController.swift in Sources */,
 				CE83C7A12D3D0C7B00BADCBC /* MainTabBarController.swift in Sources */,
 				CEF3F2022DED74D7006D037C /* FTSTable.swift in Sources */,
 				CE83C7732D3D0C4600BADCBC /* SceneDelegate.swift in Sources */,
