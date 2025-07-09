@@ -18,7 +18,8 @@ final class MainTabBarController: UITabBarController {
         let firstVC = UINavigationController(rootViewController: FTS5ContentlessDeleteTableViewController(ftsTable: .contentlessDeleteTable))
         let secondVC = UINavigationController(rootViewController: FTS5ContentlessTableViewController(ftsTable: .contentlessTable))
 //        let thridVC = UINavigationController(rootViewController: SimpleTableViewController(ftsTable: .defaultTable))
-        let thridVC = UINavigationController(rootViewController: FTS4ContentlessTableViewController())
+        let thridVC = UINavigationController(rootViewController: FTS5DefaultTableViewController(ftsTable: .defaultTable))
+        let forthVC = UINavigationController(rootViewController: FTS4ContentlessTableViewController())
 
         firstVC.tabBarItem = UITabBarItem(
             title: FTSTable.contentlessTable.title,
@@ -38,6 +39,12 @@ final class MainTabBarController: UITabBarController {
             selectedImage: UIImage(systemName: "list.bullet.rectangle.fill")
         )
 
-        viewControllers = [firstVC, secondVC, thridVC]
+        forthVC.tabBarItem = UITabBarItem(
+            title: "Contentless FTS4",
+            image: UIImage(systemName: "list.bullet.rectangle"),
+            selectedImage: UIImage(systemName: "list.bullet.rectangle.fill")
+        )
+
+        viewControllers = [firstVC, secondVC, thridVC, forthVC]
     }
 }

@@ -12,7 +12,6 @@ import SQLite3
 /// - Create: "CREATE VIRTUAL TABLE IF NOT EXISTS search USING fts4(title);"
 /// - Insert: "INSERT INTO search(title) VALUES (?);"
 /// - Search: "SELECT rowid, title FROM search WHERE search MATCH '\(text)*';"
-/// - Delete: "DELETE FROM search WHERE rowid = ?"
 final class FTS4ContentlessTableViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
@@ -207,7 +206,7 @@ final class FTS4ContentlessTableViewController: UIViewController {
     }
 
     private func insertSearchDatabase(with movie: Movie) {
-        let sqlQueryString = "INSERT INTO search (docid, text) VALUES (?, ?);"
+        let sqlQueryString = "INSERT INTO search (rowid, text) VALUES (?, ?);"
         var statement: OpaquePointer?
 
         if sqlite3_prepare_v2(self.searchDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
@@ -274,7 +273,7 @@ final class FTS4ContentlessTableViewController: UIViewController {
     }
 
     private func logSQLErrorMessage() {
-        let errorMessage = String(cString: sqlite3_errmsg(movieDatabase))
+        let errorMessage = String(cString: sqlite3_errmsg(searchDatabase))
         print("SQL error: \(errorMessage)")
     }
 
@@ -393,7 +392,7 @@ extension FTS4ContentlessTableViewController: UITableViewDelegate {
 
 extension FTS4ContentlessTableViewController: UISearchResultsUpdating {
     private func performFTS4Search(with text: String) -> [Int32] {
-        let sqlQueryString = "SELECT docid FROM search AS d WHERE d.text MATCH '\(text)*';"
+        let sqlQueryString = "SELECT rowid FROM search AS d WHERE d.text MATCH '\(text)*';"
         var statement: OpaquePointer?
 
         guard sqlite3_prepare_v2(searchDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK else {
