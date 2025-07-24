@@ -12,7 +12,7 @@ enum DBScheme {
     case v1
     case v2
     case v3
-    case v4
+    case contentless
 
     var databaseFileName: String {
         switch self {
@@ -22,8 +22,8 @@ enum DBScheme {
             "search_v2.sqlite"
         case .v3:
             "search_v3.sqlite"
-        case .v4:
-            "search_v4.sqlite"
+        case .contentless:
+            "search_contentless.sqlite"
         }
     }
 }

@@ -170,8 +170,6 @@ final class FTS5DefaultTableViewController: UIViewController {
     }
 
     private func fetchMovies() {
-        movies.removeAll()
-
         let sqlQueryString = "SELECT * FROM movies";
         var statement: OpaquePointer?
 
@@ -179,6 +177,8 @@ final class FTS5DefaultTableViewController: UIViewController {
             logSQLErrorMessage()
             return
         }
+
+        movies.removeAll()
 
         while sqlite3_step(statement) == SQLITE_ROW {
             let id = sqlite3_column_int(statement, 0)
@@ -284,7 +284,7 @@ final class FTS5DefaultTableViewController: UIViewController {
         var statement: OpaquePointer?
 
         if sqlite3_prepare_v2(searchDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
-            // Bind the row ID to the query
+            // Bind the rowid to the query
             sqlite3_bind_int(statement, 1, index)
 
             if sqlite3_step(statement) != SQLITE_DONE {

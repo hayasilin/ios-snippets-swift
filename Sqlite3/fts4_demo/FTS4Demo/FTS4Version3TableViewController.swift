@@ -8,6 +8,7 @@
 import UIKit
 import SQLite3
 
+/// Use `SQLiteDatabase` to perform FTS4 DB.
 final class FTS4Version3TableViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero)

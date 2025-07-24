@@ -135,7 +135,7 @@ final class FTS4ContentlessTableViewController: UIViewController {
             return nil
         }
 
-        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent(DBScheme.v4.databaseFileName)
+        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent(DBScheme.contentless.databaseFileName)
         let databasePath = libraryURL.path
 
         var db: OpaquePointer?
