@@ -15,20 +15,21 @@ final class MainTabBarController: UITabBarController {
     }
 
     private func configureViews() {
+        //let simpleVC = UINavigationController(rootViewController: SimpleTableViewController(ftsTable: .defaultTable))
+
         let firstVC = UINavigationController(rootViewController: FTS5ContentlessDeleteTableViewController(ftsTable: .contentlessDeleteTable))
         let secondVC = UINavigationController(rootViewController: FTS5ContentlessTableViewController(ftsTable: .contentlessTable))
-//        let thridVC = UINavigationController(rootViewController: SimpleTableViewController(ftsTable: .defaultTable))
         let thridVC = UINavigationController(rootViewController: FTS5DefaultTableViewController(ftsTable: .defaultTable))
         let forthVC = UINavigationController(rootViewController: FTS4ContentlessTableViewController())
 
         firstVC.tabBarItem = UITabBarItem(
-            title: FTSTable.contentlessTable.title,
+            title: FTSTable.contentlessDeleteTable.title,
             image: UIImage(systemName: "list.bullet.rectangle"),
             selectedImage: UIImage(systemName: "list.bullet.rectangle.fill")
         )
 
         secondVC.tabBarItem = UITabBarItem(
-            title: FTSTable.contentlessDeleteTable.title,
+            title: FTSTable.contentlessTable.title,
             image: UIImage(systemName: "list.bullet.rectangle"),
             selectedImage: UIImage(systemName: "list.bullet.rectangle.fill")
         )

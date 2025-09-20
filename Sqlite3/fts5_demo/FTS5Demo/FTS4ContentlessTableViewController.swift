@@ -392,13 +392,20 @@ extension FTS4ContentlessTableViewController: UITableViewDelegate {
 
 extension FTS4ContentlessTableViewController: UISearchResultsUpdating {
     private func performFTS4Search(with text: String) -> [Int32] {
-        let sqlQueryString = "SELECT docid FROM search AS d WHERE d.text MATCH '\(text)*';"
+        filteredMovies.removeAll()
+
+        // let sqlQueryString = "SELECT docid FROM search AS d WHERE d.text MATCH '\(text)*';"
+        let normalizedText = "\(text)*"
+        let sqlQueryString = "SELECT docid FROM search AS d WHERE d.text MATCH ?;"
+
         var statement: OpaquePointer?
 
         guard sqlite3_prepare_v2(searchDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK else {
             logSQLErrorMessage()
             return []
         }
+
+        sqlite3_bind_text(statement, 1, (normalizedText as NSString).utf8String, -1, nil)
 
         var movieIDs = [Int32]()
 

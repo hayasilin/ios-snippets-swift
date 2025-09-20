@@ -373,11 +373,13 @@ extension FTS5ContentlessDeleteTableViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: UITableViewCell.self), for: indexPath)
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: String(describing: UITableViewCell.self))
 
         let item = isFiltering ? filteredItems[indexPath.row] : items[indexPath.row]
 
         cell.textLabel?.text = item.text
+        cell.detailTextLabel?.text = String(item.messageID)
+
         return cell
     }
 }
@@ -436,13 +438,18 @@ extension FTS5ContentlessDeleteTableViewController: UISearchResultsUpdating {
     private func performFTS5Search(with text: String) {
         filteredItems.removeAll()
 
-        let sqlQueryString = "SELECT rowid FROM fts5_contentless_delete AS d WHERE d.text MATCH '\(text)*';"
+        // let sqlQueryString = "SELECT rowid FROM fts5_contentless_delete AS d WHERE d.text MATCH '\(text)*';"
+        let normalizedText = "\(text)*"
+        let sqlQueryString = "SELECT rowid FROM fts5_contentless AS d WHERE d.text MATCH ?;"
+
         var statement: OpaquePointer?
 
         guard sqlite3_prepare_v2(fts5Database, sqlQueryString, -1, &statement, nil) == SQLITE_OK else {
             logSQLErrorMessage()
             return
         }
+
+        sqlite3_bind_text(statement, 1, (normalizedText as NSString).utf8String, -1, nil)
 
         while sqlite3_step(statement) == SQLITE_ROW {
             let rowid = sqlite3_column_int(statement, 0)

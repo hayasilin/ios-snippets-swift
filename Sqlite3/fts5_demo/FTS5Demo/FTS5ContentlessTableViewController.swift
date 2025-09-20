@@ -436,13 +436,17 @@ extension FTS5ContentlessTableViewController: UISearchResultsUpdating {
     private func performFTS5Search(with text: String) {
         filteredItems.removeAll()
 
-        let sqlQueryString = "SELECT rowid FROM fts5_contentless AS d WHERE d.text MATCH '\(text)*';"
+        let normalizedText = "\(text)*"
+        let sqlQueryString = "SELECT rowid FROM fts5_contentless AS d WHERE d.text MATCH ?;"
+
         var statement: OpaquePointer?
 
         guard sqlite3_prepare_v2(fts5ContentlessDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK else {
             logSQLErrorMessage()
             return
         }
+
+        sqlite3_bind_text(statement, 1, (normalizedText as NSString).utf8String, -1, nil)
 
         while sqlite3_step(statement) == SQLITE_ROW {
             let rowid = sqlite3_column_int(statement, 0)
