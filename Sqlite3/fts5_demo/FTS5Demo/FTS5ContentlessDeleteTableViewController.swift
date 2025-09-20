@@ -39,13 +39,14 @@ final class FTS5ContentlessDeleteTableViewController: UIViewController {
     private var items = [Item]()
     private var filteredItems = [Item]()
 
-    private var itemDatabase: OpaquePointer?
-    private var fts5Database: OpaquePointer?
+    private var mainDatabase: OpaquePointer?
+    private var searchDatabase: OpaquePointer?
 
     private let ftsTable: FTSTable
 
     deinit {
-        sqlite3_close(itemDatabase)
+        sqlite3_close(mainDatabase)
+        sqlite3_close(searchDatabase)
     }
 
     init(ftsTable: FTSTable) {
@@ -81,10 +82,10 @@ final class FTS5ContentlessDeleteTableViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
-        itemDatabase = configureMainDatabase()
-        createItemTable()
+        mainDatabase = configureMainDatabase()
+        createMainTable()
 
-        fts5Database = configureFTS5Database()
+        searchDatabase = configureSearchDatabase()
         createFTS5ContentlessDeleteTable()
 
         fetchItems()
@@ -110,36 +111,36 @@ final class FTS5ContentlessDeleteTableViewController: UIViewController {
         }
     }
 
-    private func createItemTable() {
+    private func createMainTable() {
         let sqlQueryString = """
-                            CREATE TABLE IF NOT EXISTS items(
-                            id INTEGER PRIMARY KEY,
-                            text TEXT NOT NULL,
-                            message_id INTEGER
-                            );
-                            """
+        CREATE TABLE IF NOT EXISTS \(ftsTable.mainTableName)(
+        id INTEGER PRIMARY KEY,
+        text TEXT NOT NULL,
+        message_id INTEGER
+        );
+        """
         var statement: OpaquePointer?
 
-        if sqlite3_prepare_v2(itemDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(mainDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
             if sqlite3_step(statement) == SQLITE_DONE {
-                print(ftsTable.log)
+                ftsTable.logSuccess(function: #function)
             } else {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: mainDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: mainDatabase)
         }
 
         sqlite3_finalize(statement)
     }
 
-    private func configureFTS5Database() -> OpaquePointer? {
+    private func configureSearchDatabase() -> OpaquePointer? {
         guard let libraryPath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).first else {
             assertionFailure()
             return nil
         }
 
-        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent(ftsTable.fts5DatabaseFileName)
+        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent(ftsTable.ftsDatabaseFileName)
         let databasePath = libraryURL.path
 
         var db: OpaquePointer?
@@ -153,33 +154,33 @@ final class FTS5ContentlessDeleteTableViewController: UIViewController {
     }
 
     private func createFTS5ContentlessDeleteTable() {
-        let sqlQueryString = "CREATE VIRTUAL TABLE IF NOT EXISTS fts5_contentless_delete USING fts5(content='', text, contentless_delete=1);"
+        let sqlQueryString = "CREATE VIRTUAL TABLE IF NOT EXISTS \(ftsTable.ftsTableName) USING fts5(content='', text, tokenize = 'porter ascii', contentless_delete=1);"
 
         var statement: OpaquePointer?
 
-        if sqlite3_prepare_v2(fts5Database, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(searchDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
             if sqlite3_step(statement) == SQLITE_DONE {
-                print(ftsTable.log)
+                ftsTable.logSuccess(function: #function)
             } else {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: searchDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: searchDatabase)
         }
 
         sqlite3_finalize(statement)
     }
 
     private func fetchItems() {
-        items.removeAll()
-
-        let sqlQueryString = "SELECT * FROM items";
+        let sqlQueryString = "SELECT * FROM \(ftsTable.mainTableName)";
         var statement: OpaquePointer?
 
-        guard sqlite3_prepare(itemDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK else {
-            logSQLErrorMessage()
+        guard sqlite3_prepare(mainDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK else {
+            logSQLErrorMessage(for: mainDatabase)
             return
         }
+
+        items.removeAll()
 
         while sqlite3_step(statement) == SQLITE_ROW {
             let id = sqlite3_column_int(statement, 0)
@@ -198,109 +199,112 @@ final class FTS5ContentlessDeleteTableViewController: UIViewController {
         sqlite3_finalize(statement)
     }
 
-    private func insertItem(with text: String) -> (text: String, messageID: Int32) {
+    private func insertMainTable(with text: String) -> (text: String, messageID: Int32) {
         let sqlQueryString = "INSERT INTO items(id, text, message_id) VALUES (?, ?, ?);"
         var statement: OpaquePointer?
 
-        let randomInt = Int32.random(in: 1..<10000)
+        let messageID = Int32(Date().timeIntervalSince1970)
 
-        if sqlite3_prepare_v2(itemDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(mainDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
             // Don't set id manually becuase SQLite will do auto increment for it.
             sqlite3_bind_text(statement, 2, (text as NSString).utf8String, -1, nil)
-            sqlite3_bind_int(statement, 3, randomInt)
+            sqlite3_bind_int(statement, 3, messageID)
 
             if sqlite3_step(statement) != SQLITE_DONE {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: mainDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: mainDatabase)
         }
 
         sqlite3_finalize(statement)
 
-        return (text, randomInt)
+        return (text, messageID)
     }
 
-    private func insertFTS5Contentless(with result: (text: String, messageID: Int32)) {
-        let sqlQueryString = "INSERT INTO fts5_contentless_delete(rowid, text) VALUES (?, ?);"
+    private func insertSearchTable(with result: (text: String, messageID: Int32)) {
+        let sqlQueryString = "INSERT INTO \(ftsTable.ftsTableName)(rowid, text) VALUES (?, ?);"
         var statement: OpaquePointer?
 
-        if sqlite3_prepare_v2(fts5Database, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(searchDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
             sqlite3_bind_int(statement, 1, result.messageID)
             sqlite3_bind_text(statement, 2, (result.text as NSString).utf8String, -1, nil)
 
             if sqlite3_step(statement) != SQLITE_DONE {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: searchDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: searchDatabase)
         }
 
         sqlite3_finalize(statement)
     }
 
-    private func updateItem(text: String, at index: Int32) {
-        let sqlQueryString = "UPDATE items SET text = ? WHERE id = ?;"
+    private func updateMainTable(with text: String, at index: Int32) {
+        let sqlQueryString = "UPDATE \(ftsTable.mainTableName) SET text = ? WHERE id = ?;"
         var statement: OpaquePointer?
 
-        if sqlite3_prepare_v2(itemDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(mainDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
             sqlite3_bind_text(statement, 1, (text as NSString).utf8String, -1, nil)
             sqlite3_bind_int(statement, 2, index)
 
             if sqlite3_step(statement) != SQLITE_DONE {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: mainDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: mainDatabase)
         }
 
         sqlite3_finalize(statement)
     }
 
-    private func updateFTS5Contentless(text: String, messageID: Int32) {
-        let sqlQueryString = "UPDATE fts5_contentless_delete SET text=? WHERE rowid=?;"
+    private func updateSearchTable(with text: String, messageID: Int32) {
+        let sqlQueryString = "UPDATE \(ftsTable.ftsTableName) SET text = ? WHERE rowid = ?;"
         var statement: OpaquePointer?
 
-        if sqlite3_prepare_v2(fts5Database, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(searchDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
             sqlite3_bind_text(statement, 1, (text as NSString).utf8String, -1, nil)
             sqlite3_bind_int(statement, 2, messageID)
 
             if sqlite3_step(statement) != SQLITE_DONE {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: searchDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: searchDatabase)
         }
 
         sqlite3_finalize(statement)
     }
 
-    private func deleteFromItemTable(at index: Int32) {
-        let sqlQueryString = "DELETE FROM items WHERE id = \(index)"
+    private func deleteFromMainTable(at index: Int32) {
+        let sqlQueryString = "DELETE FROM \(ftsTable.mainTableName) WHERE id = ?"
         var statement: OpaquePointer?
 
-        if sqlite3_prepare_v2(itemDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(mainDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
+
+            sqlite3_bind_int(statement, 1, index)
+
             if sqlite3_step(statement) != SQLITE_DONE {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: mainDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: mainDatabase)
         }
     }
 
-    private func deleteFromFTS5ContentlessTable(at index: Int32) {
-        let sqlQueryString = "DELETE FROM fts5_contentless_delete WHERE rowid = ?"
+    private func deleteFromSearchTable(at index: Int32) {
+        let sqlQueryString = "DELETE FROM \(ftsTable.ftsTableName) WHERE rowid = ?"
         var statement: OpaquePointer?
 
-        if sqlite3_prepare_v2(fts5Database, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(searchDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
             // Bind the row ID to the query
             sqlite3_bind_int(statement, 1, index)
 
             if sqlite3_step(statement) != SQLITE_DONE {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: searchDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: searchDatabase)
         }
     }
 
@@ -308,48 +312,50 @@ final class FTS5ContentlessDeleteTableViewController: UIViewController {
         let queryString = "DROP TABLE \(name)"
         var statement: OpaquePointer?
 
-        guard sqlite3_prepare(itemDatabase, queryString, -1, &statement, nil) == SQLITE_OK else {
-            logSQLErrorMessage()
+        guard sqlite3_prepare(mainDatabase, queryString, -1, &statement, nil) == SQLITE_OK else {
+            logSQLErrorMessage(for: mainDatabase)
             return
         }
 
         if sqlite3_step(statement) != SQLITE_DONE {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: mainDatabase)
         }
     }
 
-    private func logSQLErrorMessage() {
-        let errorMessage = String(cString: sqlite3_errmsg(itemDatabase))
+    private func logSQLErrorMessage(for database: OpaquePointer?) {
+        let errorMessage = String(cString: sqlite3_errmsg(database))
         print("SQL error: \(errorMessage)")
     }
 
     @objc
     private func didTapInsertButton(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: nil, message: "Insert", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: CommonText.insertTitle, preferredStyle: .alert)
         alert.addTextField()
         alert.textFields?.first?.placeholder = CommonText.insertTextFieldPlaceholder
 
-        let action = UIAlertAction(title: "Save", style: .default) { _ in
+        let action = UIAlertAction(title: CommonText.confirmTitle, style: .default) { _ in
             guard let textField = alert.textFields?.first, let text = textField.text else {
                 return
             }
-            let result = self.insertItem(with: text)
-            self.insertFTS5Contentless(with: result)
+            let result = self.insertMainTable(with: text)
+            self.insertSearchTable(with: result)
             self.fetchItems()
             self.tableView.reloadData()
         }
 
         alert.addAction(action)
+        alert.addAction(UIAlertAction(title: CommonText.cancelTItle, style: .cancel))
+
         present(alert, animated: true)
     }
 
     @objc
     private func didTapDropButton(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: nil, message: "Drop Table", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: CommonText.dropTableTitle, preferredStyle: .alert)
         alert.addTextField()
         alert.textFields?.first?.placeholder = CommonText.dropTableTextFieldPlaceholder
 
-        let action = UIAlertAction(title: "Drop table", style: .destructive) { _ in
+        let action = UIAlertAction(title: CommonText.confirmTitle, style: .destructive) { _ in
             guard let textField = alert.textFields?.first, let text = textField.text else {
                 return
             }
@@ -359,10 +365,9 @@ final class FTS5ContentlessDeleteTableViewController: UIViewController {
             self.tableView.reloadData()
         }
 
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-
         alert.addAction(action)
-        alert.addAction(cancelAction)
+        alert.addAction(UIAlertAction(title: CommonText.cancelTItle, style: .cancel))
+
         present(alert, animated: true)
     }
 }
@@ -390,26 +395,37 @@ extension FTS5ContentlessDeleteTableViewController: UITableViewDelegate {
 
         let item = isFiltering ? filteredItems[indexPath.row] : items[indexPath.row]
 
-        let alert = UIAlertController(title: nil, message: "Update", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: CommonText.updateTitle, preferredStyle: .alert)
         alert.addTextField()
         alert.textFields?.first?.placeholder = item.text
 
-        let action = UIAlertAction(title: "Update", style: .default) { _ in
+        let action = UIAlertAction(title: CommonText.confirmTitle, style: .default) { _ in
             guard let textField = alert.textFields?.first, let text = textField.text else {
                 return
             }
-            self.updateItem(text: text, at: item.id)
-            self.updateFTS5Contentless(text: text, messageID: item.messageID)
+            self.updateMainTable(with: text, at: item.id)
+            self.updateSearchTable(with: text, messageID: item.messageID)
             self.fetchItems()
             self.tableView.reloadData()
         }
 
         alert.addAction(action)
+        alert.addAction(
+            UIAlertAction(
+                title: CommonText.copyTitle,
+                style: .default,
+                handler: { _ in
+                    UIPasteboard.general.string = item.text
+                }
+            )
+        )
+        alert.addAction(UIAlertAction(title: CommonText.cancelTItle, style: .cancel))
+        
         present(alert, animated: true)
     }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { contextualAction, view, complete in
+        let deleteAction = UIContextualAction(style: .destructive, title: CommonText.deleteTitle) { contextualAction, view, complete in
             guard contextualAction.style == .destructive else {
                 complete(false)
                 return
@@ -417,13 +433,13 @@ extension FTS5ContentlessDeleteTableViewController: UITableViewDelegate {
             if self.isFiltering {
                 let item = self.filteredItems[indexPath.row]
                 self.filteredItems.remove(at: indexPath.row)
-                self.deleteFromItemTable(at: item.id)
-                self.deleteFromFTS5ContentlessTable(at: item.messageID)
+                self.deleteFromMainTable(at: item.id)
+                self.deleteFromSearchTable(at: item.messageID)
             } else {
                 let item = self.items[indexPath.row]
                 self.items.remove(at: indexPath.row)
-                self.deleteFromItemTable(at: item.id)
-                self.deleteFromFTS5ContentlessTable(at: item.messageID)
+                self.deleteFromMainTable(at: item.id)
+                self.deleteFromSearchTable(at: item.messageID)
             }
 
             tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -440,12 +456,12 @@ extension FTS5ContentlessDeleteTableViewController: UISearchResultsUpdating {
 
         // let sqlQueryString = "SELECT rowid FROM fts5_contentless_delete AS d WHERE d.text MATCH '\(text)*';"
         let normalizedText = "\(text)*"
-        let sqlQueryString = "SELECT rowid FROM fts5_contentless AS d WHERE d.text MATCH ?;"
+        let sqlQueryString = "SELECT rowid FROM \(ftsTable.ftsTableName) AS d WHERE d.text MATCH ?;"
 
         var statement: OpaquePointer?
 
-        guard sqlite3_prepare_v2(fts5Database, sqlQueryString, -1, &statement, nil) == SQLITE_OK else {
-            logSQLErrorMessage()
+        guard sqlite3_prepare_v2(searchDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK else {
+            logSQLErrorMessage(for: searchDatabase)
             return
         }
 

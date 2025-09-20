@@ -122,10 +122,10 @@
 				CE83C77E2D3D0C4700BADCBC /* Info.plist */,
 				CE83C7A02D3D0C7B00BADCBC /* MainTabBarController.swift */,
 				CE83C7A22D3D0C9300BADCBC /* SimpleTableViewController.swift */,
-				CEF3F1FD2DE9894C006D037C /* FTS5ContentlessTableViewController.swift */,
 				CEF3F2012DED74D7006D037C /* FTSTable.swift */,
-				CEF3F2032DED755C006D037C /* FTS5ContentlessDeleteTableViewController.swift */,
 				CEF3F2052DEDAEFE006D037C /* FTS5DefaultTableViewController.swift */,
+				CEF3F1FD2DE9894C006D037C /* FTS5ContentlessTableViewController.swift */,
+				CEF3F2032DED755C006D037C /* FTS5ContentlessDeleteTableViewController.swift */,
 				CEF3F2072DEDB10D006D037C /* FTS4ContentlessTableViewController.swift */,
 			);
 			path = FTS5Demo;

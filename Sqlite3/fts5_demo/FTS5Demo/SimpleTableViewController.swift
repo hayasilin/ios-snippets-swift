@@ -120,7 +120,7 @@ final class SimpleTableViewController: UIViewController {
 
         if sqlite3_prepare_v2(movieDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
             if sqlite3_step(statement) == SQLITE_DONE {
-                print(ftsTable.log)
+                ftsTable.logSuccess(function: #function)
             } else {
                 logSQLErrorMessage()
             }
@@ -137,7 +137,7 @@ final class SimpleTableViewController: UIViewController {
             return nil
         }
 
-        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent(ftsTable.fts5DatabaseFileName)
+        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent(ftsTable.ftsDatabaseFileName)
         let databasePath = libraryURL.path
 
         var db: OpaquePointer?
@@ -157,7 +157,7 @@ final class SimpleTableViewController: UIViewController {
 
         if sqlite3_prepare_v2(searchDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
             if sqlite3_step(statement) == SQLITE_DONE {
-                print(ftsTable.log)
+                ftsTable.logSuccess(function: #function)
             } else {
                 logSQLErrorMessage()
             }

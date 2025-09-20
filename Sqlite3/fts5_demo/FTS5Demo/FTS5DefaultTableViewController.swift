@@ -8,6 +8,10 @@
 import UIKit
 import SQLite3
 
+/// FTS5 using default table to perform CRUD.
+/// - Create: "CREATE VIRTUAL TABLE IF NOT EXISTS fts5_default USING FTS5(title, tokenize = 'porter ascii');"
+/// - Insert: "INSERT INTO fts5_default(title) VALUES (?);"
+/// - Search: "SELECT rowid, title FROM fts5_default WHERE title MATCH 'text*';"
 final class FTS5DefaultTableViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
@@ -39,13 +43,14 @@ final class FTS5DefaultTableViewController: UIViewController {
     private var movies = [Movie]()
     private var filteredMovies = [Movie]()
 
-    private var movieDatabase: OpaquePointer?
+    private var mainDatabase: OpaquePointer?
     private var searchDatabase: OpaquePointer?
 
     private let ftsTable: FTSTable
 
     deinit {
-        sqlite3_close(movieDatabase)
+        sqlite3_close(mainDatabase)
+        sqlite3_close(searchDatabase)
     }
 
     init(ftsTable: FTSTable) {
@@ -81,8 +86,8 @@ final class FTS5DefaultTableViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
-        movieDatabase = configureMovieDatabase()
-        createMoviesTable()
+        mainDatabase = configureMainDatabase()
+        createMainTable()
 
         searchDatabase = configureSearchDatabase()
         createSearchTable()
@@ -91,7 +96,7 @@ final class FTS5DefaultTableViewController: UIViewController {
         tableView.reloadData()
     }
 
-    private func configureMovieDatabase() -> OpaquePointer? {
+    private func configureMainDatabase() -> OpaquePointer? {
         guard let libraryPath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).first else {
             assertionFailure()
             return nil
@@ -102,7 +107,7 @@ final class FTS5DefaultTableViewController: UIViewController {
 
         var db: OpaquePointer?
         if sqlite3_open(databasePath, &db) == SQLITE_OK {
-            print("Open movie database success, path: \(databasePath)")
+            print("Open main database success, path: \(databasePath)")
             return db
         } else {
             assertionFailure()
@@ -110,23 +115,23 @@ final class FTS5DefaultTableViewController: UIViewController {
         }
     }
 
-    private func createMoviesTable() {
+    private func createMainTable() {
         let sqlQueryString = """
-                            CREATE TABLE IF NOT EXISTS movies(
-                            id INTEGER PRIMARY KEY,
-                            title TEXT NOT NULL
-                            );
-                            """
+        CREATE TABLE IF NOT EXISTS \(ftsTable.mainTableName)(
+        id INTEGER PRIMARY KEY,
+        title TEXT NOT NULL
+        );
+        """
         var statement: OpaquePointer?
 
-        if sqlite3_prepare_v2(movieDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(mainDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
             if sqlite3_step(statement) == SQLITE_DONE {
-                print(ftsTable.log)
+                ftsTable.logSuccess(function: #function)
             } else {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: mainDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: mainDatabase)
         }
 
         sqlite3_finalize(statement)
@@ -138,12 +143,12 @@ final class FTS5DefaultTableViewController: UIViewController {
             return nil
         }
 
-        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent(ftsTable.fts5DatabaseFileName)
+        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent(ftsTable.ftsDatabaseFileName)
         let databasePath = libraryURL.path
 
         var db: OpaquePointer?
         if sqlite3_open(databasePath, &db) == SQLITE_OK {
-            print("Open fts database success, path: \(databasePath)")
+            print("Open FTS database success, path: \(databasePath)")
             return db
         } else {
             assertionFailure()
@@ -152,29 +157,32 @@ final class FTS5DefaultTableViewController: UIViewController {
     }
 
     private func createSearchTable() {
-        let sqlQueryString = "CREATE VIRTUAL TABLE IF NOT EXISTS search USING FTS5(title, tokenize = 'porter ascii');"
+        // Use ascii tokenizer allows non-ASCII characters (those with codepoints greater than 127) are always considered token characters, hence special character such as emoji ￣▽￣ is able to be searched.
+        let sqlQueryString = "CREATE VIRTUAL TABLE IF NOT EXISTS \(ftsTable.ftsTableName) USING FTS5(title, tokenize = 'porter ascii');"
+//        let sqlQueryString = "CREATE VIRTUAL TABLE IF NOT EXISTS \(ftsTable.ftsTableName) USING FTS5(title);"
+//        let sqlQueryString = "CREATE VIRTUAL TABLE IF NOT EXISTS \(ftsTable.ftsTableName) USING FTS5(title, tokenize = 'porter');"
 
         var statement: OpaquePointer?
 
         if sqlite3_prepare_v2(searchDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
             if sqlite3_step(statement) == SQLITE_DONE {
-                print(ftsTable.log)
+                ftsTable.logSuccess(function: #function)
             } else {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: searchDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: searchDatabase)
         }
 
         sqlite3_finalize(statement)
     }
 
     private func fetchMovies() {
-        let sqlQueryString = "SELECT * FROM movies";
+        let sqlQueryString = "SELECT * FROM \(ftsTable.mainTableName)";
         var statement: OpaquePointer?
 
-        guard sqlite3_prepare(movieDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK else {
-            logSQLErrorMessage()
+        guard sqlite3_prepare(mainDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK else {
+            logSQLErrorMessage(for: mainDatabase)
             return
         }
 
@@ -195,61 +203,61 @@ final class FTS5DefaultTableViewController: UIViewController {
         sqlite3_finalize(statement)
     }
 
-    private func insertMovieDatabase(with title: String) {
-        let sqlQueryString = "INSERT INTO movies(id, title) VALUES (?, ?);"
+    private func insertMainTable(with title: String) {
+        let sqlQueryString = "INSERT INTO \(ftsTable.mainTableName)(id, title) VALUES (?, ?);"
         var statement: OpaquePointer?
 
-        if sqlite3_prepare_v2(movieDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(mainDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
             // Don't set id manually becuase SQLite will do auto increment for it.
             sqlite3_bind_text(statement, 2, (title as NSString).utf8String, -1, nil)
 
             if sqlite3_step(statement) != SQLITE_DONE {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: mainDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: mainDatabase)
         }
 
         sqlite3_finalize(statement)
     }
 
-    private func insertSearchDatabase(with title: String) {
-        let sqlQueryString = "INSERT INTO search(title) VALUES (?);"
+    private func insertIntoSearchTable(with title: String) {
+        let sqlQueryString = "INSERT INTO \(ftsTable.ftsTableName)(title) VALUES (?);"
         var statement: OpaquePointer?
 
         if sqlite3_prepare_v2(searchDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
             sqlite3_bind_text(statement, 1, (title as NSString).utf8String, -1, nil)
 
             if sqlite3_step(statement) != SQLITE_DONE {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: searchDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: searchDatabase)
         }
 
         sqlite3_finalize(statement)
     }
 
-    private func updateMovie(title: String, at index: Int32) {
-        let sqlQueryString = "UPDATE movies SET title = ? WHERE id = ?;"
+    private func updateMainTable(with title: String, at index: Int32) {
+        let sqlQueryString = "UPDATE \(ftsTable.mainTableName) SET title = ? WHERE id = ?;"
         var statement: OpaquePointer?
 
-        if sqlite3_prepare_v2(movieDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(mainDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
             sqlite3_bind_text(statement, 1, (title as NSString).utf8String, -1, nil)
             sqlite3_bind_int(statement, 2, index)
 
             if sqlite3_step(statement) != SQLITE_DONE {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: mainDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: mainDatabase)
         }
 
         sqlite3_finalize(statement)
     }
 
-    private func updateFTS5(text: String, at index: Int32) {
-        let sqlQueryString = "UPDATE search SET title=? WHERE rowid=?;"
+    private func updateSearchTable(with text: String, at index: Int32) {
+        let sqlQueryString = "UPDATE \(ftsTable.ftsTableName) SET title = ? WHERE rowid = ?;"
         var statement: OpaquePointer?
 
         if sqlite3_prepare_v2(searchDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
@@ -257,30 +265,33 @@ final class FTS5DefaultTableViewController: UIViewController {
             sqlite3_bind_int(statement, 2, index)
 
             if sqlite3_step(statement) != SQLITE_DONE {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: searchDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: searchDatabase)
         }
 
         sqlite3_finalize(statement)
     }
 
-    private func deleteFromMovieTable(at index: Int32) {
-        let sqlQueryString = "DELETE FROM movies WHERE id = \(index)"
+    private func deleteFromMainTable(at index: Int32) {
+        let sqlQueryString = "DELETE FROM \(ftsTable.mainTableName) WHERE id = ?"
         var statement: OpaquePointer?
 
-        if sqlite3_prepare_v2(movieDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(mainDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
+
+            sqlite3_bind_int(statement, 1, index)
+
             if sqlite3_step(statement) != SQLITE_DONE {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: mainDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: mainDatabase)
         }
     }
 
     private func deleteFromSearchTable(at index: Int32) {
-        let sqlQueryString = "DELETE FROM search WHERE rowid = ?"
+        let sqlQueryString = "DELETE FROM \(ftsTable.ftsTableName) WHERE rowid = ?"
         var statement: OpaquePointer?
 
         if sqlite3_prepare_v2(searchDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
@@ -288,10 +299,10 @@ final class FTS5DefaultTableViewController: UIViewController {
             sqlite3_bind_int(statement, 1, index)
 
             if sqlite3_step(statement) != SQLITE_DONE {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: searchDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: searchDatabase)
         }
     }
 
@@ -299,48 +310,49 @@ final class FTS5DefaultTableViewController: UIViewController {
         let queryString = "DROP TABLE \(name)"
         var statement: OpaquePointer?
 
-        guard sqlite3_prepare(movieDatabase, queryString, -1, &statement, nil) == SQLITE_OK else {
-            logSQLErrorMessage()
+        guard sqlite3_prepare(mainDatabase, queryString, -1, &statement, nil) == SQLITE_OK else {
+            logSQLErrorMessage(for: mainDatabase)
             return
         }
 
         if sqlite3_step(statement) != SQLITE_DONE {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: mainDatabase)
         }
     }
 
-    private func logSQLErrorMessage() {
-        let errorMessage = String(cString: sqlite3_errmsg(movieDatabase))
+    private func logSQLErrorMessage(for database: OpaquePointer?) {
+        let errorMessage = String(cString: sqlite3_errmsg(mainDatabase))
         print("SQL error: \(errorMessage)")
     }
 
     @objc
     private func didTapInsertButton(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: nil, message: "Insert", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: CommonText.insertTitle, preferredStyle: .alert)
         alert.addTextField()
         alert.textFields?.first?.placeholder = CommonText.insertTextFieldPlaceholder
 
-        let action = UIAlertAction(title: "Save", style: .default) { _ in
+        let action = UIAlertAction(title: CommonText.confirmTitle, style: .default) { _ in
             guard let textField = alert.textFields?.first, let title = textField.text else {
                 return
             }
-            self.insertMovieDatabase(with: title)
-            self.insertSearchDatabase(with: title)
+            self.insertMainTable(with: title)
+            self.insertIntoSearchTable(with: title)
             self.fetchMovies()
             self.tableView.reloadData()
         }
 
         alert.addAction(action)
+        alert.addAction(UIAlertAction(title: CommonText.cancelTItle, style: .cancel))
         present(alert, animated: true)
     }
 
     @objc
     private func didTapDropButton(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: nil, message: "Drop Table", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: CommonText.dropTableTitle, preferredStyle: .alert)
         alert.addTextField()
         alert.textFields?.first?.placeholder = CommonText.dropTableTextFieldPlaceholder
 
-        let action = UIAlertAction(title: "Drop table", style: .destructive) { _ in
+        let action = UIAlertAction(title: CommonText.confirmTitle, style: .destructive) { _ in
             guard let textField = alert.textFields?.first, let title = textField.text else {
                 return
             }
@@ -350,10 +362,8 @@ final class FTS5DefaultTableViewController: UIViewController {
             self.tableView.reloadData()
         }
 
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-
         alert.addAction(action)
-        alert.addAction(cancelAction)
+        alert.addAction(UIAlertAction(title: CommonText.cancelTItle, style: .cancel))
         present(alert, animated: true)
     }
 }
@@ -364,11 +374,13 @@ extension FTS5DefaultTableViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: UITableViewCell.self), for: indexPath)
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: String(describing: UITableViewCell.self))
 
         let movie = isFiltering ? filteredMovies[indexPath.row] : movies[indexPath.row]
 
         cell.textLabel?.text = movie.title
+        cell.detailTextLabel?.text = String(movie.id)
+
         return cell
     }
 }
@@ -379,26 +391,37 @@ extension FTS5DefaultTableViewController: UITableViewDelegate {
 
         let movie = isFiltering ? filteredMovies[indexPath.row] : movies[indexPath.row]
 
-        let alert = UIAlertController(title: nil, message: "Update", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: CommonText.updateTitle, preferredStyle: .alert)
         alert.addTextField()
         alert.textFields?.first?.placeholder = movie.title
 
-        let action = UIAlertAction(title: "Update", style: .default) { _ in
+        let action = UIAlertAction(title: CommonText.confirmTitle, style: .default) { _ in
             guard let textField = alert.textFields?.first, let title = textField.text else {
                 return
             }
-            self.updateMovie(title: title, at: movie.id)
-            self.updateFTS5(text: title, at: movie.id)
+            self.updateMainTable(with: title, at: movie.id)
+            self.updateSearchTable(with: title, at: movie.id)
             self.fetchMovies()
             self.tableView.reloadData()
         }
 
         alert.addAction(action)
+        alert.addAction(
+            UIAlertAction(
+                title: CommonText.copyTitle,
+                style: .default,
+                handler: { _ in
+                    UIPasteboard.general.string = movie.title
+                }
+            )
+        )
+        alert.addAction(UIAlertAction(title: CommonText.cancelTItle, style: .cancel))
+
         present(alert, animated: true)
     }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { contextualAction, view, complete in
+        let deleteAction = UIContextualAction(style: .destructive, title: CommonText.deleteTitle) { contextualAction, view, complete in
             guard contextualAction.style == .destructive else {
                 complete(false)
                 return
@@ -406,12 +429,12 @@ extension FTS5DefaultTableViewController: UITableViewDelegate {
             if self.isFiltering {
                 let movie = self.filteredMovies[indexPath.row]
                 self.filteredMovies.remove(at: indexPath.row)
-                self.deleteFromMovieTable(at: movie.id)
+                self.deleteFromMainTable(at: movie.id)
                 self.deleteFromSearchTable(at: movie.id)
             } else {
                 let movie = self.movies[indexPath.row]
                 self.movies.remove(at: indexPath.row)
-                self.deleteFromMovieTable(at: movie.id)
+                self.deleteFromMainTable(at: movie.id)
                 self.deleteFromSearchTable(at: movie.id)
             }
 
@@ -427,13 +450,17 @@ extension FTS5DefaultTableViewController: UISearchResultsUpdating {
     private func performFTS5Search(with text: String) {
         filteredMovies.removeAll()
 
-        let sqlQueryString = "SELECT rowid, title FROM search WHERE search MATCH '\"\(text)\"*' ORDER BY rank;"
+        let normalizedText = "\(text)*"
+        let sqlQueryString = "SELECT rowid, title FROM \(ftsTable.ftsTableName) WHERE title MATCH ? ORDER BY rank;"
+
         var statement: OpaquePointer?
 
         guard sqlite3_prepare_v2(searchDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: searchDatabase)
             return
         }
+
+        sqlite3_bind_text(statement, 1, (normalizedText as NSString).utf8String, -1, nil)
 
         while sqlite3_step(statement) == SQLITE_ROW {
             let rowid = sqlite3_column_int(statement, 0)
