@@ -62,7 +62,7 @@ enum FTSTable {
         case .fts5ContentlessDeleteTable:
             "fts5_contentless_delete.sqlite"
         case .fts4ContentlessTable:
-            "fts4_default.sqlite"
+            "fts4_contentless.sqlite"
         }
     }
 
@@ -88,7 +88,7 @@ enum FTSTable {
         case .fts5ContentlessDeleteTable:
             "fts5_contentless_delete"
         case .fts4ContentlessTable:
-            "fts4_default"
+            "fts4_contentless"
         }
     }
 

@@ -8,10 +8,12 @@
 import UIKit
 import SQLite3
 
-/// FTS4 using contentless table to perform CRUD.
-/// - Create: "CREATE VIRTUAL TABLE IF NOT EXISTS search USING fts4(title);"
-/// - Insert: "INSERT INTO search(title) VALUES (?);"
-/// - Search: "SELECT rowid, title FROM search WHERE search MATCH '\(text)*';"
+/// A ViewControler to perform CRUD in `FTS4` contentless table.
+/// - Create: "CREATE VIRTUAL TABLE IF NOT EXISTS fts4_contentless USING fts4(title);"
+/// - Insert: "INSERT INTO fts4_contentless(title) VALUES (text);"
+/// - Search: "SELECT rowid, title FROM search WHERE fts4_contentless MATCH 'text*';"
+/// - Update: Not support
+/// - Delete: Not support
 final class FTS4ContentlessTableViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
@@ -43,18 +45,30 @@ final class FTS4ContentlessTableViewController: UIViewController {
     private var movies = [Movie]()
     private var filteredMovies = [Movie]()
 
-    private var movieDatabase: OpaquePointer?
+    private var mainDatabase: OpaquePointer?
     private var searchDatabase: OpaquePointer?
 
+    private let ftsTable: FTSTable
+
     deinit {
-        sqlite3_close(movieDatabase)
+        sqlite3_close(mainDatabase)
+        sqlite3_close(searchDatabase)
+    }
+
+    init(ftsTable: FTSTable) {
+        self.ftsTable = ftsTable
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
 
-        navigationItem.title = "FTS4 Contentless"
+        navigationItem.title = ftsTable.title
 
         let rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(didTapDropButton)),
@@ -74,28 +88,28 @@ final class FTS4ContentlessTableViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
-        movieDatabase = openMovieDatabaseConnection()
-        createMoviesTable()
+        mainDatabase = configureMainDatabase()
+        createMainTable()
 
-        searchDatabase = openSearchDatabaseConnection()
+        searchDatabase = configureSearchDatabase()
         createSearchTable()
 
         fetchMovies()
         tableView.reloadData()
     }
 
-    private func openMovieDatabaseConnection() -> OpaquePointer? {
+    private func configureMainDatabase() -> OpaquePointer? {
         guard let libraryPath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).first else {
             assertionFailure()
             return nil
         }
 
-        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent("movie.sqlite")
+        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent(ftsTable.mainDatabaseFileName)
         let databasePath = libraryURL.path
 
         var db: OpaquePointer?
         if sqlite3_open(databasePath, &db) == SQLITE_OK {
-            print("Open movie database success path: \(databasePath)")
+            ftsTable.logSuccess(function: #function)
             return db
         } else {
             assertionFailure()
@@ -103,38 +117,38 @@ final class FTS4ContentlessTableViewController: UIViewController {
         }
     }
 
-    private func createMoviesTable() {
+    private func createMainTable() {
         let sqlQueryString = """
-                            CREATE TABLE IF NOT EXISTS movies(
-                            id INTEGER PRIMARY KEY NOT NULL,
-                            title TEXT NOT NULL
-                            );
-                            """
+        CREATE TABLE IF NOT EXISTS \(ftsTable.mainTableName)(
+        id INTEGER PRIMARY KEY NOT NULL,
+        title TEXT NOT NULL
+        );
+        """
         var statement: OpaquePointer?
 
-        if sqlite3_prepare_v2(movieDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(mainDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
             if sqlite3_step(statement) != SQLITE_DONE {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: mainDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: mainDatabase)
         }
 
         sqlite3_finalize(statement)
     }
 
-    private func openSearchDatabaseConnection() -> OpaquePointer? {
+    private func configureSearchDatabase() -> OpaquePointer? {
         guard let libraryPath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).first else {
             assertionFailure()
             return nil
         }
 
-        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent("fts4_contentless.sqlite")
+        let libraryURL = URL(fileURLWithPath: libraryPath).appendingPathComponent(ftsTable.ftsDatabaseFileName)
         let databasePath = libraryURL.path
 
         var db: OpaquePointer?
         if sqlite3_open(databasePath, &db) == SQLITE_OK {
-            print("Open search database success, path: \(databasePath)")
+            ftsTable.logSuccess(function: #function)
             return db
         } else {
             assertionFailure()
@@ -144,7 +158,7 @@ final class FTS4ContentlessTableViewController: UIViewController {
 
     private func createSearchTable() {
         let sqlQueryString = """
-        CREATE VIRTUAL TABLE IF NOT EXISTS search \
+        CREATE VIRTUAL TABLE IF NOT EXISTS \(ftsTable.ftsTableName) \
         USING FTS4 (content="", text, order=desc);
         """
 
@@ -152,25 +166,25 @@ final class FTS4ContentlessTableViewController: UIViewController {
 
         if sqlite3_prepare_v2(searchDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
             if sqlite3_step(statement) != SQLITE_DONE {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: searchDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: searchDatabase)
         }
 
         sqlite3_finalize(statement)
     }
 
     private func fetchMovies() {
-        let sqlQueryString = "SELECT * FROM movies";
+        movies.removeAll()
+
+        let sqlQueryString = "SELECT * FROM \(ftsTable.mainTableName)";
         var statement: OpaquePointer?
 
-        guard sqlite3_prepare(movieDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK else {
-            logSQLErrorMessage()
+        guard sqlite3_prepare(mainDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK else {
+            logSQLErrorMessage(for: mainDatabase)
             return
         }
-
-        movies.removeAll()
 
         while sqlite3_step(statement) == SQLITE_ROW {
             let id = sqlite3_column_int(statement, 0)
@@ -187,26 +201,26 @@ final class FTS4ContentlessTableViewController: UIViewController {
         sqlite3_finalize(statement)
     }
 
-    private func insertMovieDatabase(with movie: Movie) {
-        let sqlQueryString = "INSERT INTO movies(id, title) VALUES (?, ?);"
+    private func insertMainTable(with movie: Movie) {
+        let sqlQueryString = "INSERT INTO \(ftsTable.mainTableName)(id, title) VALUES (?, ?);"
         var statement: OpaquePointer?
 
-        if sqlite3_prepare_v2(movieDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(mainDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
             sqlite3_bind_int(statement, 1, movie.id)
             sqlite3_bind_text(statement, 2, (movie.title as NSString).utf8String, -1, nil)
 
             if sqlite3_step(statement) != SQLITE_DONE {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: mainDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: mainDatabase)
         }
 
         sqlite3_finalize(statement)
     }
 
-    private func insertSearchDatabase(with movie: Movie) {
-        let sqlQueryString = "INSERT INTO search (rowid, text) VALUES (?, ?);"
+    private func insertSearchTable(with movie: Movie) {
+        let sqlQueryString = "INSERT INTO \(ftsTable.ftsTableName)(docid, text) VALUES (?, ?);"
         var statement: OpaquePointer?
 
         if sqlite3_prepare_v2(self.searchDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
@@ -214,45 +228,48 @@ final class FTS4ContentlessTableViewController: UIViewController {
             sqlite3_bind_text(statement, 2, (movie.title as NSString).utf8String, -1, nil)
 
             if sqlite3_step(statement) != SQLITE_DONE {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: searchDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: searchDatabase)
         }
 
         sqlite3_finalize(statement)
     }
 
-    private func updateMovie(title: String, at index: Int32) {
-        let sqlQueryString = "UPDATE movies SET title = ? WHERE id = ?;"
+    private func updateMainTable(with title: String, at index: Int32) {
+        let sqlQueryString = "UPDATE \(ftsTable.mainTableName) SET title = ? WHERE id = ?;"
         var statement: OpaquePointer?
 
-        if sqlite3_prepare_v2(movieDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(mainDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
             sqlite3_bind_text(statement, 1, (title as NSString).utf8String, -1, nil)
             sqlite3_bind_int(statement, 2, index)
 
             if sqlite3_step(statement) != SQLITE_DONE {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: mainDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: mainDatabase)
         }
 
         sqlite3_finalize(statement)
     }
 
-    private func deleteFromMovieTable(at index: Int32) {
-        let sqlQueryString = "DELETE FROM movies WHERE id = \(index)"
+    private func deleteFromMainTable(at index: Int32) {
+        let sqlQueryString = "DELETE FROM movies WHERE id = ?"
         var statement: OpaquePointer?
 
-        if sqlite3_prepare_v2(movieDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(mainDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK {
+
+            sqlite3_bind_int(statement, 1, index)
+
             if sqlite3_step(statement) == SQLITE_DONE {
-                print("Delete data success")
+                ftsTable.logSuccess(function: #function)
             } else {
-                logSQLErrorMessage()
+                logSQLErrorMessage(for: mainDatabase)
             }
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: mainDatabase)
         }
     }
 
@@ -260,20 +277,20 @@ final class FTS4ContentlessTableViewController: UIViewController {
         let queryString = "DROP TABLE \(name)"
         var statement: OpaquePointer?
 
-        guard sqlite3_prepare(movieDatabase, queryString, -1, &statement, nil) == SQLITE_OK else {
-            logSQLErrorMessage()
+        guard sqlite3_prepare(mainDatabase, queryString, -1, &statement, nil) == SQLITE_OK else {
+            logSQLErrorMessage(for: mainDatabase)
             return
         }
 
         if sqlite3_step(statement) == SQLITE_DONE {
-            print("Drop table success")
+            ftsTable.logSuccess(function: #function)
         } else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: mainDatabase)
         }
     }
 
-    private func logSQLErrorMessage() {
-        let errorMessage = String(cString: sqlite3_errmsg(searchDatabase))
+    private func logSQLErrorMessage(for database: OpaquePointer?) {
+        let errorMessage = String(cString: sqlite3_errmsg(database))
         print("SQL error: \(errorMessage)")
     }
 
@@ -293,8 +310,8 @@ final class FTS4ContentlessTableViewController: UIViewController {
                 title: title
             )
 
-            self.insertMovieDatabase(with: movie)
-            self.insertSearchDatabase(with: movie)
+            self.insertMainTable(with: movie)
+            self.insertSearchTable(with: movie)
             self.fetchMovies()
             self.tableView.reloadData()
         }
@@ -357,7 +374,7 @@ extension FTS4ContentlessTableViewController: UITableViewDelegate {
             guard let textField = alert.textFields?.first, let title = textField.text else {
                 return
             }
-            self.updateMovie(title: title, at: movie.id)
+            self.updateMainTable(with: title, at: movie.id)
             self.fetchMovies()
             self.tableView.reloadData()
         }
@@ -375,11 +392,11 @@ extension FTS4ContentlessTableViewController: UITableViewDelegate {
             if self.isFiltering {
                 let movie = self.filteredMovies[indexPath.row]
                 self.filteredMovies.remove(at: indexPath.row)
-                self.deleteFromMovieTable(at: movie.id)
+                self.deleteFromMainTable(at: movie.id)
             } else {
                 let movie = self.movies[indexPath.row]
                 self.movies.remove(at: indexPath.row)
-                self.deleteFromMovieTable(at: movie.id)
+                self.deleteFromMainTable(at: movie.id)
             }
 
             tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -396,12 +413,12 @@ extension FTS4ContentlessTableViewController: UISearchResultsUpdating {
 
         // let sqlQueryString = "SELECT docid FROM search AS d WHERE d.text MATCH '\(text)*';"
         let normalizedText = "\(text)*"
-        let sqlQueryString = "SELECT docid FROM search AS d WHERE d.text MATCH ?;"
+        let sqlQueryString = "SELECT docid FROM \(ftsTable.ftsTableName) AS d WHERE d.text MATCH ?;"
 
         var statement: OpaquePointer?
 
         guard sqlite3_prepare_v2(searchDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK else {
-            logSQLErrorMessage()
+            logSQLErrorMessage(for: searchDatabase)
             return []
         }
 
@@ -419,9 +436,7 @@ extension FTS4ContentlessTableViewController: UISearchResultsUpdating {
         return movieIDs
     }
 
-    private func querySelectedMovices(with movieIDs: [Int32]) {
-        filteredMovies.removeAll()
-
+    private func querySearchedMovices(with movieIDs: [Int32]) {
         guard !movieIDs.isEmpty else {
             return
         }
@@ -431,8 +446,8 @@ extension FTS4ContentlessTableViewController: UISearchResultsUpdating {
 
         var statement: OpaquePointer?
 
-        guard sqlite3_prepare_v2(movieDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK else {
-            logSQLErrorMessage()
+        guard sqlite3_prepare_v2(mainDatabase, sqlQueryString, -1, &statement, nil) == SQLITE_OK else {
+            logSQLErrorMessage(for: mainDatabase)
             return
         }
 
@@ -451,7 +466,7 @@ extension FTS4ContentlessTableViewController: UISearchResultsUpdating {
         }
 
         let movieIDs = performFTS4Search(with: searchText.lowercased())
-        querySelectedMovices(with: movieIDs)
+        querySearchedMovices(with: movieIDs)
         tableView.reloadData()
     }
 }

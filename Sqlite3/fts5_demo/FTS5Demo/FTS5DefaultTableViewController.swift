@@ -107,7 +107,7 @@ final class FTS5DefaultTableViewController: UIViewController {
 
         var db: OpaquePointer?
         if sqlite3_open(databasePath, &db) == SQLITE_OK {
-            print("Open main database success, path: \(databasePath)")
+            ftsTable.logSuccess(function: #function)
             return db
         } else {
             assertionFailure()
@@ -148,7 +148,7 @@ final class FTS5DefaultTableViewController: UIViewController {
 
         var db: OpaquePointer?
         if sqlite3_open(databasePath, &db) == SQLITE_OK {
-            print("Open FTS database success, path: \(databasePath)")
+            ftsTable.logSuccess(function: #function)
             return db
         } else {
             assertionFailure()
@@ -321,7 +321,7 @@ final class FTS5DefaultTableViewController: UIViewController {
     }
 
     private func logSQLErrorMessage(for database: OpaquePointer?) {
-        let errorMessage = String(cString: sqlite3_errmsg(mainDatabase))
+        let errorMessage = String(cString: sqlite3_errmsg(database))
         print("SQL error: \(errorMessage)")
     }
 

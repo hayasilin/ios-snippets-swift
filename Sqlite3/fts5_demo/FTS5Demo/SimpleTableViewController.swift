@@ -101,7 +101,7 @@ final class SimpleTableViewController: UIViewController {
 
         var db: OpaquePointer?
         if sqlite3_open(databasePath, &db) == SQLITE_OK {
-            print("Open database success, path: \(databasePath)")
+            ftsTable.logSuccess(function: #function)
             return db
         } else {
             assertionFailure()
@@ -142,7 +142,7 @@ final class SimpleTableViewController: UIViewController {
 
         var db: OpaquePointer?
         if sqlite3_open(databasePath, &db) == SQLITE_OK {
-            print("Open database success, path: \(databasePath)")
+            ftsTable.logSuccess(function: #function)
             return db
         } else {
             assertionFailure()

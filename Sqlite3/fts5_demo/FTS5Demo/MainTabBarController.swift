@@ -20,7 +20,7 @@ final class MainTabBarController: UITabBarController {
         let firstVC = UINavigationController(rootViewController: FTS5DefaultTableViewController(ftsTable: .fts5DefaultTable))
         let secondVC = UINavigationController(rootViewController: FTS5ContentlessTableViewController(ftsTable: .fts5ContentlessTable))
         let thirdVC = UINavigationController(rootViewController: FTS5ContentlessDeleteTableViewController(ftsTable: .fts5ContentlessDeleteTable))
-        let forthVC = UINavigationController(rootViewController: FTS4ContentlessTableViewController())
+        let forthVC = UINavigationController(rootViewController: FTS4ContentlessTableViewController(ftsTable: .fts4ContentlessTable))
 
         firstVC.tabBarItem = UITabBarItem(
             title: FTSTable.fts5DefaultTable.title,

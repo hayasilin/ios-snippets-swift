@@ -103,7 +103,7 @@ final class FTS5ContentlessDeleteTableViewController: UIViewController {
 
         var db: OpaquePointer?
         if sqlite3_open(databasePath, &db) == SQLITE_OK {
-            print("Open main database success, path: \(databasePath)")
+            ftsTable.logSuccess(function: #function)
             return db
         } else {
             assertionFailure()
@@ -145,7 +145,7 @@ final class FTS5ContentlessDeleteTableViewController: UIViewController {
 
         var db: OpaquePointer?
         if sqlite3_open(databasePath, &db) == SQLITE_OK {
-            print("Open fts database success, path: \(databasePath)")
+            ftsTable.logSuccess(function: #function)
             return db
         } else {
             assertionFailure()
