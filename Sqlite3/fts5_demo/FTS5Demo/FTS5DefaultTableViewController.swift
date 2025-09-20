@@ -158,9 +158,8 @@ final class FTS5DefaultTableViewController: UIViewController {
 
     private func createSearchTable() {
         // Use ascii tokenizer allows non-ASCII characters (those with codepoints greater than 127) are always considered token characters, hence special character such as emoji ￣▽￣ is able to be searched.
-        let sqlQueryString = "CREATE VIRTUAL TABLE IF NOT EXISTS \(ftsTable.ftsTableName) USING FTS5(title, tokenize = 'porter ascii');"
+        let sqlQueryString = "CREATE VIRTUAL TABLE IF NOT EXISTS \(ftsTable.ftsTableName) USING FTS5(title, tokenize = 'ascii');"
 //        let sqlQueryString = "CREATE VIRTUAL TABLE IF NOT EXISTS \(ftsTable.ftsTableName) USING FTS5(title);"
-//        let sqlQueryString = "CREATE VIRTUAL TABLE IF NOT EXISTS \(ftsTable.ftsTableName) USING FTS5(title, tokenize = 'porter');"
 
         var statement: OpaquePointer?
 

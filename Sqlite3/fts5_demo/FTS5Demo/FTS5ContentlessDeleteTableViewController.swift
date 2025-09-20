@@ -154,7 +154,8 @@ final class FTS5ContentlessDeleteTableViewController: UIViewController {
     }
 
     private func createFTS5ContentlessDeleteTable() {
-        let sqlQueryString = "CREATE VIRTUAL TABLE IF NOT EXISTS \(ftsTable.ftsTableName) USING fts5(content='', text, tokenize = 'porter ascii', contentless_delete=1);"
+        // Use ascii tokenizer allows non-ASCII characters (those with codepoints greater than 127) are always considered token characters, hence special character such as emoji ￣▽￣ is able to be searched.
+        let sqlQueryString = "CREATE VIRTUAL TABLE IF NOT EXISTS \(ftsTable.ftsTableName) USING fts5(content='', text, tokenize = 'ascii', contentless_delete=1);"
 
         var statement: OpaquePointer?
 
